@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConsoleToDoList.App\ConsoleToDoList.App.csproj" />
-    <ProjectReference Include="..\ConsoleToDoList.Console\ConsoleToDoList.Console.csproj" />
   </ItemGroup>
 
 </Project>

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Console\\ConsoleToDoList.Console.csproj",
-      "projectName": "ConsoleToDoList.Console",
-      "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Console\\ConsoleToDoList.Console.csproj",
+      "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
+      "projectName": "ConsoleToDoList.ConsoleTerminal",
+      "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
       "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Console\\obj\\",
+      "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

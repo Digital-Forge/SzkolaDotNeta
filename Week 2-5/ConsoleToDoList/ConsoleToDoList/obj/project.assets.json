@@ -11,16 +11,6 @@
         "runtime": {
           "bin/placeholder/ConsoleToDoList.App.dll": {}
         }
-      },
-      "ConsoleToDoList.Console/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "compile": {
-          "bin/placeholder/ConsoleToDoList.Console.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ConsoleToDoList.Console.dll": {}
-        }
       }
     }
   },
@@ -29,17 +19,11 @@
       "type": "project",
       "path": "../ConsoleToDoList.App/ConsoleToDoList.App.csproj",
       "msbuildProject": "../ConsoleToDoList.App/ConsoleToDoList.App.csproj"
-    },
-    "ConsoleToDoList.Console/1.0.0": {
-      "type": "project",
-      "path": "../ConsoleToDoList.Console/ConsoleToDoList.Console.csproj",
-      "msbuildProject": "../ConsoleToDoList.Console/ConsoleToDoList.Console.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "ConsoleToDoList.App >= 1.0.0",
-      "ConsoleToDoList.Console >= 1.0.0"
+      "ConsoleToDoList.App >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -76,9 +60,6 @@
           "projectReferences": {
             "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj": {
               "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj"
-            },
-            "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Console\\ConsoleToDoList.Console.csproj": {
-              "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Console\\ConsoleToDoList.Console.csproj"
             }
           }
         }

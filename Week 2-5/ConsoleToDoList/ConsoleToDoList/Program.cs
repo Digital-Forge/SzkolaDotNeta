@@ -6,7 +6,8 @@ namespace ConsoleToDoList
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine();
+            Console.WriteLine();
+            
         }
     }
 }
