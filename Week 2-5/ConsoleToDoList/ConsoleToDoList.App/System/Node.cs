@@ -5,23 +5,37 @@ using System.Threading.Tasks;
 
 namespace ConsoleToDoList.App
 {
-    class Node<T> where T : class
+    [Serializable]
+    class Node
     {
-        private Node<T> _lastNode = null; 
-        private List<Node<T>> _nextNodes = null;
+        private Node _lastNode = null; 
+        private List<Node> _nextNodes = null;
+        private INodeDataIntegration _data = null;
 
-        public Node<T> LastNode { get => _lastNode; }
-        public List<Node<T>> NextNodes { get => _nextNodes; }
+        public Node LastNode { get => _lastNode; }
+        public List<Node> NextNodes { get => _nextNodes; }
+        public INodeDataIntegration Data
+        {
+            get { return _data; }
+            set 
+            {
+                if (_data != null)
+                {
+                    _data.Node = null;
+                    _data = null;
+                }
 
-        public T Data { get; set; } = null;
-
+                _data = value;
+                _data.Node = this;
+            }
+        }
 
         public Node()
         {
 
         }
 
-        private Node(Node<T> parent)
+        private Node(Node parent)
         {
             _lastNode = parent;
         }
@@ -57,24 +71,31 @@ namespace ConsoleToDoList.App
         {
             RemoveNextNodes();
             _lastNode = null;
+
+            if (_data != null)
+            {
+                _data.Node = null;
+                _data = null;
+            }
         }
 
-        public Node<T> CreateNewNode()
+        public Node CreateNewNode()
         {
             if (_nextNodes == null)
             {
-                _nextNodes = new List<Node<T>>();
+                _nextNodes = new List<Node>();
             }
 
-            Node<T> buff = new Node<T>(this);
+            Node buff = new Node(this);
             _nextNodes.Add(buff);
             return buff;
         }
 
-        public Node<T> CreateNewNode(T data)
+        public Node CreateNewNode(INodeDataIntegration data)
         {
-            Node<T> buff = CreateNewNode();
-            buff.Data = data;
+            Node buff = CreateNewNode();
+            buff._data = data;
+            buff._data.Node = buff;
             return buff;
         }
 
@@ -86,7 +107,5 @@ namespace ConsoleToDoList.App
             }
             _removeNextNodes();
         }
-
-        
     }
 }
