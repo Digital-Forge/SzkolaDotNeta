@@ -1,0 +1,9 @@
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\bin\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.deps.json
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\bin\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.dll
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\bin\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.pdb
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.csprojAssemblyReference.cache
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.AssemblyInfoInputs.cache
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.AssemblyInfo.cs
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.csproj.CoreCompileInputs.cache
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.dll
+C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.pdb

@@ -4,25 +4,14 @@ using System.Text;
 
 namespace ConsoleToDoList.App
 {
+    [Serializable]
     class Task
     {
-        public enum TaskPriority
-        {
-            Hight,
-            Meddium,
-            Low,
-            NoPriority
-        }
-
-        private List<Tag> _tagList = null;
-        private TaskPriority _priority;
-        private string _name;
-        private string _description;
-
-        public Task(string name, TaskPriority priority = TaskPriority.NoPriority)
-        {
-            _name = name;
-            _priority = priority;
-        }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public TaskPriority Priority { get; set; }
+        public List<Tag> _tagList = new List<Tag>();
+        public DateTime? Date = null;
+        public bool? FinishStatus = null;
     }
 }

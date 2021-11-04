@@ -50,9 +50,10 @@ namespace ConsoleToDoList.ConsoleTerminal
             AddText(text, color, backgroundColor);
         }
 
-        public void AddText(string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
+        public ConsoleColorString AddText(string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
         {
             _text.Add(new colorText(text, color, backgroundColor));
+            return this;
         }
 
         public void ConsoleWrite()
@@ -111,8 +112,6 @@ namespace ConsoleToDoList.ConsoleTerminal
             }
 
             return length;
-        }
-
-        
+        }  
     }
 }

@@ -75,7 +75,7 @@ namespace ConsoleToDoList.ConsoleTerminal
                 //paint select option
                 saveBufror = rowOptionsList[position].text.Copy();
 
-                foreach (var txt in rowOptionsList[position].text.Text)
+                foreach (var txt in rowOptionsList[position].text.TextElementsList)
                 {
                     txt.color = style.TextColorOfSelectedOptionText;
                     txt.backgroundColor = style.TextBackgroundColorOfSelectedOptionText;

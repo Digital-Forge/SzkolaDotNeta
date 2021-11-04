@@ -144,7 +144,8 @@ namespace ConsoleToDoList.ConsoleTerminal
                 Console.ForegroundColor = Style.ValueColorOfSelectedItem == null ? Console.ForegroundColor : (ConsoleColor)Style.ValueColorOfSelectedItem;
                 Console.BackgroundColor = Style.ValueBackgroundColorOfSelectedItem == null ? Console.BackgroundColor : (ConsoleColor)Style.ValueBackgroundColorOfSelectedItem;
                 //string line = ReadLine.Read("", $"{properties[position].GetValue(this.obj).ToString()}");
-                string line = Console.ReadLine();
+                //string line = Console.ReadLine();
+                string line = ConsoleExtension.ReadLine("", $"{properties[position].GetValue(this.obj).ToString()}");
                 Console.ForegroundColor = buff[0];
                 Console.BackgroundColor = buff[1];
 

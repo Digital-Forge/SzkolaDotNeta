@@ -8,25 +8,25 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Jan\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
+      "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
       "projectName": "ConsoleToDoList.ConsoleTerminal",
-      "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
-      "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\obj\\",
+      "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
+      "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
+      "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -65,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

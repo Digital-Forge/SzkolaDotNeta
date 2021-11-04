@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleToDoList.ConsoleTerminal\ConsoleToDoList.ConsoleTerminal.csproj" />
+  </ItemGroup>
+
 </Project>
