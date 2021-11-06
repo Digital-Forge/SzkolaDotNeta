@@ -1,17 +1,18 @@
 ﻿using ConsoleToDoList.ConsoleTerminal;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleToDoList.App
 {
     [Serializable]
     public class LogicCORE<T> where T: class
     {
+        [NonSerialized]
         public static LogicCORE<T> Core;
 
         public List<T> DataList;
 
+        [NonSerialized]
         public static string DataPath = "RegisterData.dat";
 
         public LogicCORE()
@@ -32,7 +33,7 @@ namespace ConsoleToDoList.App
         {
             if (!Serialization<List<T>>.SerializationToFile(DataPath, DataList))
             {
-                ConsoleAlert.Show("Save error\n Try to save manually", ConsoleColor.Yellow);
+                ConsoleAlert.Show("Save error\n Try to save manually", ConsoleColor.Red);
             }
         }
 

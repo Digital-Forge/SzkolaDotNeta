@@ -7,5 +7,6 @@ namespace ConsoleToDoList.App
     interface ITag
     {
         public string TagName { get; }
+        public string TagDescription { get; }
     }
 }
