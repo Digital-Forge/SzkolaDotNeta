@@ -7,3 +7,13 @@ C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTermina
 C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.csproj.CoreCompileInputs.cache
 C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.dll
 C:\Project\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.pdb
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\bin\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.deps.json
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\bin\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.dll
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\bin\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.pdb
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.csproj.AssemblyReference.cache
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.AssemblyInfoInputs.cache
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.AssemblyInfo.cs
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.csproj.CoreCompileInputs.cache
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.dll
+D:\Project\C#\SzkolaDotNeta\Week 2-5\ConsoleToDoList\ConsoleToDoList.ConsoleTerminal\obj\Debug\netcoreapp3.1\ConsoleToDoList.ConsoleTerminal.pdb

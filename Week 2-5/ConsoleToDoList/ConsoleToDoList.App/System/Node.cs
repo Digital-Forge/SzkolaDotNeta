@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace ConsoleToDoList.App
 {
     [Serializable]
-    class Node
+    public class Node
     {
         private Node _lastNode = null; 
         private List<Node> _nextNodes = null;

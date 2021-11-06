@@ -5,7 +5,7 @@ using System.Text;
 namespace ConsoleToDoList.App
 {
     [Serializable]
-    class Tag : ITag
+    public class Tag : ITag
     {
         private string _tagName;
         private string _tagDescription;

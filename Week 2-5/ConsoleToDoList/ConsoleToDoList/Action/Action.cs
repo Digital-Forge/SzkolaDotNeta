@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleToDoList.App;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,6 +19,8 @@ namespace ConsoleToDoList
 
         private void init()
         {
+            LogicCORE.Load();
+
             initStyle();
         }
     }

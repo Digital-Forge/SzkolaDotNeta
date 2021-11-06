@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ConsoleToDoList.ConsoleTerminal;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ConsoleToDoList.App
 {
     [Serializable]
-    class Task
+    public class Task : ITask
     {
         public string Name { get; set; }
         public string Description { get; set; }

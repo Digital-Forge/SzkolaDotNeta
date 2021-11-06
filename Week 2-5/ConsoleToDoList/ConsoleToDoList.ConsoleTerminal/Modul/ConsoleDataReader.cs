@@ -5,8 +5,7 @@ using System.Text;
 
 namespace ConsoleToDoList.ConsoleTerminal
 {
-    public class ConsoleDataReader<T> : IConsoleDataReader
-        where T: IConsoleReadable
+    public class ConsoleDataReader : IConsoleDataReader
     {
         private enum propertySignature
         {
@@ -15,14 +14,14 @@ namespace ConsoleToDoList.ConsoleTerminal
             _default
         };
 
-        private T obj;
+        private IConsoleReadable obj;
 
         public object GetReadObject { get => obj; }
 
         public Type GetReadObjectType { get => obj.GetType(); }
         public IConsoleDataReader.DataConsoleReaderStyle Style { get; set; }
 
-        public ConsoleDataReader(T obj, IConsoleDataReader.DataConsoleReaderStyle style = null)
+        public ConsoleDataReader(IConsoleReadable obj, IConsoleDataReader.DataConsoleReaderStyle style = null)
         {
             this.obj = obj;
             this.Style = style != null ? style : new IConsoleDataReader.DataConsoleReaderStyle();
@@ -182,7 +181,7 @@ namespace ConsoleToDoList.ConsoleTerminal
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private void _editClass(ref int position, System.Reflection.PropertyInfo[] properties)
         {
-            new ConsoleDataReader<IConsoleReadable>((IConsoleReadable)properties[position].GetValue(this.obj), Style).DataRead();
+            new ConsoleDataReader((IConsoleReadable)properties[position].GetValue(this.obj), Style).DataRead();
         }
 
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]

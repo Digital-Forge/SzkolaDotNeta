@@ -3,7 +3,7 @@
 namespace ConsoleToDoList.App
 {
     [Serializable]
-    class TaskHook : INodeDataIntegration
+    public class TaskHook : INodeDataIntegration
     {
         public Node Node { get; set; }
 

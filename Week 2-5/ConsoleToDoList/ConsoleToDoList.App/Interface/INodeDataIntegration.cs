@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleToDoList.App
 {
-    interface INodeDataIntegration
+    public interface INodeDataIntegration
     {
         public Node Node { get; set; }
     }

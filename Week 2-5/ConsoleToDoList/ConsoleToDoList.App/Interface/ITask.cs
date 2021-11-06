@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ConsoleToDoList.ConsoleTerminal;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ConsoleToDoList.App
 {
-    interface ITask
+    public interface ITask : IConsoleReadable
     {
         public string Name { get; set; }
         public string Description { get; set; }

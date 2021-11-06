@@ -5,48 +5,49 @@ using System.Collections.Generic;
 namespace ConsoleToDoList.App
 {
     [Serializable]
-    public class LogicCORE<T> where T: class
+    public class LogicCORE
     {
         [NonSerialized]
-        public static LogicCORE<T> Core;
+        public static LogicCORE Core;
 
-        public List<T> DataList;
+        public Node TasksData;
+
+        public string[] TagsData; // <<<--------------------------- to implementation modul
 
         [NonSerialized]
         public static string DataPath = "RegisterData.dat";
 
         public LogicCORE()
         {
-            Core = this;
-            Load();
+            TasksData = new Node();
         }
 
-        public LogicCORE(List<T> list)
+        public LogicCORE(Node data)
         {
-            if (list == null) throw new Exception("DataEnvironmentException");
+            if (data == null) throw new Exception("DataEnvironmentException");
 
-            DataList = list;
+            TasksData = data;
             Core = this;
         }
 
-        public void Save()
+        public static void Save()
         {
-            if (!Serialization<List<T>>.SerializationToFile(DataPath, DataList))
+            if (!Serialization<LogicCORE>.SerializationToFile(DataPath, Core))
             {
                 ConsoleAlert.Show("Save error\n Try to save manually", ConsoleColor.Red);
             }
         }
 
-        public void Load()
+        public static void Load()
         {
-            var buff = Serialization<List< T >>.DeserializationFromFile(DataPath);
+            var buff = Serialization<LogicCORE>.DeserializationFromFile(DataPath);
 
             if (buff == null)
             {
                 ConsoleAlert.Show("Load error\n Try to load manually\n  Or continue if this first time", ConsoleColor.Yellow);
-                DataList = new List<T>();
+                Core = new LogicCORE();
             }
-            else DataList = buff;
+            else Core = buff;
         }
     }
 }
