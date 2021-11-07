@@ -12,6 +12,7 @@ namespace ConsoleToDoList.ConsoleTerminal
             ConsoleKey key;
 
             Console.Write(prefixText);
+            Console.Write(defoultText);
 
             do
             {
