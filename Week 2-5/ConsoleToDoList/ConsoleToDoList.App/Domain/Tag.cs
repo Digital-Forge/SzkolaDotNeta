@@ -9,10 +9,13 @@ namespace ConsoleToDoList.App
     {
         private string _tagName;
         private string _tagDescription;
-        private DateTime? _tagDate;
 
         public string TagName { get => _tagName; }
         public string TagDescription { get => _tagDescription; }
-        public DateTime? TagDate { get => _tagDate; }
+
+        public Tag(string name)
+        {
+
+        }
     }
 }

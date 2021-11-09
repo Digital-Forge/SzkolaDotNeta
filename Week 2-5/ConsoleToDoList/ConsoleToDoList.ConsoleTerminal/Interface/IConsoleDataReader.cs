@@ -27,9 +27,7 @@ namespace ConsoleToDoList.ConsoleTerminal
             public ConsoleColorString TextMiddleFixOfSelectItem = new ConsoleColorString(" : ");
 
             public ConsoleColorString TextPrefix = new ConsoleColorString("    ");
-            public ConsoleColorString TextMiddleFix = new ConsoleColorString(" : ");
-
-            public ConsoleColorString ActionDescription = new ConsoleColorString("Enter - edit/save, Arrow Up/Down, Backspace - back");         
+            public ConsoleColorString TextMiddleFix = new ConsoleColorString(" : ");      
         }
     }
 }

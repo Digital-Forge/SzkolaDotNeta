@@ -16,6 +16,8 @@ namespace ConsoleToDoList.ConsoleTerminal
 
         private IConsoleReadable obj;
 
+        public ConsoleColorString ActionDescription = new ConsoleColorString("Enter - edit/save, Arrow Up/Down, Backspace - back");
+
         public object GetReadObject { get => obj; }
 
         public Type GetReadObjectType { get => obj.GetType(); }
@@ -123,7 +125,7 @@ namespace ConsoleToDoList.ConsoleTerminal
                 lineBuff.ConsoleWriteLine();
             }
             Console.WriteLine();
-            Style.ActionDescription.ConsoleWriteLine();
+            ActionDescription.ConsoleWriteLine();
 
             if (edit)
             {
@@ -211,7 +213,7 @@ namespace ConsoleToDoList.ConsoleTerminal
                     }
                 }
                 Console.WriteLine();
-                Style.ActionDescription.ConsoleWriteLine();
+                ActionDescription.ConsoleWriteLine();
 
                 switch (Console.ReadKey().Key)
                 {

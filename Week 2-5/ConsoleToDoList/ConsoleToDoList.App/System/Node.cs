@@ -93,9 +93,21 @@ namespace ConsoleToDoList.App
 
         public Node CreateNewNode(INodeDataIntegration data)
         {
-            Node buff = CreateNewNode();
-            buff._data = data;
-            buff._data.Node = buff;
+            Node buff;
+
+            if (data.Node == null)
+            {
+                buff = CreateNewNode();
+                buff._data = data;
+                buff._data.Node = buff;
+            }
+            else
+            {
+                buff = data.Node;
+                if (_nextNodes == null) _nextNodes = new List<Node>();
+                buff._lastNode = this;
+                _nextNodes.Add(buff);
+            }
             return buff;
         }
 
