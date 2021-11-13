@@ -8,6 +8,5 @@ namespace ConsoleToDoList.App
     public interface ITag : IConsoleReadable
     {
         public string TagName { get; }
-        public string TagDescription { get; }
     }
 }
