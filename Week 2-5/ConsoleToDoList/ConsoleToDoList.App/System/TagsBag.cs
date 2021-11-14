@@ -4,23 +4,33 @@ using System.Linq;
 
 namespace ConsoleToDoList.App
 {
-    class TagBag
+    public class TagsBag
     {
-        private class TagCell
+        public class TagCell
         {
-            public Tag Tag;
-            public bool Lock;
+            private bool _lock;
+            private Tag _tag;
+
+            public Tag Tag { get => _tag; }
+            public bool Lock { get => _lock; }
 
             public TagCell(Tag tag, bool toLock)
             {
-                Tag = tag;
-                Lock = toLock;
+                _tag = tag;
+                _lock = toLock;
+            }
+
+            public void setLock(bool value)
+            {
+                _lock = value;
             }
         }
 
         private List<TagCell> _tagsList = new List<TagCell>();
 
         public List<Tag> TagsList { get => _tagsList.Select(x => x.Tag).ToList(); }
+
+        public List<TagCell> cellsOfTagsList { get => _tagsList; }
 
         public void AddTag(Tag tag, bool toLock = false)
         {
@@ -32,11 +42,11 @@ namespace ConsoleToDoList.App
             }
             else
             {
-                findTag.Lock = findTag.Lock ? true : toLock;
+                findTag.setLock(findTag.Lock ? true : toLock);
             }
         }
 
-        public void AddTag(TagBag bag, bool toLock = false)
+        public void AddTag(TagsBag bag, bool toLock = false)
         {
             foreach (var item in bag._tagsList)
             {

@@ -8,7 +8,7 @@ namespace ConsoleToDoList
     {
         private void AddNewTask()
         {
-            TaskBuilder.Build(LogicCORE.Core.TasksData);
+            new TaskBuilder().Build(LogicCORE.Core.TasksData);
         }
     }
 }

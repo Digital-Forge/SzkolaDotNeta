@@ -81,10 +81,7 @@ namespace ConsoleToDoList.App
 
         public Node CreateNewNode()
         {
-            if (_nextNodes == null)
-            {
-                _nextNodes = new List<Node>();
-            }
+            if (_nextNodes == null) _nextNodes = new List<Node>();
 
             Node buff = new Node(this);
             _nextNodes.Add(buff);
@@ -104,6 +101,7 @@ namespace ConsoleToDoList.App
             else
             {
                 buff = data.Node;
+                buff._data = data;
                 if (_nextNodes == null) _nextNodes = new List<Node>();
                 buff._lastNode = this;
                 _nextNodes.Add(buff);

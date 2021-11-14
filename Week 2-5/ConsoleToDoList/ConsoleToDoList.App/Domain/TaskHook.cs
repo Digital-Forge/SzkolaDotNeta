@@ -10,6 +10,8 @@ namespace ConsoleToDoList.App
 
         public Task Task = new Task();
 
+        public TagsBag TagsBag = new TagsBag(); 
+
         public DateTime? Date
         {
             get => Task.Date;
@@ -32,12 +34,17 @@ namespace ConsoleToDoList.App
         public void AddTask()
         {
             if (Node == null) Node = new Node();
-            TaskBuilder.Build(Node);
+            new TaskBuilder().Build(Node);
+        }
+
+        public void ModifyData()
+        {
+            new TaskBuilder().Build(Node, true);
         }
 
         public void ModifyDate()
         {
-            TaskBuilder.Build(Node, true);
+            
         }
 
         public void View()
@@ -54,19 +61,27 @@ namespace ConsoleToDoList.App
         {
             ConsoleColorString buff = new ConsoleColorString(" Title : ").AddText($"{Task.Name}\n", ConsoleColor.Green);
             _CCS_PriorityDate(buff, Task);
-            buff.AddText(" Description : ").AddText($"{Task.Description}\n", ConsoleColor.Yellow);
+            buff.AddText("\n Description : ").AddText($"{Task.Description}\n", ConsoleColor.Yellow).
+                AddText(" Tags :");
 
+            if (TagsBag.cellsOfTagsList.Count != 0) buff.AddText("\n");
 
-            // <------------------------------------------------------------------------------------------------------------------------- implement view Tags
-
-
-            buff.AddText(" SubTasks : \n");
-            if (Node.NextNodes != null)
+            foreach (var item in TagsBag.cellsOfTagsList)
             {
-                foreach (var item in Node.NextNodes)
+                if (item.Lock) buff.AddText($"  {item.Tag.TagName}", ConsoleColor.Gray);
+                else           buff.AddText($"  {item.Tag.TagName}", ConsoleColor.White);
+            }
+
+            buff.AddText("\n SubTasks : \n");
+            if (Node != null)
+            {
+                if (Node.NextNodes != null)
                 {
-                    buff.AddText("     -> ").AddText(((TaskHook)(item.Data)).Task.Name, ConsoleColor.Green).AddText("\n          ");
-                    _CCS_PriorityDate(buff, ((TaskHook)(item.Data)).Task).AddText("\n");
+                    foreach (var item in Node.NextNodes)
+                    {
+                        buff.AddText("     -> ").AddText(((TaskHook)(item.Data)).Task.Name, ConsoleColor.Green).AddText("\n          ");
+                        _CCS_PriorityDate(buff, ((TaskHook)(item.Data)).Task).AddText("\n");
+                    }
                 }
             }
             return buff;

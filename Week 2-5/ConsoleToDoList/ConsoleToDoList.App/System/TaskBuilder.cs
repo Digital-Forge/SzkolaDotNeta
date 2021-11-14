@@ -5,17 +5,17 @@ using System.Text;
 
 namespace ConsoleToDoList.App
 {
-    public static class TaskBuilder
+    public class TaskBuilder
     {
-        private static Node nodeHook;
-        private static TaskHook taskBuffer;
-        private static bool confirmStatus;
-        private static bool modifyStatus;
+        private Node nodeHook;
+        private TaskHook taskBuffer;
+        private bool confirmStatus;
+        private bool modifyStatus;
 
         public static IConsoleDataReader.DataConsoleReaderStyle DataConsoleReaderStyle = null;
         public static ConsoleMenu.MenuStyle MenuStyle = null;
 
-        public static void Build(Node node, bool modify = false)
+        public TaskHook Build(Node node, bool modify = false)
         {
             nodeHook = node;
             modifyStatus = modify;
@@ -31,14 +31,15 @@ namespace ConsoleToDoList.App
                 if (string.IsNullOrEmpty(taskBuffer.Task.Name))
                 {
                     confirmStatus = false;
-                    return;
+                    return null;
                 }
                 confirmTaskMenu();
             } while (!confirmStatus);
+            return taskBuffer;
         }
 
 
-        private static void confirmTaskMenu()
+        private void confirmTaskMenu()
         {
             ConsoleMenu menuCreateTask = new ConsoleMenu(MenuStyle);
 
@@ -48,29 +49,29 @@ namespace ConsoleToDoList.App
             
             if (modifyStatus)
             {
-                menuCreateTask.add(new ConsoleColorString("Edit Data"), taskBuffer.ModifyDate);
-                menuCreateTask.add(new ConsoleColorString("Edit Tag"), taskBuffer.ModifyTag);
-                menuCreateTask.add(new ConsoleColorString("Add SubTask"), taskBuffer.AddTask);
-                menuCreateTask.add(new ConsoleColorString("Save"), cancel);
+                menuCreateTask.add(new ConsoleColorString("Edit Data"), () => { taskBuffer.ModifyDate(); menuCreateTask.MenuTitle = taskBuffer.Header(); });
+                menuCreateTask.add(new ConsoleColorString("Edit Tag"), () => { taskBuffer.ModifyTag(); menuCreateTask.MenuTitle = taskBuffer.Header(); });
+                menuCreateTask.add(new ConsoleColorString("Add SubTask"), () => { taskBuffer.AddTask(); menuCreateTask.MenuTitle = taskBuffer.Header(); });
+                menuCreateTask.add(new ConsoleColorString("Save"), () => { cancel(); menuCreateTask.exitFunction(); });
             }
             else
             {
-                menuCreateTask.add(new ConsoleColorString("Add Data"), taskBuffer.ModifyDate);
-                menuCreateTask.add(new ConsoleColorString("Add Tag"), taskBuffer.ModifyTag);
-                menuCreateTask.add(new ConsoleColorString("Add SubTask"), taskBuffer.AddTask);
-                menuCreateTask.add(new ConsoleColorString("Save"), save);
-                menuCreateTask.add(new ConsoleColorString("Cancel"), cancel);
+                menuCreateTask.add(new ConsoleColorString("Add Data"), () => { taskBuffer.ModifyDate(); menuCreateTask.MenuTitle = taskBuffer.Header(); });
+                menuCreateTask.add(new ConsoleColorString("Add Tag"), () => { taskBuffer.ModifyTag(); menuCreateTask.MenuTitle = taskBuffer.Header(); });
+                menuCreateTask.add(new ConsoleColorString("Add SubTask"), () => { taskBuffer.AddTask(); menuCreateTask.MenuTitle = taskBuffer.Header(); });
+                menuCreateTask.add(new ConsoleColorString("Save"), () => { save(); menuCreateTask.exitFunction(); });
+                menuCreateTask.add(new ConsoleColorString("Cancel"), () => { cancel(); menuCreateTask.exitFunction(); });
             }
             menuCreateTask.show();
         }
 
-        private static void save()
+        private void save()
         {
             nodeHook.CreateNewNode(taskBuffer);
             confirmStatus = true;
         }
 
-        private static void cancel()
+        private void cancel()
         {
             confirmStatus = true;
         }
