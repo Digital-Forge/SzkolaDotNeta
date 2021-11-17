@@ -12,7 +12,7 @@ namespace ConsoleToDoList.App
 
         public Node TasksData;
 
-        public string[] TagsData; // <<<--------------------------- to implementation modul
+        public TagsBag TagsData; 
 
         [NonSerialized]
         public static string DataPath = "RegisterData.dat";
@@ -20,6 +20,7 @@ namespace ConsoleToDoList.App
         public LogicCORE()
         {
             TasksData = new Node();
+            TagsData = new TagsBag();
         }
 
         public LogicCORE(Node data)

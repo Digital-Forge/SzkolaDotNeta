@@ -29,6 +29,7 @@ namespace ConsoleToDoList
         {
             TaskBuilder.DataConsoleReaderStyle = DataReaderStyle;
             TaskBuilder.MenuStyle = MainMenuStyle;
+            TaskHook.MenuStyle = MainMenuStyle;
         }
     }
 }

@@ -45,6 +45,14 @@ namespace ConsoleToDoList.App
             RemoveNextNodes();
         }
 
+        public void RemoveThisNode()
+        {
+            if (_lastNode != null)
+            {
+                _lastNode.NextNodes.Remove(this);
+            }
+            _removeNextNodes();
+        }
 
         public async void RemoveNextNodes()
         {
@@ -64,7 +72,6 @@ namespace ConsoleToDoList.App
                 }
                 _nextNodes = null;
             }
-
         }
 
         private void _removeNextNodes()
@@ -107,15 +114,6 @@ namespace ConsoleToDoList.App
                 _nextNodes.Add(buff);
             }
             return buff;
-        }
-
-        public void RemoveThisNode()
-        {
-            if (_lastNode != null)
-            {
-                _lastNode.NextNodes.Remove(this);
-            }
-            _removeNextNodes();
         }
     }
 }

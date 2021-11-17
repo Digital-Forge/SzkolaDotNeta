@@ -4,8 +4,10 @@ using System.Linq;
 
 namespace ConsoleToDoList.App
 {
+    [Serializable]
     public class TagsBag
     {
+        [Serializable]
         public class TagCell
         {
             private bool _lock;
@@ -63,6 +65,34 @@ namespace ConsoleToDoList.App
                     return _tagsList.Remove(_tag);
                 }
             return false;
+        }
+
+        public bool RemoveTag(TagsBag bag, bool hardRemove = false)
+        {
+            bool removeStats = false;
+
+            foreach (var tag in bag._tagsList)
+            {
+                var _tag = _tagsList.Find(x => x.Tag.TagName == tag.Tag.TagName);
+                if (_tag != null)
+                    if (!_tag.Lock || hardRemove || tag.Lock)
+                    {
+                        _tagsList.Remove(_tag);
+                        removeStats = true;
+                    }
+                return false;
+            }
+            return removeStats;
+        }
+
+        public void SortByLock()
+        {
+            _tagsList.OrderBy(x => x.Lock);
+        }
+
+        public void SortByTagName()
+        {
+            _tagsList.OrderBy(x => x.Tag.TagName);
         }
     }
 }
