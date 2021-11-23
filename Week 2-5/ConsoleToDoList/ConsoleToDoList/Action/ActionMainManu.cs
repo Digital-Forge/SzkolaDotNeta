@@ -13,7 +13,7 @@ namespace ConsoleToDoList
 
             menu.MenuTitle = new ConsoleColorString("      TO ", ConsoleColor.Red).AddText("DO ", ConsoleColor.Yellow).AddText("LIST ", ConsoleColor.Green);
 
-            menu.add(new ConsoleColorString("View"), null);
+            menu.add(new ConsoleColorString("View"), ViewTasks);
             menu.add(new ConsoleColorString("Add new Task"), AddNewTask);
             menu.add(new ConsoleColorString("Raport"), null);
             menu.add(new ConsoleColorString("Exit"), menu.exitFunction);

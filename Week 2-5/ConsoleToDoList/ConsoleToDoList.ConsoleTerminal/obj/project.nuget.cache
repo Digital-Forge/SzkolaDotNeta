@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "H4oTgljUwgndWGuQIb//CF2dUOnd744hciNc6DqfDL6vCeAaoUZK8B2urRlGEN+nxZe7WW+BrUZm56MaswRHrg==",
+  "dgSpecHash": "DM9BcREXPG01WwPq2SMblYLVSxr3e2Lj9wJc5wrPoukfXHq+3QLvOCR7vLYIAjg8AXB6q0Up4wStt02zUvGG+w==",
   "success": true,
-  "projectFilePath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
+  "projectFilePath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

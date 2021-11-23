@@ -29,7 +29,21 @@ namespace ConsoleToDoList.App
             set
             {
                 Task.FinishStatus = value;
-                if (Task.FinishStatus != true) Task.Date = DateTime.Now;
+                if (Task.FinishStatus)
+                {
+                    if (Node != null)
+                    {
+                        if (Node.NextNodes != null)
+                        {
+                            foreach (var item in Node.NextNodes)
+                            {
+                                (item.Data as TaskHook).FinishStatus = Task.FinishStatus;
+                            }
+                        }
+                    }
+                    Task.Date = DateTime.Now;
+                }
+                LogicCORE.Save();
             }
         }
 
@@ -57,6 +71,7 @@ namespace ConsoleToDoList.App
         public void DeleteTask()
         {
             Node?.RemoveThisNode();
+            LogicCORE.Save();
         }
 
         public void View()

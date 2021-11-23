@@ -15,10 +15,10 @@ namespace ConsoleToDoList.App
         public static IConsoleDataReader.DataConsoleReaderStyle DataConsoleReaderStyle = null;
         public static ConsoleMenu.MenuStyle MenuStyle = null;
 
-        public TaskHook Build(Node node, bool modify = false)
+        public TaskHook Build(Node node, bool editMode = false)
         {
             nodeHook = node;
-            modifyStatus = modify;
+            modifyStatus = editMode;
             confirmStatus = false;
             taskBuffer = modifyStatus ? (TaskHook)nodeHook.Data: new TaskHook();
 
@@ -69,11 +69,13 @@ namespace ConsoleToDoList.App
         {
             nodeHook.CreateNewNode(taskBuffer);
             confirmStatus = true;
+            LogicCORE.Save();
         }
 
         private void cancel()
         {
             confirmStatus = true;
+            if (modifyStatus) LogicCORE.Save();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ConsoleToDoList.App
 {
+    [Serializable]
     public enum TaskPriority
     {
         NoPriority,
