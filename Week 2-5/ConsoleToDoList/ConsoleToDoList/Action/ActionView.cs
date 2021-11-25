@@ -60,7 +60,6 @@ namespace ConsoleToDoList
             menu.MenuTitle = new ConsoleColorString("Sort by", ConsoleColor.Magenta);
             menu.add(new ConsoleColorString("Name A-Z"), null);
             menu.add(new ConsoleColorString("Name Z-A"), null);
-            menu.add(new ConsoleColorString("Tag"), null);
             menu.add(new ConsoleColorString("Data"), null);
             menu.add(new ConsoleColorString("Priority"), null);
             menu.AutoBackKeyButton = ConsoleKey.Backspace;
