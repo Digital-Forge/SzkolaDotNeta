@@ -13,7 +13,7 @@ namespace ConsoleToDoList.App
 
         public Tag(string name)
         {
-
+            _tagName = name;
         }
     }
 }

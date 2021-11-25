@@ -5,21 +5,19 @@ namespace ConsoleToDoList.App
 {
     public class DateAdapter : IConsoleReadable
     {
-        private DateTime? _date;
-
-        public DateTime? Date { get => _date; private set { } }
+        public DateTime? Date;
 
         public int? Year 
         { 
-            get => _date?.Year; 
+            get => Date?.Year; 
             set
             {
                 if (value != null)
                 {
                     try
                     {
-                        if (_date == null) _date = new DateTime(value.Value, 1, 1);
-                        else               _date = new DateTime(value.Value, _date.Value.Month, _date.Value.Day);
+                        if (Date == null) Date = new DateTime(value.Value, 1, 1);
+                        else              Date = new DateTime(value.Value, Date.Value.Month, Date.Value.Day);
                     }
                     catch
                     {}
@@ -29,23 +27,23 @@ namespace ConsoleToDoList.App
 
         public int? Month
         {
-            get => _date?.Month;
+            get => Date?.Month;
             set
             {
                 if (value != null)
                 {
                     try
                     {
-                        if (_date == null)
+                        if (Date == null)
                         {
-                            if (value.Value < DateTime.Now.Month)  _date = new DateTime(DateTime.Now.Year + 1, value.Value, 1);
-                            if (value.Value == DateTime.Now.Month) _date = new DateTime(DateTime.Now.Year, value.Value, DateTime.Now.Day + 1);
-                            else                                   _date = new DateTime(DateTime.Now.Year, value.Value, 1);
+                            if (value.Value < DateTime.Now.Month)  Date = new DateTime(DateTime.Now.Year + 1, value.Value, 1);
+                            if (value.Value == DateTime.Now.Month) Date = new DateTime(DateTime.Now.Year, value.Value, DateTime.Now.Day + 1);
+                            else                                   Date = new DateTime(DateTime.Now.Year, value.Value, 1);
 
                         }
                         else
                         {
-                            _date = new DateTime(_date.Value.Year ,value.Value, _date.Value.Day);
+                            Date = new DateTime(Date.Value.Year ,value.Value, Date.Value.Day);
                         }
                     }
                     catch
@@ -56,26 +54,26 @@ namespace ConsoleToDoList.App
 
         public int? Day
         {
-            get => _date?.Day;
+            get => Date?.Day;
             set
             {
                 if (value != null)
                 {
                     try
                     {
-                        if (_date == null)
+                        if (Date == null)
                         {
                             if (value.Value <= DateTime.Now.Day)
                             {
-                                if (DateTime.Now.Month == 12) _date = new DateTime(DateTime.Now.Year + 1, 1, value.Value);
-                                else                          _date = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, value.Value);
+                                if (DateTime.Now.Month == 12) Date = new DateTime(DateTime.Now.Year + 1, 1, value.Value);
+                                else                          Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, value.Value);
                             }
-                            else _date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, value.Value);
+                            else Date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, value.Value);
 
                         }
                         else
                         {
-                            _date = new DateTime(_date.Value.Year, value.Value, _date.Value.Day);
+                            Date = new DateTime(Date.Value.Year, Date.Value.Month, value.Value);
                         }
                     }
                     catch
@@ -86,7 +84,7 @@ namespace ConsoleToDoList.App
 
         public DateAdapter(DateTime? date = null)
         {
-            _date = date;
+            Date = date;
         }
     }
 }

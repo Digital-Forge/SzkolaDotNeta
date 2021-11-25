@@ -144,15 +144,21 @@ namespace ConsoleToDoList.ConsoleTerminal
                     
                 Console.ForegroundColor = Style.ValueColorOfSelectedItem == null ? Console.ForegroundColor : (ConsoleColor)Style.ValueColorOfSelectedItem;
                 Console.BackgroundColor = Style.ValueBackgroundColorOfSelectedItem == null ? Console.BackgroundColor : (ConsoleColor)Style.ValueBackgroundColorOfSelectedItem;
-                //string line = ReadLine.Read("", $"{properties[position].GetValue(this.obj).ToString()}");
-                //string line = Console.ReadLine();
                 string line = ConsoleExtension.ReadLine("", $"{properties[position].GetValue(this.obj)}");
                 Console.ForegroundColor = buff[0];
                 Console.BackgroundColor = buff[1];
 
                 try
                 {
-                    properties[position].SetValue(this.obj, Convert.ChangeType(line, properties[position].PropertyType));
+                    if (properties[position].PropertyType.IsGenericType && properties[position].PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        var genericType = properties[position].PropertyType.GetGenericArguments()[0];
+                        properties[position].SetValue(this.obj, Convert.ChangeType(line, genericType), null);
+                    }
+                    else
+                    {
+                        properties[position].SetValue(this.obj, Convert.ChangeType(line, properties[position].PropertyType), null);
+                    }
                 }
                 catch (Exception)
                 {

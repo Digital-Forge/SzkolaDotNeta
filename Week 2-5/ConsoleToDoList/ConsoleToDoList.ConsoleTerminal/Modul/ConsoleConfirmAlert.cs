@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleToDoList.ConsoleTerminal.Modul
+namespace ConsoleToDoList.ConsoleTerminal
 {
     public static class ConsoleConfirmAlert
     {
@@ -19,6 +19,11 @@ namespace ConsoleToDoList.ConsoleTerminal.Modul
                 Horizontally,
                 Vertically
             }
+        }
+
+        public static bool Show(string alert, ConsoleColor? color = null, ConsoleColor? backgroundColor = null, ConfirmAlertStyle style = null)
+        {
+            return Show(new ConsoleColorString(alert, color, backgroundColor), style);
         }
 
         public static bool Show(ConsoleColorString alert, ConfirmAlertStyle style = null)
