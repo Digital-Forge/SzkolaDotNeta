@@ -37,6 +37,7 @@ namespace ConsoleToDoList
             TaskBuilder.MenuStyle = MainMenuStyle;
             TaskHook.MenuStyle = MainMenuStyle;
             TaskHook.DataReaderStyle = DataReaderStyle;
+            TagController.MenuStyle = MainMenuStyle;
         }
     }
 }

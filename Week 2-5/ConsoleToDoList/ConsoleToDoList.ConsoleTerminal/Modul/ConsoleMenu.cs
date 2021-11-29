@@ -6,7 +6,6 @@ namespace ConsoleToDoList.ConsoleTerminal
 {
     public class ConsoleMenu
     {
-        public delegate void voidFunctionDelegate();
 
         public class MenuStyle
         {
@@ -29,9 +28,9 @@ namespace ConsoleToDoList.ConsoleTerminal
         private class rowOption
         {
             public ConsoleColorString text;
-            public voidFunctionDelegate function;
+            public Action function;
 
-            public rowOption(ConsoleColorString text, voidFunctionDelegate function)
+            public rowOption(ConsoleColorString text, Action function)
             {
                 this.text = text;
                 this.function = function;
@@ -44,7 +43,7 @@ namespace ConsoleToDoList.ConsoleTerminal
         private List<rowOption> rowOptionsList = new List<rowOption>();
         private MenuStyle style;
         private bool exit = false;
-        private voidFunctionDelegate exitFun;
+        private Action exitFun;
         
 
         public ConsoleMenu(MenuStyle style = null)
@@ -53,7 +52,7 @@ namespace ConsoleToDoList.ConsoleTerminal
             exitFun = this.exitFunction;
         }
 
-        public void add(ConsoleColorString text, voidFunctionDelegate function)
+        public void add(ConsoleColorString text, Action function)
         {
             rowOptionsList.Add(new rowOption(text, function));
         }

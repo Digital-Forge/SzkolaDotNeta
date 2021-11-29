@@ -68,6 +68,7 @@ namespace ConsoleToDoList.App
         private void save()
         {
             nodeHook.CreateNewNode(taskBuffer);
+            TagController.ApplyTagsToUpNode(taskBuffer);
             confirmStatus = true;
             LogicCORE.Save();
         }

@@ -70,15 +70,12 @@ namespace ConsoleToDoList.App
                 {
                     if ((reader.GetReadObject as DateAdapter).Date < DateTime.Now)
                     {
-                        if(ConsoleConfirmAlert.Show("The date has expired. Do you want to save anyway?"))
+                        if(!ConsoleConfirmAlert.Show("The date has expired. Do you want to save anyway?"))
                         {
-                            Task.Date = (reader.GetReadObject as DateAdapter).Date;
+                            return;
                         }
                     }
-                    else
-                    {
-                        Task.Date = (reader.GetReadObject as DateAdapter).Date;
-                    }
+                    Task.Date = (reader.GetReadObject as DateAdapter).Date;
                 }
             };
 
@@ -99,7 +96,12 @@ namespace ConsoleToDoList.App
 
         public void ModifyTag()
         {
-
+            var menu = new ConsoleMenu(MenuStyle);
+            menu.AutoBackKeyButton = ConsoleKey.Backspace;
+            menu.add(new ConsoleColorString("Add"), () => { TagController.AddTags(this); menu.exitFunction(); });
+            menu.add(new ConsoleColorString("Remove"), () => { TagController.RemoveTags(this); menu.exitFunction(); });
+            menu.add(new ConsoleColorString("Back"), menu.exitFunction);
+            menu.show();
         }
 
         public void DeleteTask()
@@ -207,9 +209,9 @@ namespace ConsoleToDoList.App
                 if (FinishStatus) buff.AddText("    Date : ").AddText($"{Task.Date.ToString()}");
                 else
                 {
-                    if (Task.Date < DateTime.Now)                                               buff.AddText("    Termin : ").AddText($"{Task.Date.ToString()}", ConsoleColor.DarkRed);
-                    else if (Task.Date >= DateTime.Now && Task.Date < DateTime.Now.AddDays(-7)) buff.AddText("    Termin : ").AddText($"{Task.Date.ToString()}", ConsoleColor.Red);
-                    else                                                                        buff.AddText("    Termin : ").AddText($"{Task.Date.ToString()}", ConsoleColor.Yellow);
+                    if (Task.Date < DateTime.Now)                                               buff.AddText("    Termin : ").AddText($"{Task.Date.Value.ToString("d MMM yyyy")}", ConsoleColor.DarkRed);
+                    else if (Task.Date >= DateTime.Now && Task.Date < DateTime.Now.AddDays(-7)) buff.AddText("    Termin : ").AddText($"{Task.Date.Value.ToString("d MMM yyyy")}", ConsoleColor.Red);
+                    else                                                                        buff.AddText("    Termin : ").AddText($"{Task.Date.Value.ToString("d MMM yyyy")}", ConsoleColor.Yellow);
                 }
             }
             return buff;
@@ -219,5 +221,7 @@ namespace ConsoleToDoList.App
         {
             if (Task.FinishStatus) txt.AddText(" Satus : ").AddText("Finish", ConsoleColor.Blue, ConsoleColor.White);
         }
+
+
     }
 }
