@@ -36,7 +36,7 @@ namespace ConsoleToDoList.App
 
         public void AddTag(Tag tag, bool toLock = false)
         {
-            var findTag = _tagsList.Find(x => x.Tag.TagName == tag.TagName);
+            var findTag = _tagsList.Find(x => x.Tag.TagName.ToLower() == tag.TagName.ToLower());
 
             if (findTag == null)
             {
@@ -58,7 +58,7 @@ namespace ConsoleToDoList.App
 
         public bool RemoveTag(Tag tag, bool hardRemove = false)
         {
-            var _tag = _tagsList.Find(x => x.Tag.TagName == tag.TagName);
+            var _tag = _tagsList.Find(x => x.Tag.TagName.ToLower() == tag.TagName.ToLower());
             if (_tag != null)
                 if (!_tag.Lock || hardRemove)
                 {
@@ -73,7 +73,7 @@ namespace ConsoleToDoList.App
 
             foreach (var tag in bag._tagsList)
             {
-                var _tag = _tagsList.Find(x => x.Tag.TagName == tag.Tag.TagName);
+                var _tag = _tagsList.Find(x => x.Tag.TagName.ToLower() == tag.Tag.TagName.ToLower());
                 if (_tag != null)
                     if (!_tag.Lock || hardRemove || tag.Lock)
                     {

@@ -186,5 +186,23 @@ namespace ConsoleToDoList.App
                 }
             }
         }
+
+        public static void RemoveTagFromAllNodes(Node node, Tag tag)
+        {
+            if (node != null)
+            {
+                if ((node.Data as TaskHook)?.TagsBag != null)
+                {
+                    (node.Data as TaskHook)?.TagsBag.RemoveTag(tag, true);
+                }
+                if (node?.NextNodes != null)
+                {
+                    foreach (var item in node.NextNodes)
+                    {
+                        RemoveTagFromAllNodes(item, tag);
+                    }
+                }
+            }
+        }
     }
 }
