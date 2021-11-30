@@ -51,6 +51,7 @@ namespace ConsoleToDoList.App
         public void AddTask()
         {
             if (Node == null) Node = new Node();
+            Node.Data = this;
             new TaskBuilder().Build(Node);
         }
 
@@ -120,6 +121,7 @@ namespace ConsoleToDoList.App
                 reload = false;
                 menu = new ConsoleMenu(MenuStyle);
                 menu.MenuTitle = Header(false).AddText("\n SubTasks : \n");
+                menu.AutoBackKeyButton = ConsoleKey.Backspace;
 
                 if (Node != null)
                 {
@@ -139,6 +141,7 @@ namespace ConsoleToDoList.App
                     menu.add(new ConsoleColorString("Check"), () => { FinishStatus = true; menu.exitFunction(); });
                 }
                 menu.add(new ConsoleColorString("Delete"), () => { DeleteTask(); menu.exitFunction(); });
+                menu.add(new ConsoleColorString("Back"), menu.exitFunction);
                 menu.show();
             } while (reload); 
         }

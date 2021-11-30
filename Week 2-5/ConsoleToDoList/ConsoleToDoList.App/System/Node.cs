@@ -115,5 +115,26 @@ namespace ConsoleToDoList.App
             }
             return buff;
         }
+
+        public static List<Node> NormalizationNodeToList(Node startNode)
+        {
+            if (startNode != null)
+            {
+                if (startNode.NextNodes != null)
+                {
+                    List<Node> buff = new List<Node>() { startNode };
+                    foreach (var item in startNode.NextNodes)
+                    {
+                        buff.AddRange(NormalizationNodeToList(item));
+                    }
+                    return buff;
+                }
+                else
+                {
+                    return new List<Node>() { startNode }; 
+                }
+            }
+            return new List<Node>();
+        }
     }
 }

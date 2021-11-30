@@ -14,11 +14,12 @@ namespace ConsoleToDoList.App
 
         public static void AddTags(TaskHook hook)
         {
-            bool reload = false;
+            bool reload;
             tagList = LogicCORE.Core.TagsData.TagsList.OrderBy(x => x.TagName).ToList();
 
             do
             {
+                reload = false;
                 ConsoleMenu menu = new ConsoleMenu(MenuStyle);
                 menu.AutoBackKeyButton = ConsoleKey.Backspace;
 
@@ -28,8 +29,8 @@ namespace ConsoleToDoList.App
                 menu.MenuTitle = new ConsoleColorString("Tags :");
                 foreach (var item in hook.TagsBag.cellsOfTagsList)
                 {
-                    if (item.Lock) menu.MenuTitle.AddText(item.Tag.TagName, ConsoleColor.Red);
-                    else           menu.MenuTitle.AddText(item.Tag.TagName, ConsoleColor.Green);
+                    if (item.Lock) menu.MenuTitle.AddText($" {item.Tag.TagName}", ConsoleColor.Red);
+                    else           menu.MenuTitle.AddText($" {item.Tag.TagName}", ConsoleColor.Green);
                 }
 
                 menu.add(new ConsoleColorString("Serch"), () => { serchTagByName(); reload = true; menu.exitFunction(); });
@@ -46,11 +47,12 @@ namespace ConsoleToDoList.App
 
         public static void RemoveTags(TaskHook hook)
         {
-            bool reload = false;
+            bool reload;
             tagList = hook.TagsBag.cellsOfTagsList.Where(x => x.Lock == false).Select(x => x.Tag).OrderBy(x => x.TagName).ToList();
 
             do
             {
+                reload = false;
                 ConsoleMenu menu = new ConsoleMenu(MenuStyle);
                 menu.AutoBackKeyButton = ConsoleKey.Backspace;
 
@@ -70,6 +72,7 @@ namespace ConsoleToDoList.App
                         if (ConsoleConfirmAlert.Show($"Are you sure you want to delete this tag ({item.TagName}) ?"))
                         {
                             removeTagToUpEndNode(item, hook);
+                            tagList = hook.TagsBag.cellsOfTagsList.Where(x => x.Lock == false).Select(x => x.Tag).OrderBy(x => x.TagName).ToList();
                             reload = true;
                             menu.exitFunction();
                         } 
@@ -81,7 +84,7 @@ namespace ConsoleToDoList.App
 
         public static void ApplyTagsToUpNode(TaskHook hook)
         {
-            if (hook.Node?.LastNode != null)
+            if (hook.Node?.LastNode?.Data != null)
             {
                 (hook.Node.LastNode.Data as TaskHook).TagsBag.AddTag(hook.TagsBag, true);
             }
