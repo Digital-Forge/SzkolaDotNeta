@@ -15,7 +15,7 @@ namespace ConsoleToDoList
 
             menu.add(new ConsoleColorString("View"), ViewTasks);
             menu.add(new ConsoleColorString("Add new Task"), AddNewTask);
-            menu.add(new ConsoleColorString("Raport"), null);
+            menu.add(new ConsoleColorString("Reports"), ReportsMenu);
             menu.add(new ConsoleColorString("Options"), Options);
             menu.add(new ConsoleColorString("Exit"), menu.exitFunction);
 
