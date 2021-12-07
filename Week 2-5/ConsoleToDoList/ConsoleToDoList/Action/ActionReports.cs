@@ -11,10 +11,10 @@ namespace ConsoleToDoList
             ConsoleMenu menu = new ConsoleMenu(MainMenuStyle);
             menu.AutoBackKeyButton = ConsoleKey.Backspace;
             menu.MenuTitle = new ConsoleColorString("Report Patterns");
+            menu.add(new ConsoleColorString("Back"), menu.exitFunction);
             menu.add(new ConsoleColorString("Base"), ReportsBuilder.BaseReport);
             menu.add(new ConsoleColorString("To Do"), ReportsBuilder.ToDoReport);
             menu.add(new ConsoleColorString("Tag"), ReportsBuilder.TagReport);
-            menu.add(new ConsoleColorString("Back"), menu.exitFunction);
             menu.show();
         }
     }

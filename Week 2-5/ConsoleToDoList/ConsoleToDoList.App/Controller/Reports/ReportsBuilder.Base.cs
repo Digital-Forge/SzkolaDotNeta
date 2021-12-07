@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ConsoleToDoList.App
 {
@@ -23,19 +22,19 @@ namespace ConsoleToDoList.App
 
             string report = @$"Total number of tasks : {numberAllTask}
 
-Total number of completed tasks : {finishTask[0]} -> {Math.Round(100.0 * finishTask[0] / numberAllTask, 2)}%\n
+Total number of completed tasks : {finishTask[0]} -> {Math.Round(100.0 * finishTask[0] / numberAllTask, 2)}%
     Priority : 
-        NoPriority : {finishTask[1]} -> {Math.Round(100.0 * finishTask[1] / finishTask[0], 2)}%, {finishTask[0]} -> {Math.Round(100.0 * finishTask[1] / numberAllTask, 2)}% to all
-        Hight : {finishTask[2]} -> {Math.Round(100.0 * finishTask[2] / finishTask[0], 2)}%, {finishTask[0]} -> {Math.Round(100.0 * finishTask[2] / numberAllTask, 2)}% to all
-        Meddium : {finishTask[3]} -> {Math.Round(100.0 * finishTask[3] / finishTask[0], 2)}%, {finishTask[0]} -> {Math.Round(100.0 * finishTask[3] / numberAllTask, 2)}% to all
-        Low : {finishTask[4]} -> {Math.Round(100.0 * finishTask[4] / finishTask[0], 2)}%, {finishTask[0]} -> {Math.Round(100.0 * finishTask[4] / numberAllTask, 2)}% to all
+        NoPriority : {finishTask[1]} -> {Math.Round(100.0 * finishTask[1] / finishTask[0], 2)}% -> {Math.Round(100.0 * finishTask[1] / numberAllTask, 2)}% to all
+        Hight : {finishTask[2]} -> {Math.Round(100.0 * finishTask[2] / finishTask[0], 2)}% -> {Math.Round(100.0 * finishTask[2] / numberAllTask, 2)}% to all
+        Meddium : {finishTask[3]} -> {Math.Round(100.0 * finishTask[3] / finishTask[0], 2)}% -> {Math.Round(100.0 * finishTask[3] / numberAllTask, 2)}% to all
+        Low : {finishTask[4]} -> {Math.Round(100.0 * finishTask[4] / finishTask[0], 2)}% -> {Math.Round(100.0 * finishTask[4] / numberAllTask, 2)}% to all
 
-Total number of tasks to be done : {toDoTask[0]} -> {Math.Round(100.0 * toDoTask[0] / numberAllTask, 2)}%\n
+Total number of tasks to be done : {toDoTask[0]} -> {Math.Round(100.0 * toDoTask[0] / numberAllTask, 2)}%
     Priority : 
-        NoPriority : {toDoTask[1]} -> {Math.Round(100.0 * toDoTask[1] / toDoTask[0], 2)}%, {toDoTask[0]} -> {Math.Round(100.0 * toDoTask[1] / numberAllTask, 2)}% to all
-        Hight : {toDoTask[2]} -> {Math.Round(100.0 * toDoTask[2] / toDoTask[0], 2)}%, {toDoTask[0]} -> {Math.Round(100.0 * toDoTask[2] / numberAllTask, 2)}% to all
-        Meddium : {toDoTask[3]} -> {Math.Round(100.0 * toDoTask[3] / toDoTask[0], 2)}%, {toDoTask[0]} -> {Math.Round(100.0 * toDoTask[3] / numberAllTask, 2)}% to all
-        Low : {toDoTask[4]} -> {Math.Round(100.0 * toDoTask[4] / toDoTask[0], 2)}%, {toDoTask[0]} -> {Math.Round(100.0 * toDoTask[4] / numberAllTask, 2)}% to all
+        NoPriority : {toDoTask[1]} -> {Math.Round(100.0 * toDoTask[1] / toDoTask[0], 2)}% -> {Math.Round(100.0 * toDoTask[1] / numberAllTask, 2)}% to all
+        Hight : {toDoTask[2]} -> {Math.Round(100.0 * toDoTask[2] / toDoTask[0], 2)}% -> {Math.Round(100.0 * toDoTask[2] / numberAllTask, 2)}% to all
+        Meddium : {toDoTask[3]} -> {Math.Round(100.0 * toDoTask[3] / toDoTask[0], 2)}% -> {Math.Round(100.0 * toDoTask[3] / numberAllTask, 2)}% to all
+        Low : {toDoTask[4]} -> {Math.Round(100.0 * toDoTask[4] / toDoTask[0], 2)}% -> {Math.Round(100.0 * toDoTask[4] / numberAllTask, 2)}% to all
 
 Total number of completed tags : {LogicCORE.Core.TagsData.TagsList.Count()}
 
@@ -52,9 +51,10 @@ Total number of completed tags : {LogicCORE.Core.TagsData.TagsList.Count()}
             }
             printProgress();
 
-
-
-
+            if (saveAndShowRaport(report))
+            {
+                printProgress();
+            }
         }
 
         private static int[] br_dataFinishTask(List<Node> listNormalizeTask)

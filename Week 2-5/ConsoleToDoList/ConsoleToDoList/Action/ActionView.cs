@@ -278,7 +278,7 @@ namespace ConsoleToDoList
         private void VT_SerchMenuClean()
         {
             list = LogicCORE.Core.TasksData.NextNodes != null ?
-                LogicCORE.Core.TasksData.NextNodes.Select(x => x.Data as TaskHook).ToList() :
+                LogicCORE.Core.TasksData.NextNodes.Select(x => x.Data as TaskHook).OrderBy(x => x.FinishStatus).ToList() :
                 new List<TaskHook>();
         }
     }

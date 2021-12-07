@@ -1,5 +1,7 @@
-﻿using ConsoleToDoList.ConsoleTerminal;
+﻿
+using ConsoleToDoList.ConsoleTerminal;
 using System;
+using System.Linq;
 
 namespace ConsoleToDoList.App
 {
@@ -127,9 +129,10 @@ namespace ConsoleToDoList.App
                 {
                     if (Node.NextNodes != null)
                     {
-                        foreach (var item in Node.NextNodes)
+                        var subtaskList = Node.NextNodes.Select(x => x.Data as TaskHook).OrderBy(x => x.FinishStatus).ToList();
+                        foreach (var item in subtaskList)
                         {
-                            menu.add(new ConsoleColorString("      ") + (((TaskHook)(item.Data)).RecordHeader()), () => { reload = true; menu.exitFunction(); ((TaskHook)(item.Data)).View(); });
+                            menu.add(new ConsoleColorString("      ") + item.RecordHeader(), () => { reload = true; menu.exitFunction(); item.View(); });
                         }
                     }
                 }
@@ -222,7 +225,7 @@ namespace ConsoleToDoList.App
 
         private void _CCS_StatusTask(ConsoleColorString txt)
         {
-            if (Task.FinishStatus) txt.AddText(" Satus : ").AddText("Finish", ConsoleColor.Blue, ConsoleColor.White);
+            if (Task.FinishStatus) txt.AddText(" Status : ").AddText("Finish", ConsoleColor.Blue, ConsoleColor.White);
         }
 
 
