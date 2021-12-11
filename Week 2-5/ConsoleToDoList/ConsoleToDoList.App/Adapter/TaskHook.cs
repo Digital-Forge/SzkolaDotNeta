@@ -158,9 +158,9 @@ namespace ConsoleToDoList.App
             buff.AddText("\n Description : ").AddText($"{Task.Description}\n", ConsoleColor.Yellow).
                 AddText(" Tags :");
 
-            if (TagsBag.cellsOfTagsList.Count != 0) buff.AddText("\n");
+            if (TagsBag.CellsOfTagsList.Count != 0) buff.AddText("\n");
 
-            foreach (var item in TagsBag.cellsOfTagsList)
+            foreach (var item in TagsBag.CellsOfTagsList)
             {
                 if (item.Lock) buff.AddText($"  {item.Tag.TagName}", ConsoleColor.Gray);
                 else           buff.AddText($"  {item.Tag.TagName}", ConsoleColor.White);
@@ -227,7 +227,5 @@ namespace ConsoleToDoList.App
         {
             if (Task.FinishStatus) txt.AddText(" Status : ").AddText("Finish", ConsoleColor.Blue, ConsoleColor.White);
         }
-
-
     }
 }

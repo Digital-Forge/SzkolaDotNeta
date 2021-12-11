@@ -11,7 +11,6 @@ namespace ConsoleToDoList.App
         public string Name { get; set; }
         public string Description { get; set; }
         public TaskPriority Priority { get; set; }
-        public List<Tag> TagList = new List<Tag>();
         public DateTime? Date = null;
         public bool FinishStatus = false;
     }

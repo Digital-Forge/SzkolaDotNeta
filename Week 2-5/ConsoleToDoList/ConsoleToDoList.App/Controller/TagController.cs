@@ -27,7 +27,7 @@ namespace ConsoleToDoList.App
                 hook.TagsBag.SortByLock();
 
                 menu.MenuTitle = new ConsoleColorString("Tags :");
-                foreach (var item in hook.TagsBag.cellsOfTagsList)
+                foreach (var item in hook.TagsBag.CellsOfTagsList)
                 {
                     if (item.Lock) menu.MenuTitle.AddText($" {item.Tag.TagName}", ConsoleColor.Red);
                     else           menu.MenuTitle.AddText($" {item.Tag.TagName}", ConsoleColor.Green);
@@ -48,7 +48,7 @@ namespace ConsoleToDoList.App
         public static void RemoveTags(TaskHook hook)
         {
             bool reload;
-            tagList = hook.TagsBag.cellsOfTagsList.Where(x => x.Lock == false).Select(x => x.Tag).OrderBy(x => x.TagName).ToList();
+            tagList = hook.TagsBag.CellsOfTagsList.Where(x => x.Lock == false).Select(x => x.Tag).OrderBy(x => x.TagName).ToList();
 
             do
             {
@@ -72,7 +72,7 @@ namespace ConsoleToDoList.App
                         if (ConsoleConfirmAlert.Show($"Are you sure you want to delete this tag ({item.TagName}) ?"))
                         {
                             removeTagToUpEndNode(item, hook);
-                            tagList = hook.TagsBag.cellsOfTagsList.Where(x => x.Lock == false).Select(x => x.Tag).OrderBy(x => x.TagName).ToList();
+                            tagList = hook.TagsBag.CellsOfTagsList.Where(x => x.Lock == false).Select(x => x.Tag).OrderBy(x => x.TagName).ToList();
                             reload = true;
                             menu.exitFunction();
                         } 

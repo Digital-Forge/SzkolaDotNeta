@@ -32,7 +32,7 @@ namespace ConsoleToDoList.App
 
         public List<Tag> TagsList { get => _tagsList.Select(x => x.Tag).ToList(); }
 
-        public List<TagCell> cellsOfTagsList { get => _tagsList; }
+        public List<TagCell> CellsOfTagsList { get => _tagsList; }
 
         public void AddTag(Tag tag, bool toLock = false)
         {

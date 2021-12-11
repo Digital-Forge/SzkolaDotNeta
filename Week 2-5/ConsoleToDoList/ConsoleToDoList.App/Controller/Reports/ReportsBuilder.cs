@@ -33,16 +33,23 @@ namespace ConsoleToDoList.App
 
         private static bool saveAndShowRaport(string text)
         {
+            string savePath;
             try
             {
-                string savePath;
                 using (StreamWriter outputFile = new StreamWriter("Report.txt"))
                 {
                     outputFile.WriteLine(text);
                     savePath = (outputFile.BaseStream as FileStream).Name;
                 }
+            }
+            catch
+            {
+                Console.WriteLine("Fail");
+                return false;
+            }
 
-
+            try
+            {
                 Process firstProc = new Process();
                 firstProc.StartInfo.FileName = "notepad.exe";
                 firstProc.StartInfo.Arguments = savePath;
@@ -53,7 +60,8 @@ namespace ConsoleToDoList.App
             }
             catch
             {
-                Console.WriteLine("Fail");
+                printProgress();
+                Console.WriteLine($"Path to file : {savePath}");
                 return false;
             }
             return true;
