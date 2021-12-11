@@ -1,25 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj": {}
+    "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj": {
+    "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj",
+        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj",
         "projectName": "ConsoleToDoList.Tests",
-        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj",
-        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
-        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\obj\\",
+        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\ConsoleToDoList.Tests.csproj",
+        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -80,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleToDoList.App
@@ -56,6 +57,38 @@ namespace ConsoleToDoList.App
                 return false;
             }
             return true;
+        }
+
+        private static int[] dataFinishTask(List<Node> listNormalizeTask)
+        {
+            return new int[]
+            {
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == true).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == true
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.NoPriority).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == true
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.Hight).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == true
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.Meddium).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == true
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.Low).Count()
+            };
+        }
+
+        private static int[] dataToDoTask(List<Node> listNormalizeTask)
+        {
+            return new int[]
+            {
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == false).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == false
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.NoPriority).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == false
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.Hight).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == false
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.Meddium).Count(),
+                listNormalizeTask.Where(x => x.Data != null && (x.Data as TaskHook).FinishStatus == false
+                                  && (x.Data as TaskHook).Task.Priority == TaskPriority.Low).Count()
+            };
         }
     }
 }
