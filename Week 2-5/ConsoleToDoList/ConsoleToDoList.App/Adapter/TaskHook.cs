@@ -1,5 +1,4 @@
-﻿
-using ConsoleToDoList.ConsoleTerminal;
+﻿using ConsoleToDoList.ConsoleTerminal;
 using System;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace ConsoleToDoList.App
     [Serializable]
     public class TaskHook : INodeDataIntegration
     {
-        public Node Node { get; set; } = null;
+        private Node node = null;
 
         public Task Task = new Task();
 
@@ -16,6 +15,17 @@ namespace ConsoleToDoList.App
 
         public static ConsoleMenu.MenuStyle MenuStyle = null;
         public static IConsoleDataReader.DataConsoleReaderStyle DataReaderStyle = null;
+
+        public Node Node 
+        { 
+            get => node;
+            set
+            {
+                if (node != null) node.Data = null;
+                node = value;
+                if (node != null) node.Data = this;
+            }
+        }
 
         public DateTime? Date
         {
@@ -34,14 +44,11 @@ namespace ConsoleToDoList.App
                 Task.FinishStatus = value;
                 if (Task.FinishStatus)
                 {
-                    if (Node != null)
+                    if (Node?.NextNodes != null)
                     {
-                        if (Node.NextNodes != null)
+                        foreach (var item in Node.NextNodes)
                         {
-                            foreach (var item in Node.NextNodes)
-                            {
-                                (item.Data as TaskHook).FinishStatus = Task.FinishStatus;
-                            }
+                            (item.Data as TaskHook).FinishStatus = Task.FinishStatus;
                         }
                     }
                     Task.Date = DateTime.Now;
@@ -109,7 +116,9 @@ namespace ConsoleToDoList.App
 
         public void DeleteTask()
         {
-            Node?.RemoveThisNode();
+            node?.RemoveThisNode();
+            Task = null;
+            TagsBag = null;
             LogicCORE.Save();
         }
 

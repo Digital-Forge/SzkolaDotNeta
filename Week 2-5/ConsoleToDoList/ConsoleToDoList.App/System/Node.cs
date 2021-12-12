@@ -13,20 +13,34 @@ namespace ConsoleToDoList.App
         private INodeDataIntegration _data = null;
 
         public Node LastNode { get => _lastNode; }
+
         public List<Node> NextNodes { get => _nextNodes; }
+
         public INodeDataIntegration Data
         {
             get { return _data; }
             set 
             {
-                if (_data != null)
+                if (value == null)
                 {
-                    _data.Node = null;
-                    _data = null;
+                    if (_data != null)
+                    {
+                        var buff = _data;
+                        _data = null;
+                        buff.Node = null;
+                    }
                 }
-
-                _data = value;
-                _data.Node = this;
+                else
+                {
+                    if (value != _data)
+                    {
+                        var buff = _data;
+                        _data = null;
+                        if (buff != null) buff.Node = null;
+                        _data = value;
+                        _data.Node = this;
+                    }
+                }
             }
         }
 
@@ -47,6 +61,8 @@ namespace ConsoleToDoList.App
 
         public void RemoveThisNode()
         {
+            Data = null;
+
             if (_lastNode != null)
             {
                 _lastNode.NextNodes.Remove(this);
@@ -54,7 +70,7 @@ namespace ConsoleToDoList.App
             _removeNextNodes();
         }
 
-        public async void RemoveNextNodes()
+        public void RemoveNextNodes()
         {
             if (_nextNodes != null)
             {
@@ -78,12 +94,7 @@ namespace ConsoleToDoList.App
         {
             RemoveNextNodes();
             _lastNode = null;
-
-            if (_data != null)
-            {
-                _data.Node = null;
-                _data = null;
-            }
+            Data = null;
         }
 
         public Node CreateNewNode()
@@ -99,11 +110,10 @@ namespace ConsoleToDoList.App
         {
             Node buff;
 
-            if (data.Node == null)
+            if (data?.Node == null)
             {
                 buff = CreateNewNode();
-                buff._data = data;
-                buff._data.Node = buff;
+                buff.Data = data;
             }
             else
             {

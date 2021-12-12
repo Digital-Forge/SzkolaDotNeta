@@ -17,6 +17,9 @@ namespace ConsoleToDoList.App
         [NonSerialized]
         public static string DataPath = "RegisterData.dat";
 
+        [NonSerialized]
+        public static bool ___Testing = false;
+
         public LogicCORE()
         {
             TasksData = new Node();
@@ -33,22 +36,28 @@ namespace ConsoleToDoList.App
 
         public static void Save()
         {
-            if (!Serialization<LogicCORE>.SerializationToFile(DataPath, Core))
+            if (!___Testing)
             {
-                ConsoleAlert.Show("Save error\n Try to save manually", ConsoleColor.Red);
-            }
+                if (!Serialization<LogicCORE>.SerializationToFile(DataPath, Core))
+                {
+                    ConsoleAlert.Show("Save error\n Try to save manually", ConsoleColor.Red);
+                }
+            }      
         }
 
         public static void Load()
         {
-            var buff = Serialization<LogicCORE>.DeserializationFromFile(DataPath);
-
-            if (buff == null)
+            if (!___Testing)
             {
-                ConsoleAlert.Show("Load error\n Try to load manually\n  Or continue if this first time", ConsoleColor.Yellow);
-                Core = new LogicCORE();
+                var buff = Serialization<LogicCORE>.DeserializationFromFile(DataPath);
+
+                if (buff == null)
+                {
+                    ConsoleAlert.Show("Load error\n Try to load manually\n  Or continue if this first time", ConsoleColor.Yellow);
+                    Core = new LogicCORE();
+                }
+                else Core = buff;
             }
-            else Core = buff;
         }
     }
 }

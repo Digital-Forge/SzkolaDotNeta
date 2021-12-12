@@ -1,8 +1,6 @@
 ﻿using ConsoleToDoList.App;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ConsoleToDoList.Tests
@@ -26,7 +24,7 @@ namespace ConsoleToDoList.Tests
         }
 
         [Fact]
-        public void Default_EmptyTask()
+        public void EmptyTask()
         {
             //Arrange
             var x = new TaskHook();
@@ -37,9 +35,92 @@ namespace ConsoleToDoList.Tests
             x.Task = null;
 
             //Assert
-            x.Task.Should().NotBeNull();
-            actDate.Should().Throw<ArgumentNullException>();
-            actFinishStatus.Should().Throw<ArgumentNullException>();
+            x.Task.Should().BeNull();
+            actDate.Should().Throw<NullReferenceException>();
+            actFinishStatus.Should().Throw<NullReferenceException>();
+        }
+
+        [Fact]
+        public void ActionFinishTask()
+        {
+            //Arrange
+            LogicCORE.___Testing = true;
+            var node = new Node();
+            node.Data = new TaskHook();
+            node.CreateNewNode(new TaskHook());
+
+            //Act
+            (node.Data as TaskHook).FinishStatus = true;
+
+            //Assert
+            (node.Data as TaskHook).FinishStatus.Should().BeTrue();
+            (node.Data as TaskHook).Date.Should().NotBeNull();
+            node.NextNodes[0].Data.Should().NotBeNull();
+            (node.NextNodes[0].Data as TaskHook).FinishStatus.Should().BeTrue();
+            (node.NextNodes[0].Data as TaskHook).Date.Should().NotBeNull();
+
+            //Clean
+            LogicCORE.___Testing = false;
+        }
+
+        [Fact]
+        public void NoFinishTask_ActionChangeDate()
+        {
+            //Arrange
+            var x = new TaskHook();
+            var date = new DateTime(2021, 12, 12);
+            LogicCORE.___Testing = true;
+
+            //Act
+            x.FinishStatus = false;
+            x.Date = date;
+
+            //Assert
+            x.FinishStatus.Should().BeFalse();
+            x.Date.Should().NotBeNull();
+            x.Date.Should().Be(date);
+
+            //Clean
+            LogicCORE.___Testing = false;
+        }
+
+        [Fact]
+        public void FinishTask_ActionChangeDate()
+        {
+            //Arrange
+            var x = new TaskHook();
+            var date = new DateTime(2021, 12, 11);
+            LogicCORE.___Testing = true;
+
+            //Act
+            x.Date = date;
+            x.FinishStatus = true;
+
+            //Assert
+            x.FinishStatus.Should().BeTrue();
+            x.Date.Should().NotBeNull();
+            x.Date.Should().NotBe(date);
+
+            //Clean
+            LogicCORE.___Testing = false;
+        }
+
+        [Fact]
+        public void DeleteTask()
+        {
+            //Arrange
+            LogicCORE.___Testing = true;
+            var x = new TaskHook();
+            x.Node = new Node();
+
+            //Act
+            x.DeleteTask();
+
+            //Assert
+            x.Node.Should().BeNull();
+
+            //Clean
+            LogicCORE.___Testing = false;
         }
     }
 }
