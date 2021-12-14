@@ -67,22 +67,17 @@ namespace ConsoleToDoList.App
             return false;
         }
 
-        public bool RemoveTag(TagsBag bag, bool hardRemove = false)
+        public void RemoveTag(TagsBag bag, bool hardRemove = false)
         {
-            bool removeStats = false;
-
             foreach (var tag in bag._tagsList)
             {
-                var _tag = _tagsList.Find(x => x.Tag.TagName.ToLower() == tag.Tag.TagName.ToLower());
+                var _tag = this._tagsList.Find(x => x.Tag.TagName.ToLower() == tag.Tag.TagName.ToLower());
                 if (_tag != null)
                     if (!_tag.Lock || hardRemove || tag.Lock)
                     {
-                        _tagsList.Remove(_tag);
-                        removeStats = true;
+                        this._tagsList.Remove(_tag);
                     }
-                return false;
             }
-            return removeStats;
         }
 
         public void SortByLock()

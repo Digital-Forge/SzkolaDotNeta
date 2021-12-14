@@ -15,5 +15,11 @@ namespace ConsoleToDoList.App
         {
             _tagName = name;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Tag)) return false;
+            return this.TagName == (obj as Tag).TagName; 
+        }
     }
 }

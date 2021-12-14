@@ -88,7 +88,6 @@ namespace ConsoleToDoList.App
             {
                 (hook.Node.LastNode.Data as TaskHook).TagsBag.AddTag(hook.TagsBag, true);
             }
-
         }
 
         private static void serchTagByName()
