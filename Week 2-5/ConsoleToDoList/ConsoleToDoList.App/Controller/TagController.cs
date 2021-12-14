@@ -33,7 +33,7 @@ namespace ConsoleToDoList.App
                     else           menu.MenuTitle.AddText($" {item.Tag.TagName}", ConsoleColor.Green);
                 }
 
-                menu.add(new ConsoleColorString("Serch"), () => { serchTagByName(); reload = true; menu.exitFunction(); });
+                menu.add(new ConsoleColorString("Search"), () => { serchTagByName(); reload = true; menu.exitFunction(); });
                 menu.add(new ConsoleColorString("New Tag"), () => { newAddTag(hook); reload = true; menu.exitFunction(); });
                 menu.add(new ConsoleColorString("Back\n"), menu.exitFunction);
 
@@ -62,7 +62,7 @@ namespace ConsoleToDoList.App
                 menu.MenuTitle = new ConsoleColorString("RemoveTags", ConsoleColor.Yellow);
 
 
-                menu.add(new ConsoleColorString("Serch"), () => { serchTagByName(); reload = true; menu.exitFunction(); });
+                menu.add(new ConsoleColorString("Search"), () => { serchTagByName(); reload = true; menu.exitFunction(); });
                 menu.add(new ConsoleColorString("Back\n"), menu.exitFunction);
 
                 foreach (var item in tagList)

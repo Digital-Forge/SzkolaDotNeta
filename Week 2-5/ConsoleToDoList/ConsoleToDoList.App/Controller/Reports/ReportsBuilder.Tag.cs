@@ -20,10 +20,10 @@ namespace ConsoleToDoList.App
                 ConsoleMenu menu = new ConsoleMenu(ViewMenuStyle);
                 menu.AutoBackKeyButton = ConsoleKey.Backspace;
 
-                menu.MenuTitle = new ConsoleColorString("Remove Tags From System", ConsoleColor.Yellow);
+                menu.MenuTitle = new ConsoleColorString("Select Tag To Generate Report", ConsoleColor.Yellow);
 
 
-                menu.add(new ConsoleColorString("Serch"), () =>
+                menu.add(new ConsoleColorString("Search"), () =>
                 {
                     Console.Clear();
                     Console.Write("Tag Name : ");

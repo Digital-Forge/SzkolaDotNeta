@@ -54,7 +54,7 @@ namespace ConsoleToDoList
                 menu.MenuTitle = new ConsoleColorString("Remove Tags From System", ConsoleColor.Yellow);
 
 
-                menu.add(new ConsoleColorString("Serch"), () => 
+                menu.add(new ConsoleColorString("Search"), () => 
                 {
                     Console.Clear();
                     Console.Write("Tag Name : ");

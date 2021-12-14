@@ -20,7 +20,7 @@ namespace ConsoleToDoList
             {
                 reload = false;
                 ConsoleMenu menu = new ConsoleMenu(ViewMenuStyle);
-                menu.add(new ConsoleColorString("Serch"), () => { VT_SerchMenu(); menu.exitFunction(); reload = true; });
+                menu.add(new ConsoleColorString("Search"), () => { VT_SerchMenu(); menu.exitFunction(); reload = true; });
                 menu.add(new ConsoleColorString("SortBy"), () => { VT_SortByMenu(); menu.exitFunction(); reload = true; });
                 menu.add(new ConsoleColorString("Back"), menu.exitFunction);
                 menu.AutoBackKeyButton = ConsoleKey.Backspace;
@@ -44,7 +44,7 @@ namespace ConsoleToDoList
         private void VT_SerchMenu()
         {
             ConsoleMenu menu = new ConsoleMenu(MainMenuStyle);
-            menu.MenuTitle = new ConsoleColorString("Serch by", ConsoleColor.Magenta);
+            menu.MenuTitle = new ConsoleColorString("Search by", ConsoleColor.Magenta);
             menu.add(new ConsoleColorString("Name"), () => { VT_SerchMenuByName(); menu.exitFunction(); });
             menu.add(new ConsoleColorString("Tag"), () => { VT_SerchMenuByTag(); menu.exitFunction(); });
             menu.add(new ConsoleColorString("Status"), () => { VT_SerchMenuByStatus(); menu.exitFunction(); });
@@ -157,7 +157,7 @@ namespace ConsoleToDoList
             {
                 reload = false;
                 ConsoleMenu menu = new ConsoleMenu(MainMenuStyle);
-                menu.add(new ConsoleColorString("Serch"), () => 
+                menu.add(new ConsoleColorString("Search"), () => 
                 {
                     Console.Clear();
                     Console.Write("Tag Name : ");
