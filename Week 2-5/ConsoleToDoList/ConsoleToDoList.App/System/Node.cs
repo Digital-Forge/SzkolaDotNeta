@@ -38,7 +38,7 @@ namespace ConsoleToDoList.App
                         _data = null;
                         if (buff != null) buff.Node = null;
                         _data = value;
-                        _data.Node = this;
+                        if (_data.Node != this) _data.Node = this;
                     }
                 }
             }

@@ -59,8 +59,8 @@ namespace ConsoleToDoList.App
 
         public void AddTask()
         {
-            if (Node == null) Node = new Node();
-            Node.Data = this;
+            if (node == null) node = new Node();
+            node.Data = this;
             new TaskBuilder().Build(Node);
         }
 
