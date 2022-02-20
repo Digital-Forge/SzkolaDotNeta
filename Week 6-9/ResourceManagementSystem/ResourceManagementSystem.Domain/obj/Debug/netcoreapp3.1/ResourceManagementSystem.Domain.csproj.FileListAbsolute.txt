@@ -1,0 +1,10 @@
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.deps.json
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.pdb
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.csproj.AssemblyReference.cache
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.AssemblyInfoInputs.cache
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.AssemblyInfo.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.csproj.CoreCompileInputs.cache
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.pdb

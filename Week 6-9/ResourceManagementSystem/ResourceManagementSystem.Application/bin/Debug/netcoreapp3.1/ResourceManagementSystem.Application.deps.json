@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "ResourceManagementSystem.Application/1.0.0": {
+        "dependencies": {
+          "ResourceManagementSystem.Domain": "1.0.0"
+        },
+        "runtime": {
+          "ResourceManagementSystem.Application.dll": {}
+        }
+      },
+      "ResourceManagementSystem.Domain/1.0.0": {
+        "runtime": {
+          "ResourceManagementSystem.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ResourceManagementSystem.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ResourceManagementSystem.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
