@@ -16,7 +16,7 @@ namespace ResourceManagementSystem.Domain.Model
         public int ItemId { get; set; }
         public virtual Item Item { get; set; }
 
-        public int? AppUserId { get; set; }
+        public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
 
         public int? SerialItemId { get; set; }

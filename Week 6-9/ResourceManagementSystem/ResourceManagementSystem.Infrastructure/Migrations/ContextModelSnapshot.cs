@@ -82,6 +82,10 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -133,6 +137,8 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -219,6 +225,22 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Departments");
+                });
+
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -233,11 +255,55 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.ItemReservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AppUserIndex")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SerialItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserIndex");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ItemReservations");
+                });
+
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.ItemToDepartment", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemId", "DepartmentId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("ItemsToDepartments");
                 });
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.SerialItem", b =>
@@ -247,17 +313,64 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("ActiveStatus")
+                        .HasColumnType("bit");
+
                     b.Property<int>("IdItem")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ItemReservationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SerialNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IdItem");
 
+                    b.HasIndex("ItemReservationId")
+                        .IsUnique()
+                        .HasFilter("[ItemReservationId] IS NOT NULL");
+
                     b.ToTable("SerialItems");
+                });
+
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.UserToDepartment", b =>
+                {
+                    b.Property<string>("AppUserIndex")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserIndex", "DepartmentId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("UsersToDepartments");
+                });
+
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.AppUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Index")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isFirstAccess")
+                        .HasColumnType("bit");
+
+                    b.HasIndex("Index")
+                        .IsUnique()
+                        .HasFilter("[Index] IS NOT NULL");
+
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -311,11 +424,58 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.ItemReservation", b =>
+                {
+                    b.HasOne("ResourceManagementSystem.Domain.Model.AppUser", "AppUser")
+                        .WithMany("Reservations")
+                        .HasForeignKey("AppUserIndex");
+
+                    b.HasOne("ResourceManagementSystem.Domain.Model.Item", "Item")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.ItemToDepartment", b =>
+                {
+                    b.HasOne("ResourceManagementSystem.Domain.Model.Department", "Department")
+                        .WithMany("Items")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ResourceManagementSystem.Domain.Model.Item", "Item")
+                        .WithMany("Departments")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.SerialItem", b =>
                 {
                     b.HasOne("ResourceManagementSystem.Domain.Model.Item", "Item")
                         .WithMany("Serials")
                         .HasForeignKey("IdItem")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ResourceManagementSystem.Domain.Model.ItemReservation", "Reservation")
+                        .WithOne("SerialItem")
+                        .HasForeignKey("ResourceManagementSystem.Domain.Model.SerialItem", "ItemReservationId");
+                });
+
+            modelBuilder.Entity("ResourceManagementSystem.Domain.Model.UserToDepartment", b =>
+                {
+                    b.HasOne("ResourceManagementSystem.Domain.Model.AppUser", "AppUser")
+                        .WithMany("Departments")
+                        .HasForeignKey("AppUserIndex")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ResourceManagementSystem.Domain.Model.Department", "Department")
+                        .WithMany("AppUsers")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

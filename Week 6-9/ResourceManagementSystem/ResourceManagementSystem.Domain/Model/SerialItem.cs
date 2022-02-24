@@ -9,6 +9,7 @@ namespace ResourceManagementSystem.Domain.Model
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string SerialNumber { get; set; }
         public bool ActiveStatus { get; set; }
 
