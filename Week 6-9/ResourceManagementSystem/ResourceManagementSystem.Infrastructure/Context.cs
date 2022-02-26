@@ -23,11 +23,6 @@ namespace ResourceManagementSystem.Infrastructure
         {
             base.OnModelCreating(builder);
 
-            //////////////////////////////////////// AppUser Unique Index
-            builder.Entity<AppUser>()
-                .HasIndex(x => x.Id)
-                .IsUnique();
-
             //////////////////////////////////////// SerialItem many to one Item
             builder.Entity<SerialItem>()
                 .HasOne<Item>(x => x.Item)

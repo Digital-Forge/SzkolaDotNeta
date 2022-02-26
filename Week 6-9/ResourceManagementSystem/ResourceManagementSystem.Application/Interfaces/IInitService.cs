@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ResourceManagementSystem.Application.ViewModel.Init;
+using ResourceManagementSystem.Domain.Model;
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace ResourceManagementSystem.Application.Interfaces
@@ -8,7 +11,11 @@ namespace ResourceManagementSystem.Application.Interfaces
     {
         bool CanInit();
 
-        void SetFirstAdminConfig();
+        bool SetFirstAdminData(AdminAccountVM model);
+
+        void SetDefaultConfig();
+
+        void SetFirstAdminConfig(ClaimsPrincipal user);
 
         void SetConfirmEmailForFirstAdmin();
     }

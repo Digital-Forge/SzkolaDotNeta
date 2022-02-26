@@ -14,6 +14,7 @@ namespace ResourceManagementSystem.Infrastructure
             services.AddTransient<IAppSettingPropertyRepository, AppSettingPropertyRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IItemRepository, ItemRepository>();
+            services.AddTransient<IAccessConfigRepository, AccessConfigRepository>();
 
             return services;
         }

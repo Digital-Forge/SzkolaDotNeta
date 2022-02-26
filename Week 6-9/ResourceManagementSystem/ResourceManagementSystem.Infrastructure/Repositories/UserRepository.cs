@@ -31,7 +31,7 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             
         }
 
-        public IQueryable<AppUser> UsersList()
+        public IQueryable<AppUser> GetUsersList()
         {
             return _context.AppUsers;
         }

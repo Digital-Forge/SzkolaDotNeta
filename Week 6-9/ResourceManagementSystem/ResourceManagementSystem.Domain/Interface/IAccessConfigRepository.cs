@@ -1,15 +1,13 @@
 ﻿using ResourceManagementSystem.Domain.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace ResourceManagementSystem.Domain.Interface
 {
-    public interface IUserRepository
+    public interface IAccessConfigRepository
     {
-        IQueryable<AppUser> GetUsersList();
-
-        bool UpdateUser(AppUser user);
+        bool AddRole(string name);
+        bool AddRoleToUser(string ruleName, AppUser user);
     }
 }

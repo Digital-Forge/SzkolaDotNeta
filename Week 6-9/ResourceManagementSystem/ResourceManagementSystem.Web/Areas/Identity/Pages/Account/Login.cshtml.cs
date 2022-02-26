@@ -26,11 +26,13 @@ namespace ResourceManagementSystem.Web.Areas.Identity.Pages.Account
 
         public LoginModel(SignInManager<AppUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager,
+            IInitService initServce)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _initServce = initServce;
         }
 
         [BindProperty]
@@ -104,13 +106,11 @@ namespace ResourceManagementSystem.Web.Areas.Identity.Pages.Account
                                     _initServce.SetConfirmEmailForFirstAdmin();
                                 }
 
-                                _initServce.SetFirstAdminConfig();
-
                                 var firstLoginResult = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                                 if (result.Succeeded)
                                 {
                                     _logger.LogInformation("Logged first admin");
-                                    return RedirectToAction("","Init");
+                                    return RedirectToAction("AdminAccount", "Init");
                                 }
                             }
                         }

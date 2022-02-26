@@ -171,3 +171,7 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\FluentValidation.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\FluentValidation.AspNetCore.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\FluentValidation.DependencyInjectionExtensions.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Init\AdminAccount.cshtml.g.cs
