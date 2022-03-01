@@ -17,12 +17,12 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             _config = configuration;
         }
 
-        public bool CanSendEmail()
+        public bool FakeSendEmail()
         {
             bool buff;
             try
             {
-                buff = bool.Parse(_config["EmailSettings:EnableSend"]);
+                buff = bool.Parse(_config["EmailConfig:EnableFakeSend"]);
             }
             catch
             {
@@ -39,12 +39,12 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             {
                 buff = new EmailConfig
                 {
-                    EnableSSL = bool.Parse(_config["EmailSettings:EnableSend"]),
-                    HostSmtp = _config["EmailSettings:Setting:HostSmtp"],
-                    Port = int.Parse(_config["EmailSettings:Setting:Port"]),
-                    SenderEmail = _config["EmailSettings:Setting:SenderEmail"],
-                    SenderEmailPassword = _config["EmailSettings:Setting:SenderEmailPassword"],
-                    SenderName = _config["EmailSettings:Setting:SenderName"]
+                    EnableSSL = bool.Parse(_config["EmailConfig:Config:EnableSend"]),
+                    HostSmtp = _config["EmailConfig:Config:HostSmtp"],
+                    Port = int.Parse(_config["EmailConfig:Config:Port"]),
+                    SenderEmail = _config["EmailConfig:Config:SenderEmail"],
+                    SenderEmailPassword = _config["EmailConfig:Config:SenderEmailPassword"],
+                    SenderName = _config["EmailConfig:Config:SenderName"]
                 };
             }
             catch

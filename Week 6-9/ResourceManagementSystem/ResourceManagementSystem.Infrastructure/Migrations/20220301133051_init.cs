@@ -41,7 +41,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
-                    Index = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
                     isActive = table.Column<bool>(nullable: true),
                     isFirstAccess = table.Column<bool>(nullable: true)
                 },
@@ -188,15 +188,15 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 name: "UsersToDepartments",
                 columns: table => new
                 {
-                    AppUserIndex = table.Column<string>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: false),
                     DepartmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersToDepartments", x => new { x.AppUserIndex, x.DepartmentId });
+                    table.PrimaryKey("PK_UsersToDepartments", x => new { x.AppUserId, x.DepartmentId });
                     table.ForeignKey(
-                        name: "FK_UsersToDepartments_AspNetUsers_AppUserIndex",
-                        column: x => x.AppUserIndex,
+                        name: "FK_UsersToDepartments_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -216,15 +216,15 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReservationStatus = table.Column<int>(nullable: false),
                     ItemId = table.Column<int>(nullable: false),
-                    AppUserIndex = table.Column<string>(nullable: true),
+                    AppUserId = table.Column<string>(nullable: true),
                     SerialItemId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemReservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemReservations_AspNetUsers_AppUserIndex",
-                        column: x => x.AppUserIndex,
+                        name: "FK_ItemReservations_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -328,16 +328,9 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Index",
-                table: "AspNetUsers",
-                column: "Index",
-                unique: true,
-                filter: "[Index] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemReservations_AppUserIndex",
+                name: "IX_ItemReservations_AppUserId",
                 table: "ItemReservations",
-                column: "AppUserIndex");
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemReservations_ItemId",

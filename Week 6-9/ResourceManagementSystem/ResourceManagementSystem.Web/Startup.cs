@@ -34,6 +34,7 @@ namespace ResourceManagementSystem.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<Context>();
 
             // DependencyInjection
@@ -41,8 +42,15 @@ namespace ResourceManagementSystem.Web
             services.AddInfrastructure();
 
             services.AddControllersWithViews()
-                .AddFluentValidation(fv => fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false);
+                .AddFluentValidation(fv => fv.DisableDataAnnotationsValidation = true);
             services.AddRazorPages();
+
+            //Set Authorize Rule
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredUniqueChars = 0;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

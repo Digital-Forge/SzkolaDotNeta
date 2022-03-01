@@ -9,5 +9,6 @@ namespace ResourceManagementSystem.Domain.Interface
     {
         bool AddRole(string name);
         bool AddRoleToUser(string ruleName, AppUser user);
+        bool RemoveRoleFromUser(string ruleName, AppUser user);
     }
 }

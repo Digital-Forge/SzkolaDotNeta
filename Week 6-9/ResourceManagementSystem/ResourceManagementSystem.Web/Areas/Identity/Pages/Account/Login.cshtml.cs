@@ -98,7 +98,7 @@ namespace ResourceManagementSystem.Web.Areas.Identity.Pages.Account
                     {
                         if (_initServce.CanInit())
                         {
-                            var firstAdminRegistrationResult = await _userManager.CreateAsync(new AppUser { UserName = Input.Username }, Input.Password);
+                            var firstAdminRegistrationResult = await _userManager.CreateAsync(new AppUser { UserName = Input.Username }, "AdminAccountInit123");
                             if (firstAdminRegistrationResult.Succeeded)
                             {
                                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -106,12 +106,16 @@ namespace ResourceManagementSystem.Web.Areas.Identity.Pages.Account
                                     _initServce.SetConfirmEmailForFirstAdmin();
                                 }
 
-                                var firstLoginResult = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                                if (result.Succeeded)
+                                var firstLoginResult = await _signInManager.PasswordSignInAsync(Input.Username, "AdminAccountInit123", Input.RememberMe, lockoutOnFailure: false);
+                                if (firstLoginResult.Succeeded)
                                 {
                                     _logger.LogInformation("Logged first admin");
                                     return RedirectToAction("AdminAccount", "Init");
                                 }
+                            }
+                            else
+                            {
+                                return BadRequest();
                             }
                         }
                     }

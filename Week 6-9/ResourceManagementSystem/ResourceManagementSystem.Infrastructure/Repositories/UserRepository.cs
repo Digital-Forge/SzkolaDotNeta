@@ -27,8 +27,7 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             catch
             {
                 return false;
-            }
-            
+            }  
         }
 
         public IQueryable<AppUser> GetUsersList()

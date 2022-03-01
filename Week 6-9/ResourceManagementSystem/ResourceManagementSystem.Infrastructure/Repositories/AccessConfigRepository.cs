@@ -51,5 +51,26 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             }
             return true;
         }
+        
+        public bool RemoveRoleFromUser(string ruleName, AppUser user)
+        {
+            try
+            {
+                var roleId = _context.Roles.Where(x => x.Name.ToLower() == ruleName.ToLower()).Select(y => y.Id).FirstOrDefault();
+                if (string.IsNullOrEmpty(roleId)) return false;
+
+                var binding = _context.UserRoles.Where(x => x.UserId == user.Id && x.RoleId == roleId).FirstOrDefault();
+
+                if (binding == null) return false;
+
+                _context.UserRoles.Remove(binding);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

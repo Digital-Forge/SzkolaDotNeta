@@ -7,7 +7,7 @@ namespace ResourceManagementSystem.Domain.Interface
 {
     public interface IAppSettingPropertyRepository
     {
-        bool CanSendEmail();
+        bool FakeSendEmail();
         EmailConfig GetEmailConfig();
     }
 }

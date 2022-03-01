@@ -3,25 +3,34 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-<ul class="navbar-nav">
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+    <a asp-area="Identity" asp-page="/Account/Manage/Index">Hello @UserManager.GetUserAsync(User).Result.FullName</a>
+
+    @if (new Func<bool>(() => {
+        if (User.IsInRole("UserModerator")) return true;
+        if (User.IsInRole("ItemModerator")) return true;
+        if (User.IsInRole("DepartmentModerator")) return true;
+        if (User.IsInRole("PickupPoint")) return true;
+        if (User.IsInRole("Admin")) return true;
+        return false;})())
+    {
+        <form asp-area="" asp-action="Index" asp-controller="Home" method="post">
+            <select name="Panel" id="Panel" onchange="this.form.submit()">
+                                                             <option value="User">User</option>
+                @if (User.IsInRole("UserModerator"))       { <option value="UserModerator">Users Moderator</option>}
+                @if (User.IsInRole("ItemModerator"))       { <option value="ItemModerator">Resources Moderator</option>}
+                @if (User.IsInRole("DepartmentModerator")) { <option value="DepartmentModerator">Departments Moderator</option>}
+                @if (User.IsInRole("PickupPoint"))         { <option value="PickupPoint">Pickup Point</option>}
+                @if (User.IsInRole("Admin"))               { <option value="Admin">Admin</option>}
+            </select>
         </form>
-    </li>
+    }
+
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="submit">Logout</button>
+    </form>
+
 }
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+

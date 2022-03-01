@@ -46,7 +46,10 @@ namespace ResourceManagementSystem.Application.Services
 
         public void SetDefaultConfig()
         {
-            _accessConfigRepository.AddRole("User");
+            _accessConfigRepository.AddRole("UserModerator");
+            _accessConfigRepository.AddRole("ItemModerator");
+            _accessConfigRepository.AddRole("DepartmentModerator");
+            _accessConfigRepository.AddRole("PickupPoint");
             _accessConfigRepository.AddRole("Admin");
         }
 
@@ -65,7 +68,7 @@ namespace ResourceManagementSystem.Application.Services
 
             if (!_userManager.SetEmailAsync(account, model.Email).Result.Succeeded) return false;
             if (!_userManager.SetUserNameAsync(account, model.Username).Result.Succeeded) return false;
-            if (!_userManager.ChangePasswordAsync(account, "admin", model.Password).Result.Succeeded) return false;
+            if (!_userManager.ChangePasswordAsync(account, "AdminAccountInit123", model.Password).Result.Succeeded) return false;
 
             account.FullName = model.FullName;
             account.isActive = true;

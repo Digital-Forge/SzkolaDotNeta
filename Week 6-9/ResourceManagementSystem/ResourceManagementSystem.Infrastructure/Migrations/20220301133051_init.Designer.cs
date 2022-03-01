@@ -10,14 +10,14 @@ using ResourceManagementSystem.Infrastructure;
 namespace ResourceManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220222135044_init")]
+    [Migration("20220301133051_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.22")
+                .HasAnnotation("ProductVersion", "3.1.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -272,7 +272,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AppUserIndex")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ItemId")
@@ -286,7 +286,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserIndex");
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ItemId");
 
@@ -341,13 +341,13 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.UserToDepartment", b =>
                 {
-                    b.Property<string>("AppUserIndex")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.HasKey("AppUserIndex", "DepartmentId");
+                    b.HasKey("AppUserId", "DepartmentId");
 
                     b.HasIndex("DepartmentId");
 
@@ -358,19 +358,15 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Index")
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("isFirstAccess")
                         .HasColumnType("bit");
-
-                    b.HasIndex("Index")
-                        .IsUnique()
-                        .HasFilter("[Index] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -430,7 +426,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 {
                     b.HasOne("ResourceManagementSystem.Domain.Model.AppUser", "AppUser")
                         .WithMany("Reservations")
-                        .HasForeignKey("AppUserIndex");
+                        .HasForeignKey("AppUserId");
 
                     b.HasOne("ResourceManagementSystem.Domain.Model.Item", "Item")
                         .WithMany("Reservations")
@@ -471,7 +467,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 {
                     b.HasOne("ResourceManagementSystem.Domain.Model.AppUser", "AppUser")
                         .WithMany("Departments")
-                        .HasForeignKey("AppUserIndex")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ResourceManagementSystem.Web.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ResourceManagementSystem.Web.Controllers
 {
@@ -20,15 +16,40 @@ namespace ResourceManagementSystem.Web.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Index(string panel)
         {
-            return View();
+            switch (panel)
+            {
+                case "User":
+                    return RedirectToAction("Index");
+                    //break;
+                case "UserModerator":
+                    return RedirectToAction("Users", "Moderate");
+                    //break;
+                case "ItemModerator":
+                    return RedirectToAction("Resources", "Moderate");
+                    //break;
+                case "DepartmentModerator":
+                    return RedirectToAction("Departments", "Moderate");
+                    //break;
+                case "PickupPoint":
+                    return RedirectToAction("Index", "PickupPoint");
+                    //break;
+                case "Admin":
+                    return RedirectToAction("Index", "Admin");
+                    //break;
+            }
+            return BadRequest();
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
