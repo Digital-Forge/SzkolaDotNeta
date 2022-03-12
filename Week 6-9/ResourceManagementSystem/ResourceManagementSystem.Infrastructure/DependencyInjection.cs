@@ -15,6 +15,8 @@ namespace ResourceManagementSystem.Infrastructure
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IAccessConfigRepository, AccessConfigRepository>();
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IReservationRepository, ReservationRepository>();
 
             return services;
         }

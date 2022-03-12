@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ResourceManagementSystem.Application.ViewModel.Users.UserOfListVM>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Users</h1>
+@if (User.IsInRole("UserModerator") || User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="CreateUser">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Index)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                Contact
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountOfDepartments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountOfResources)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Index)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)<br>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountOfDepartments)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountOfResources)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "DetailsUser", new { id=item.Index }) |
+                    @Html.ActionLink("Edit", "EditUser", new { id = item.Index })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

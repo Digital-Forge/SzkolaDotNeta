@@ -8,8 +8,7 @@ namespace ResourceManagementSystem.Domain.Model
     public class SerialItem
     {
         [Key]
-        public int Id { get; set; }
-        [Required]
+        public string Id { get; set; }
         public string SerialNumber { get; set; }
         public bool ActiveStatus { get; set; }
 

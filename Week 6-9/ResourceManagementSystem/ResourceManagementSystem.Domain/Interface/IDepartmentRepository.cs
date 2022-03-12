@@ -1,0 +1,22 @@
+﻿using ResourceManagementSystem.Domain.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ResourceManagementSystem.Domain.Interface
+{
+    public interface IDepartmentRepository
+    {
+        string AddDepartment(string name);
+        bool DeleteDepartmentByName(string name);
+        bool DeleteDepartmentById(string id);
+        bool UpdateDepartment(Department department);
+        bool AddUserToDepartment(AppUser user, Department department);
+        bool AddUserToDepartment(string userId, string departmentId);
+        bool RemoveUserToDepartment(AppUser user, Department department);
+        bool RemoveUserToDepartment(string userId, string departmentId);
+        IQueryable<Department> GetDepartmentsList();
+        IQueryable<Department> GetDepartmentsListByUser(string userId);
+    }
+}

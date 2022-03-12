@@ -46,6 +46,7 @@ namespace ResourceManagementSystem.Application.Services
 
         public void SetDefaultConfig()
         {
+            _accessConfigRepository.AddRole("User");
             _accessConfigRepository.AddRole("UserModerator");
             _accessConfigRepository.AddRole("ItemModerator");
             _accessConfigRepository.AddRole("DepartmentModerator");

@@ -72,5 +72,16 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             }
             return true;
         }
+
+        public IQueryable<IdentityRole> GetRolesList()
+        {
+            return _context.Roles;
+        }
+
+        public IQueryable<IdentityRole> GetRoleListByUser(string userId)
+        {
+            return _context.Roles.Where(
+                x => _context.UserRoles.Any(y => y.RoleId == x.Id && y.UserId == userId));
+        }
     }
 }

@@ -163,6 +163,7 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Init\AdminAccount.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\Users.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
@@ -176,3 +177,4 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.pdb
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.genruntimeconfig.cache
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateUser.cshtml.g.cs

@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "n3GbD1pKuU11Ac6Ms6ezbK5dbyHrorLlCSGahi2GbeOaZs2xgvJ2TAfYpv75pQJ5Rc8iBORB8eR5pNfs5jr88w==",
+  "dgSpecHash": "xMXmp2kZ8SXsM8AEPKRF/4t4ZKQmdjiaak3LE9NKLFBJ4dP3fOE5yLTy/UuuRlUmFA6d9El6ThQOnCl8/Az/Iw==",
   "success": true,
   "projectFilePath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Jan\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
+    "C:\\Users\\Jan\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\fluentvalidation\\10.3.6\\fluentvalidation.10.3.6.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.6\\fluentvalidation.aspnetcore.10.3.6.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.6\\fluentvalidation.dependencyinjectionextensions.10.3.6.nupkg.sha512",
@@ -12,6 +14,7 @@
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.21\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",
+    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.entityframeworkcore\\3.1.21\\microsoft.entityframeworkcore.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\3.1.21\\microsoft.entityframeworkcore.abstractions.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.1.21\\microsoft.entityframeworkcore.analyzers.3.1.21.nupkg.sha512",
@@ -22,16 +25,17 @@
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\3.1.21\\microsoft.extensions.configuration.abstractions.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.configuration.binder\\3.1.21\\microsoft.extensions.configuration.binder.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.1.21\\microsoft.extensions.dependencyinjection.3.1.21.nupkg.sha512",
-    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.21\\microsoft.extensions.dependencyinjection.abstractions.3.1.21.nupkg.sha512",
+    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.identity.core\\3.1.21\\microsoft.extensions.identity.core.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.identity.stores\\3.1.21\\microsoft.extensions.identity.stores.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.logging\\3.1.21\\microsoft.extensions.logging.3.1.21.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.21\\microsoft.extensions.logging.abstractions.3.1.21.nupkg.sha512",
-    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.options\\3.1.21\\microsoft.extensions.options.3.1.21.nupkg.sha512",
-    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.21\\microsoft.extensions.primitives.3.1.21.nupkg.sha512",
+    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\Jan\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\system.collections.immutable\\1.7.1\\system.collections.immutable.1.7.1.nupkg.sha512",
     "C:\\Users\\Jan\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
-    "C:\\Users\\Jan\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+    "C:\\Users\\Jan\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512",
+    "C:\\Users\\Jan\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

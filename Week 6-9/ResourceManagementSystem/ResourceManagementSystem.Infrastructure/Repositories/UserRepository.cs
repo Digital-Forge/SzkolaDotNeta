@@ -34,5 +34,10 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
         {
             return _context.AppUsers;
         }
+
+        public AppUser GetUserById(string id)
+        {
+            return _context.AppUsers.FirstOrDefault(x => x.Id == id);
+        }
     }
 }

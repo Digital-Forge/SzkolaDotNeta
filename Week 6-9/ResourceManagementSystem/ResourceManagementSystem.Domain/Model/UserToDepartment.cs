@@ -9,7 +9,7 @@ namespace ResourceManagementSystem.Domain.Model
         //Relations
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public int DepartmentId { get; set; }
+        public string DepartmentId { get; set; }
         public Department Department { get; set; }
     }
 }

@@ -9,17 +9,17 @@ namespace ResourceManagementSystem.Domain.Model
     public class ItemReservation
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public ReservationStatus ReservationStatus { get; set; }
 
         //Relations
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
         public virtual Item Item { get; set; }
 
         public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public virtual AppUser AppUser { get; set; }
 
-        public int? SerialItemId { get; set; }
+        public string SerialItemId { get; set; }
         public virtual SerialItem SerialItem { get; set; }
     }
 }

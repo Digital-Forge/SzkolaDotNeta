@@ -8,11 +8,8 @@ namespace ResourceManagementSystem.Domain.Model
 {
     public class AppUser : IdentityUser
     {
-        [Required]
         public string FullName { get; set; }
-        [Required]
         public bool isActive { get; set; }
-        [Required]
         public bool isFirstAccess { get; set; }
 
         //Relations

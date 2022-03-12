@@ -9,7 +9,7 @@ namespace ResourceManagementSystem.Domain.Interface
     public interface IUserRepository
     {
         IQueryable<AppUser> GetUsersList();
-
+        AppUser GetUserById(string id);
         bool UpdateUser(AppUser user);
     }
 }
