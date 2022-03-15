@@ -58,12 +58,21 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "UserModerator, Admin")]
         public IActionResult DetailsUser(string id)
         {
-            return View();
+            var buff = _usersModerateService.UserDetails(id);
+            if (buff != null) return View(buff);
+            else return BadRequest();
         }
 
         [HttpGet]
         [Authorize(Roles = "UserModerator, Admin")]
         public IActionResult EditUser(string id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "UserModerator, Admin")]
+        public IActionResult EditUser(DetailsEditUserVM input)
         {
             return View();
         }

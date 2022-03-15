@@ -14,5 +14,7 @@ namespace ResourceManagementSystem.Application.Interfaces
         string CreateUser(CreateUserVM input, ClaimsPrincipal user);
         bool SetActiveUser(bool status, AppUser user);
         DetailsEditUserVM UserDetails(string userId);
+        DetailsEditUserVM GetEditUser(string userId);
+        bool UpdateEditUser(DetailsEditUserVM input);
     }
 }

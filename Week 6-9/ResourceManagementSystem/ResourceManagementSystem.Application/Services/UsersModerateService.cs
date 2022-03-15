@@ -144,7 +144,10 @@ namespace ResourceManagementSystem.Application.Services
         public DetailsEditUserVM UserDetails(string userId)
         {
             var user = _userRepo.GetUserById(userId);
+            if (user == null) return null;
+
             var VM = _mapper.Map<DetailsEditUserVM>(user);
+            if (VM == null) return null;
 
             foreach (var department in user.Departments)
             {
@@ -165,6 +168,16 @@ namespace ResourceManagementSystem.Application.Services
             }
 
             return VM;
+        }
+
+        public DetailsEditUserVM GetEditUser(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateEditUser(DetailsEditUserVM input)
+        {
+            throw new NotImplementedException();
         }
     }
 }
