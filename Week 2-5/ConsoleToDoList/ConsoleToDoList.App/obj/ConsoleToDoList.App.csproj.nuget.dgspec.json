@@ -1,25 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj": {}
+    "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj": {}
   },
   "projects": {
-    "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj": {
+    "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj",
+        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj",
         "projectName": "ConsoleToDoList.App",
-        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj",
-        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
-        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\obj\\",
+        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\ConsoleToDoList.App.csproj",
+        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.App\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -32,8 +32,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj": {
-                "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj"
+              "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj": {
+                "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj"
               }
             }
           }
@@ -62,26 +62,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj": {
+    "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
+        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
         "projectName": "ConsoleToDoList.ConsoleTerminal",
-        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
-        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
-        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\obj\\",
+        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\ConsoleToDoList.ConsoleTerminal.csproj",
+        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 2-5\\ConsoleToDoList\\ConsoleToDoList.ConsoleTerminal\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -120,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

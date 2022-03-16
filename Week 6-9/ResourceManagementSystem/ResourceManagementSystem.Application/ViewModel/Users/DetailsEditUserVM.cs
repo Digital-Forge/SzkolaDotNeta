@@ -32,7 +32,8 @@ namespace ResourceManagementSystem.Application.ViewModel.Users
                 .ForMember(d => d.IsActive, opt => opt.MapFrom(s => s.isActive))
                 .ForMember(d => d.DepartmentsList, opt => opt.Ignore())
                 .ForMember(d => d.RolesList, opt => opt.Ignore())
-                .ForMember(d => d.ReservationItemList, opt => opt.Ignore());
+                .ForMember(d => d.ReservationItemList, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 

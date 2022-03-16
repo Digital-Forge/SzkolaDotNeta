@@ -74,7 +74,7 @@ namespace ResourceManagementSystem.Application.Services
             return buff;
         }
 
-        public string CreateUser(CreateUserVM input, ClaimsPrincipal user)
+        public string CreateUser(CreateUserVM input, ClaimsPrincipal moderator)
         {
             var newUser = new AppUser
             {
@@ -170,14 +170,154 @@ namespace ResourceManagementSystem.Application.Services
             return VM;
         }
 
-        public DetailsEditUserVM GetEditUser(string userId)
+        public DetailsEditUserVM GetEditUser(string userId, ClaimsPrincipal moderator)
         {
-            throw new NotImplementedException();
+            var user = _userRepo.GetUserById(userId);
+            if (user == null) return null;
+            if ((!moderator.IsInRole("Admin"))
+                && _userManager.IsInRoleAsync(user, "Admin").Result) return null;
+
+
+            var VM = _mapper.Map<DetailsEditUserVM>(user);
+            if (VM == null) return null;
+
+            if (moderator.IsInRole("Admin"))
+            {
+                foreach (var department in _departmentRepo.GetDepartmentsList())
+                {
+                    if (user.Departments.Any(x => x.DepartmentId == department.Id))
+                    {
+                        VM.DepartmentsList.Add(new AddRemoveStatusVM
+                        {
+                            Id = department.Id,
+                            Name = department.Name,
+                            Status = true
+                        });
+                    }
+                    else
+                    {
+                        VM.DepartmentsList.Add(new AddRemoveStatusVM
+                        {
+                            Id = department.Id,
+                            Name = department.Name,
+                            Status = false
+                        });
+                    }
+                }
+            }
+            else
+            {
+                foreach (var department in user.Departments)
+                {
+                    VM.DepartmentsList.Add(new AddRemoveStatusVM
+                    {
+                        Id = department.DepartmentId,
+                        Name = department.Department.Name,
+                        Status = true
+                    });
+                }
+            }
+
+            if (moderator.IsInRole("Admin"))
+            {
+                foreach (var role in _accessConfigRepo.GetRolesList())
+                {
+                    if (role.Name != "User")
+                    {
+                        VM.RolesList.Add(new AddRemoveStatusVM {
+                            Id = role.Id,
+                            Name = role.Name,
+                            Status = _userManager.IsInRoleAsync(user, role.Name).Result
+                        });
+                    }
+                }
+            }
+            return VM;
         }
 
-        public bool UpdateEditUser(DetailsEditUserVM input)
+        public bool UpdateEditUser(DetailsEditUserVM input, ClaimsPrincipal moderator)
         {
-            throw new NotImplementedException();
+            var user = _userRepo.GetUserById(input.Id);
+
+            user.UserName = input.UserName;
+            user.FullName = input.FullName;
+            user.PhoneNumber = input.Phone;
+            user.Email = input.Email;
+
+            if (!_userRepo.UpdateUser(user)) return false;
+            if (!string.IsNullOrEmpty(input.Password))
+            {
+                _userManager.RemovePasswordAsync(user);
+                _userManager.AddPasswordAsync(user, input.Password);
+            }
+
+            SetActiveUser(input.IsActive, user);
+
+            if (moderator.IsInRole("Admin"))
+            {
+                foreach (var department in input.DepartmentsList)
+                {
+                    if (user.Departments.Any(x => x.Department.Name == department.Name))
+                    {
+                        if (!department.Status) _departmentRepo.RemoveUserToDepartment(user.Id, department.Id);
+                    }
+                    else
+                    {
+                        if (department.Status) _departmentRepo.AddUserToDepartment(user.Id, department.Id);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var department in input.DepartmentsList)
+                {
+                    if (user.Departments.Any(x => x.Department.Name == department.Name))
+                    {
+                        if (!department.Status) _departmentRepo.RemoveUserToDepartment(user.Id, department.Id);
+                    }
+                }
+            }
+
+            foreach (var role in input.RolesList)
+            {
+                if (_userManager.IsInRoleAsync(user, role.Name).Result)
+                {
+                    if (!role.Status) _userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    if (role.Status) _userManager.AddToRoleAsync(user, role.Name);
+                }
+            }
+            return true;
+        }
+
+        public short DeleteUser(string userId, ClaimsPrincipal moderator)
+        {
+            var user = _userRepo.GetUserById(userId);
+            if (user == null) return -1;
+            if ((!moderator.IsInRole("Admin"))
+                && _userManager.IsInRoleAsync(user, "Admin").Result) return 1;
+
+            if (user.Reservations.Count != 0) return 2;
+
+            foreach (var department in user.Departments)
+            {
+                _departmentRepo.RemoveUserToDepartment(user.Id, department.DepartmentId);
+            }
+
+            if (!_userManager.DeleteAsync(user).Result.Succeeded) return -1;
+            return 0;
+        }
+
+        public List<AddRemoveStatusVM> ReservationListByUser(string userId)
+        {
+            return _reservationRepo.GetReservationListByUser(userId)
+                .Select(x => new AddRemoveStatusVM
+                {
+                    Id = x.Id,
+                    Name = $"{x.Item.Name} - {x.ItemId}"
+                }).ToList();
         }
     }
 }
