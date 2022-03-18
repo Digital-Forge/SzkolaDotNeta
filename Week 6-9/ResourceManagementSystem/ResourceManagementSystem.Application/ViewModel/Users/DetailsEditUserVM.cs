@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using ResourceManagementSystem.Application.Mapping;
+using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using ResourceManagementSystem.Domain.Model;
 using System;
 using System.Collections.Generic;

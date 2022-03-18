@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ResourceManagementSystem.Application.Interfaces;
-using ResourceManagementSystem.Application.ViewModel.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +12,13 @@ namespace ResourceManagementSystem.Web.Controllers
     public partial class ModerateController : Controller
     {
         private readonly IUsersModerateService _usersModerateService;
+        private readonly IDepartmentModerateService _departmentModerateService;
 
-        public ModerateController(IUsersModerateService usersModerateService)
+        public ModerateController(IUsersModerateService usersModerateService,
+                                  IDepartmentModerateService departmentModerateService)
         {
             _usersModerateService = usersModerateService;
+            _departmentModerateService = departmentModerateService;
         }  
     }
 }

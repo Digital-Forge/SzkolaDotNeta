@@ -4,6 +4,7 @@ using ResourceManagementSystem.Application.Interfaces;
 using ResourceManagementSystem.Application.Services;
 using ResourceManagementSystem.Application.ViewModel.Init;
 using ResourceManagementSystem.Application.ViewModel.Users;
+using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using System;
 using System.Collections.Generic;
 using System.Reflection;

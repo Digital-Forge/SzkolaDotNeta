@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
+using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 
 namespace ResourceManagementSystem.Application.ViewModel.Users
 {

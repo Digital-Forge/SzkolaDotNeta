@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using ResourceManagementSystem.Application.Interfaces;
 using ResourceManagementSystem.Application.ViewModel.Users;
+using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using ResourceManagementSystem.Domain.Interface;
 using ResourceManagementSystem.Domain.Model;
 using System;
@@ -259,7 +260,7 @@ namespace ResourceManagementSystem.Application.Services
                 {
                     if (user.Departments.Any(x => x.Department.Name == department.Name))
                     {
-                        if (!department.Status) _departmentRepo.RemoveUserToDepartment(user.Id, department.Id);
+                        if (!department.Status) _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
                     }
                     else
                     {
@@ -273,7 +274,7 @@ namespace ResourceManagementSystem.Application.Services
                 {
                     if (user.Departments.Any(x => x.Department.Name == department.Name))
                     {
-                        if (!department.Status) _departmentRepo.RemoveUserToDepartment(user.Id, department.Id);
+                        if (!department.Status) _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
                     }
                 }
             }
@@ -303,7 +304,7 @@ namespace ResourceManagementSystem.Application.Services
 
             foreach (var department in user.Departments)
             {
-                _departmentRepo.RemoveUserToDepartment(user.Id, department.DepartmentId);
+                _departmentRepo.RemoveUserFromDepartment(user.Id, department.DepartmentId);
             }
 
             if (!_userManager.DeleteAsync(user).Result.Succeeded) return -1;

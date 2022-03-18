@@ -5,12 +5,10 @@
 }
 
 <h1>Users</h1>
-@if (User.IsInRole("UserModerator") || User.IsInRole("Admin"))
-{
-    <p>
-        <a asp-action="CreateUser">Create New</a>
-    </p>
-}
+
+<p>
+    <a asp-action="CreateUser">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>

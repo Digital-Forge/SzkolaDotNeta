@@ -9,6 +9,8 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Web.pdb
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Web.Views.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Web.Views.pdb
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\AutoMapper.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\FluentValidation.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\FluentValidation.AspNetCore.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\FluentValidation.DependencyInjectionExtensions.dll
@@ -74,6 +76,7 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll
@@ -163,6 +166,10 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Init\AdminAccount.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateUser.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\DeleteBlock.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\DetailsUser.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\EditUser.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\Users.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -177,9 +184,6 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.pdb
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.genruntimeconfig.cache
-D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateUser.cshtml.g.cs
-D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\AutoMapper.dll
-D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
-D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
-D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\DetailsUser.cshtml.g.cs
-D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\EditUser.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\Departments.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateDepartment.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\DetailsDepartment.cshtml.g.cs

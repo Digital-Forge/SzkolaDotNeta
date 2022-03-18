@@ -1,4 +1,5 @@
 ﻿using ResourceManagementSystem.Application.ViewModel.Users;
+using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using ResourceManagementSystem.Domain.Model;
 using System;
 using System.Collections.Generic;
