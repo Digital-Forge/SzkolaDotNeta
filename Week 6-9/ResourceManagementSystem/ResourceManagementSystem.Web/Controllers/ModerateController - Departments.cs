@@ -75,5 +75,22 @@ namespace ResourceManagementSystem.Web.Controllers
             if (_departmentModerateService.Delete(id)) return RedirectToAction("Departments");
             return BadRequest();
         }
+
+        [HttpGet]
+        [Authorize(Roles = "DepartmentModerator, Admin")]
+        public IActionResult AddRemoveUsersToDepartment(string id)
+        {
+            return View(_departmentModerateService.GetListToAddUsers(id));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "DepartmentModerator, Admin")]
+        public IActionResult AddRemoveUsersToDepartment(StatusUsersInDepartmentVM input)
+        {
+            _departmentModerateService.UpdateUsersInDepartment(input);
+            return RedirectToAction("DetailsDepartment", input.Id);
+        }
+
+
     }
 }

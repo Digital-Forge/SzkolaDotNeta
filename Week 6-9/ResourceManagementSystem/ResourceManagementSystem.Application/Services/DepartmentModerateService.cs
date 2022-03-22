@@ -102,5 +102,51 @@ namespace ResourceManagementSystem.Application.Services
             buff.Name = input.Name;
             return _departmentRepo.UpdateDepartment(buff);
         }
+
+        public StatusUsersInDepartmentVM GetListToAddUsers(string departmentId)
+        {
+            var buff = _departmentRepo.GetDepartmentById(departmentId);
+
+            var VM = new StatusUsersInDepartmentVM
+            {
+                Id = buff.Id,
+                Name = buff.Name,
+                UsersList = new List<AddRemoveStatusVM>()
+            };
+
+            foreach (var user in _userRepo.GetUsersList())
+            {
+                VM.UsersList.Add(new AddRemoveStatusVM
+                {
+                    Id = user.Id,
+                    Name = user.FullName,
+                    Status = user.Departments.Any(x => x.DepartmentId == departmentId)
+                });
+            }
+            return VM;
+        }
+
+        public void UpdateUsersInDepartment(StatusUsersInDepartmentVM input)
+        {
+            var department = _departmentRepo.GetDepartmentById(input.Id);
+
+            foreach (var user in input.UsersList)
+            {
+                if (user.Status)
+                {
+                    if (!department.AppUsers.Any(x => x.AppUserId == user.Id))
+                    {
+                        _departmentRepo.AddUserToDepartment(user.Id, department.Id);
+                    }
+                }
+                else
+                {
+                    if (department.AppUsers.Any(x => x.AppUserId == user.Id))
+                    {
+                        _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
+                    }
+                }
+            }
+        }
     }
 }

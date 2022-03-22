@@ -1,0 +1,50 @@
+﻿@model ResourceManagementSystem.Application.ViewModel.Departments.StatusUsersInDepartmentVM
+
+@{
+    ViewData["Title"] = "AddRemoveUsersToDepartment";
+}
+
+<h1>Add/Remove Users To Department</h1>
+
+<form asp-action="AddRemoveUsersToDepartment">
+    <input asp-for="Id" type="hidden" />
+    <input asp-for="Name" type="hidden" />
+    <h3>@Model.Name</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                   FullName
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var item = 0; item < Model.UsersList.Count; item++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="UsersList[item].Id" type="hidden"/>
+                        @Model.UsersList[item].Id;
+                    </td>
+                    <td>
+                        <input asp-for="UsersList[item].Name" type="hidden" />
+                        @Model.UsersList[item].Name;
+                    </td>
+                    <td>
+                        <input asp-for="UsersList[item].Status" type="checkbox" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

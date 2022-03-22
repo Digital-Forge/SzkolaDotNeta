@@ -43,5 +43,6 @@
 </div>
 <div>
     @Html.ActionLink("Edit", "EditDepartment", new { id = Model.Id }) |
+    @Html.ActionLink("Add/Remove Users", "AddRemoveUsersToDepartment", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
