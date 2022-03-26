@@ -13,12 +13,15 @@ namespace ResourceManagementSystem.Web.Controllers
     {
         private readonly IUsersModerateService _usersModerateService;
         private readonly IDepartmentModerateService _departmentModerateService;
+        private readonly IItemModerateService _itemModerateService;
 
         public ModerateController(IUsersModerateService usersModerateService,
-                                  IDepartmentModerateService departmentModerateService)
+                                  IDepartmentModerateService departmentModerateService,
+                                  IItemModerateService itemModerateService)
         {
             _usersModerateService = usersModerateService;
             _departmentModerateService = departmentModerateService;
+            _itemModerateService = itemModerateService;
         }  
     }
 }

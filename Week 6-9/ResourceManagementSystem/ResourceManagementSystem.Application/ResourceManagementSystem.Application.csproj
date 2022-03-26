@@ -16,8 +16,4 @@
     <ProjectReference Include="..\ResourceManagementSystem.Domain\ResourceManagementSystem.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModel\Items\" />
-  </ItemGroup>
-
 </Project>
