@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ResourceManagementSystem.Application\ResourceManagementSystem.Application.csproj" />
+  </ItemGroup>
+
 </Project>
