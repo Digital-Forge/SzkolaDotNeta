@@ -26,9 +26,9 @@ namespace ResourceManagementSystem.Application.ViewModel.Items
         }
     }
 
-    public class CreateUserValidation : AbstractValidator<ItemVM>
+    public class ItemValidation : AbstractValidator<ItemVM>
     {
-        public CreateUserValidation()
+        public ItemValidation()
         {
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.SerialsList).NotNull().NotEmpty();

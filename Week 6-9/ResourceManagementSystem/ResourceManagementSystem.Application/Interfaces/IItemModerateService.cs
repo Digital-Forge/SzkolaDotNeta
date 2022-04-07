@@ -10,5 +10,7 @@ namespace ResourceManagementSystem.Application.Interfaces
         List<ItemOfListVM> GetItemsList();
         ItemVM GetCreateOfItemTemplate();
         ItemVM GetDetailsEditItem(string id);
+        int CreateItem(ItemVM input);
+        bool UpdateItem(ItemVM input);
     }
 }

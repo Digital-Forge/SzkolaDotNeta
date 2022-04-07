@@ -32,7 +32,9 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "ItemModerator, Admin")]
         public IActionResult CreateItem(ItemVM input)
         {
-            return View();
+            var buff = _itemModerateService.CreateItem(input);
+            if (buff > 0) return RedirectToAction("DetailsItem", buff);
+            else return BadRequest();
         }
 
         [HttpGet]
@@ -47,6 +49,14 @@ namespace ResourceManagementSystem.Web.Controllers
         public IActionResult EditItem(string id)
         {
             return View(_itemModerateService.GetDetailsEditItem(id));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "ItemModerator, Admin")]
+        public IActionResult EditItem(ItemVM input)
+        {
+            if (_itemModerateService.UpdateItem(input)) return RedirectToAction("DetailsItem", input.Id);
+            else return BadRequest();
         }
 
         [HttpGet]
