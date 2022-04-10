@@ -12,5 +12,6 @@ namespace ResourceManagementSystem.Application.Interfaces
         ItemVM GetDetailsEditItem(string id);
         int CreateItem(ItemVM input);
         bool UpdateItem(ItemVM input);
+        bool DeleteItem(string id);
     }
 }

@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj": {}
+    "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj": {}
   },
   "projects": {
-    "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj": {
+    "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj",
+        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj",
         "projectName": "ResourceManagementSystem.Application",
-        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj",
-        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\obj\\",
+        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj",
+        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +32,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj": {
-                "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj"
+              "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj": {
+                "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj"
               }
             }
           }
@@ -84,17 +88,21 @@
         }
       }
     },
-    "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj": {
+    "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj",
+        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj",
         "projectName": "ResourceManagementSystem.Domain",
-        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj",
-        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\obj\\",
+        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj",
+        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -144,17 +152,21 @@
         }
       }
     },
-    "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj": {
+    "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj",
         "projectName": "ResourceManagementSystem.Infrastructure",
-        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\obj\\",
+        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -168,8 +180,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj": {
-                "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj"
+              "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj": {
+                "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Domain\\ResourceManagementSystem.Domain.csproj"
               }
             }
           }
@@ -226,17 +238,21 @@
         }
       }
     },
-    "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj": {
+    "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj",
+        "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj",
         "projectName": "ResourceManagementSystem.Web",
-        "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj",
-        "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\obj\\",
+        "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\ResourceManagementSystem.Web.csproj",
+        "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
+        "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Web\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -250,11 +266,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj": {
-                "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj"
+              "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj": {
+                "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj"
               },
-              "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj": {
-                "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj"
+              "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj": {
+                "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Infrastructure\\ResourceManagementSystem.Infrastructure.csproj"
               }
             }
           }

@@ -8,3 +8,13 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.csproj.CoreCompileInputs.cache
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.pdb
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.deps.json
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.dll
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.pdb
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.csproj.AssemblyReference.cache
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.AssemblyInfoInputs.cache
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.AssemblyInfo.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.csproj.CoreCompileInputs.cache
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.dll
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Domain\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.pdb

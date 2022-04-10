@@ -11,3 +11,16 @@ D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagement
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.csproj.CopyComplete
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.dll
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.pdb
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.csproj.AssemblyReference.cache
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.AssemblyInfoInputs.cache
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.AssemblyInfo.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.csproj.CoreCompileInputs.cache
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.dll
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.pdb
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Application.deps.json
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Application.dll
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Application.pdb
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.dll
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\bin\Debug\netcoreapp3.1\ResourceManagementSystem.Domain.pdb
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Application\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Application.csproj.CopyComplete

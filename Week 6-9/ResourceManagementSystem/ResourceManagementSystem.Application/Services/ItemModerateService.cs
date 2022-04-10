@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ResourceManagementSystem.Application.Interfaces;
+using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using ResourceManagementSystem.Application.ViewModel.Items;
 using ResourceManagementSystem.Domain.Interface;
 using System;
@@ -32,10 +33,34 @@ namespace ResourceManagementSystem.Application.Services
 
         public ItemVM GetCreateOfItemTemplate()
         {
-            throw new NotImplementedException();
+            return new ItemVM()
+            {
+                DepartmentsList = _departmentRepo.GetDepartmentsList()
+                .Select(x => new AddRemoveStatusVM
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Status = false
+                }).ToList()
+            };
         }
 
         public ItemVM GetDetailsEditItem(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CreateItem(ItemVM input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateItem(ItemVM input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteItem(string id)
         {
             throw new NotImplementedException();
         }
