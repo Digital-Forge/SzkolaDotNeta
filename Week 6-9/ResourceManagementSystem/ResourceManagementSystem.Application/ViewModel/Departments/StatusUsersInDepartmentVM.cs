@@ -9,6 +9,6 @@ namespace ResourceManagementSystem.Application.ViewModel.Departments
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public List<AddRemoveStatusVM> UsersList { get; set; }
+        public List<AddRemoveStatusVM> UsersList { get; set; } = new List<AddRemoveStatusVM>();
     }
 }

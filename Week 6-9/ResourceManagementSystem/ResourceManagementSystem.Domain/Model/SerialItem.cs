@@ -8,15 +8,14 @@ namespace ResourceManagementSystem.Domain.Model
     public class SerialItem
     {
         [Key]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string SerialNumber { get; set; }
-        public bool ActiveStatus { get; set; }
 
         //Relations
-        public int IdItem { get; set; }
+        public Guid IdItem { get; set; }
         public virtual Item Item { get; set; }
 
-        public int? ItemReservationId { get; set; }
+        public Guid? ItemReservationId { get; set; }
         public virtual ItemReservation Reservation { get; set; }
     }
 }

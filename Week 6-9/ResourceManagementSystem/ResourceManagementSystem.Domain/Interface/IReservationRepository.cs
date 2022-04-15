@@ -9,5 +9,6 @@ namespace ResourceManagementSystem.Domain.Interface
     public interface IReservationRepository
     {
         IQueryable<ItemReservation> GetReservationListByUser(string userId);
+        bool RemoveReservationById(Guid id);
     }
 }

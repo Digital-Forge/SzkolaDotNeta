@@ -18,6 +18,7 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "ItemModerator, Admin")]
         public IActionResult Resources()
         {
+            ViewData["mode"] = "ItemModerator";
             return View(_itemModerateService.GetItemsList());
         }
 
@@ -33,7 +34,7 @@ namespace ResourceManagementSystem.Web.Controllers
         public IActionResult CreateItem(ItemVM input)
         {
             var buff = _itemModerateService.CreateItem(input);
-            if (buff > 0) return RedirectToAction("DetailsItem", buff);
+            if (buff != "") return RedirectToAction("DetailsItem", new { input.Id });
             else return BadRequest();
         }
 
@@ -55,7 +56,7 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "ItemModerator, Admin")]
         public IActionResult EditItem(ItemVM input)
         {
-            if (_itemModerateService.UpdateItem(input)) return RedirectToAction("DetailsItem", input.Id);
+            if (_itemModerateService.UpdateItem(input)) return RedirectToAction("DetailsItem", new { input.Id });
             else return BadRequest();
         }
 
@@ -63,7 +64,8 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "ItemModerator, Admin")]
         public IActionResult DeleteItem(string id)
         {
-            return View();
+            if (_itemModerateService.DeleteItem(id)) return RedirectToAction("Resources");
+            else return BadRequest();
         }
     }
 }

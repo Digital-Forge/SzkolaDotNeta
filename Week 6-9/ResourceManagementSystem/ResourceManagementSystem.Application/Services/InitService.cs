@@ -58,7 +58,6 @@ namespace ResourceManagementSystem.Application.Services
         {
             var userBuff = _userManager.GetUserAsync(user).Result;
             _accessConfigRepository.AddRoleToUser("Admin", userBuff);
-            
         }
 
         public bool SetFirstAdminData(AdminAccountVM model)

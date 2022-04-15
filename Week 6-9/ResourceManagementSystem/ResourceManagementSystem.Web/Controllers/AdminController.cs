@@ -12,6 +12,7 @@ namespace ResourceManagementSystem.Web.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["mode"] = "Admin";
             return View();
         }
     }

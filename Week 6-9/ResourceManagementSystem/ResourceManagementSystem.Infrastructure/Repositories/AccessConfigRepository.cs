@@ -21,7 +21,11 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
         {
             try
             {
-                _context.Roles.Add(new IdentityRole(name));
+                _context.Roles.Add(new IdentityRole
+                {
+                    Name = name,
+                    NormalizedName = name.ToUpper()
+                });
                 _context.SaveChanges();
             }
             catch

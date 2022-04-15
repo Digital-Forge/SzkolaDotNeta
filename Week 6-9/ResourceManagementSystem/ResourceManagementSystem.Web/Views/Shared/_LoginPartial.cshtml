@@ -18,12 +18,13 @@
     {
         <form asp-area="" asp-action="Index" asp-controller="Home" method="post">
             <select name="Panel" id="Panel" onchange="this.form.submit()">
-                                                             <option value="User">User</option>
-                @if (User.IsInRole("UserModerator"))       { <option value="UserModerator">Users Moderator</option>}
-                @if (User.IsInRole("ItemModerator"))       { <option value="ItemModerator">Resources Moderator</option>}
-                @if (User.IsInRole("DepartmentModerator")) { <option value="DepartmentModerator">Departments Moderator</option>}
-                @if (User.IsInRole("PickupPoint"))         { <option value="PickupPoint">Pickup Point</option>}
-                @if (User.IsInRole("Admin"))               { <option value="Admin">Admin</option>}
+                                                                                       <option value="@ViewData["mode"]" selected disabled hidden>@ViewData["mode"]</option>
+                                                                                       <option value="User">User</option>
+                @if (User.IsInRole("UserModerator") || User.IsInRole("Admin"))       { <option value="UserModerator">Users Moderator</option> }
+                @if (User.IsInRole("ItemModerator") || User.IsInRole("Admin"))       { <option value="ItemModerator">Resources Moderator</option> }
+                @if (User.IsInRole("DepartmentModerator") || User.IsInRole("Admin")) { <option value="DepartmentModerator">Departments Moderator</option> }
+                @if (User.IsInRole("PickupPoint") || User.IsInRole("Admin"))         { <option value="PickupPoint">Pickup Point</option> }
+                @if (User.IsInRole("Admin"))                                         { <option value="Admin">Admin</option> }
             </select>
         </form>
     }

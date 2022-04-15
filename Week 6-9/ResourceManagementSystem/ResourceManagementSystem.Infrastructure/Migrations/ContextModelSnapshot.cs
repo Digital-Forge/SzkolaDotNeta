@@ -227,10 +227,9 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -243,10 +242,9 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.Item", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -265,22 +263,21 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.ItemReservation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ReservationStatus")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SerialItemId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SerialItemId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -293,11 +290,11 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.ItemToDepartment", b =>
                 {
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ItemId", "DepartmentId");
 
@@ -308,22 +305,17 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ResourceManagementSystem.Domain.Model.SerialItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("ActiveStatus")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("IdItem")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("IdItem")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ItemReservationId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ItemReservationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SerialNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -342,8 +334,8 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AppUserId", "DepartmentId");
 
@@ -357,7 +349,6 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isActive")

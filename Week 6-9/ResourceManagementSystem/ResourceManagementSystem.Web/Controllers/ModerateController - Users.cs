@@ -19,6 +19,7 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "UserModerator, Admin")]
         public IActionResult Users()
         {
+            ViewData["mode"] = "UserModerator";
             return View(_usersModerateService.ListOfUsers());
         }
 
@@ -44,7 +45,7 @@ namespace ResourceManagementSystem.Web.Controllers
                     ViewBag.ErrorInfo = "Unidentified error";
                     return View();
                 default:
-                    return RedirectToAction("DetailsUser", buff);
+                    return RedirectToAction("DetailsUser", new { id = buff });
             }
         }
 
@@ -71,7 +72,7 @@ namespace ResourceManagementSystem.Web.Controllers
         public IActionResult EditUser(DetailsEditUserVM input)
         {
             var buff = _usersModerateService.UpdateEditUser(input, HttpContext.User);
-            if (buff) return RedirectToAction("DetailsUser", input.Id);
+            if (buff) return RedirectToAction("DetailsUser", new { input.Id });
             else return BadRequest();
         }
 

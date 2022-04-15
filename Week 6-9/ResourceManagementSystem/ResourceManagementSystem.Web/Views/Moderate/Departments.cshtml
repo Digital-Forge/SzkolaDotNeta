@@ -43,8 +43,8 @@
                 @Html.DisplayFor(modelItem => item.CountOfItems)
             </td>
             <td>
-                @Html.ActionLink("Details", "DetailsDepartment", new { id = item.Id })
-                @Html.ActionLink("Add/Remove Users", "AddRemoveUsersToDepartment", new { id = item.Id }) |
+                @Html.ActionLink("Details", "DetailsDepartment", new { id = item.Id }) |
+                @Html.ActionLink("Add/Remove Users", "AddRemoveUsersToDepartment", new { id = item.Id }) 
             </td>
         </tr>
 }

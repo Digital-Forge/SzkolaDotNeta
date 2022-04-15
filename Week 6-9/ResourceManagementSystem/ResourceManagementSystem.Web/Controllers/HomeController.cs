@@ -19,6 +19,7 @@ namespace ResourceManagementSystem.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData["mode"] = "User";
             return View();
         }
 
@@ -30,19 +31,19 @@ namespace ResourceManagementSystem.Web.Controllers
                 case "User":
                     return RedirectToAction("Index");
                     //break;
-                case "UserModerator":
+                case "UserModerator":                    
                     return RedirectToAction("Users", "Moderate");
                     //break;
-                case "ItemModerator":
+                case "ItemModerator":                    
                     return RedirectToAction("Resources", "Moderate");
                     //break;
-                case "DepartmentModerator":
+                case "DepartmentModerator":                    
                     return RedirectToAction("Departments", "Moderate");
                     //break;
-                case "PickupPoint":
+                case "PickupPoint":                    
                     return RedirectToAction("Index", "PickupPoint");
                     //break;
-                case "Admin":
+                case "Admin":                    
                     return RedirectToAction("Index", "Admin");
                     //break;
             }

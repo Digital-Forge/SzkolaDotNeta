@@ -54,8 +54,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 name: "Departments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -67,8 +66,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 name: "Items",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ImagePath = table.Column<string>(nullable: true)
@@ -189,7 +187,7 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 columns: table => new
                 {
                     AppUserId = table.Column<string>(nullable: false),
-                    DepartmentId = table.Column<int>(nullable: false)
+                    DepartmentId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,12 +210,11 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 name: "ItemReservations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     ReservationStatus = table.Column<int>(nullable: false),
-                    ItemId = table.Column<int>(nullable: false),
+                    ItemId = table.Column<Guid>(nullable: false),
                     AppUserId = table.Column<string>(nullable: true),
-                    SerialItemId = table.Column<int>(nullable: true)
+                    SerialItemId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,8 +237,8 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 name: "ItemsToDepartments",
                 columns: table => new
                 {
-                    ItemId = table.Column<int>(nullable: false),
-                    DepartmentId = table.Column<int>(nullable: false)
+                    ItemId = table.Column<Guid>(nullable: false),
+                    DepartmentId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -264,12 +261,10 @@ namespace ResourceManagementSystem.Infrastructure.Migrations
                 name: "SerialItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SerialNumber = table.Column<string>(nullable: false),
-                    ActiveStatus = table.Column<bool>(nullable: false),
-                    IdItem = table.Column<int>(nullable: false),
-                    ItemReservationId = table.Column<int>(nullable: true)
+                    Id = table.Column<Guid>(nullable: false),
+                    SerialNumber = table.Column<string>(nullable: true),
+                    IdItem = table.Column<Guid>(nullable: false),
+                    ItemReservationId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {

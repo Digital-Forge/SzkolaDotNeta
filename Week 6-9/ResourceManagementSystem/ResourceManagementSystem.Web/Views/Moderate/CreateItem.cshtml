@@ -4,14 +4,20 @@
     ViewData["Title"] = "CreateItem";
 }
 
-<h1>CreateItem</h1>
+<h1>Create Item</h1>
 
-<h4>ItemVM</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Image</label>
+                <input asp-for="ImageObj" accept="image/*" />
+                <span asp-validation-for="ImageObj" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -22,20 +28,17 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div id = "SerialsBox">
-                <div>
-                    <div class="form-group">
-                        <label asp-for="SerialsList[0].Id" class="control-label"></label>
-                        <input asp-for="SerialsList[0].Name" class="form-control" />
-                    </div>
-                    <input type = "button" onclick = "RemoveSerial(0)" value = "X"/>
-                </div>
 
+
+            <div id="SerialsBox">
                 
             </div>
+
             <div>
-                <input type = "button" oncancel = "AddSerial()" value = "Add" />
+                <button type="button" onClick="AddSerial()">Add Serial Number</button>
             </div>
+            <br />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -47,20 +50,50 @@
     <a asp-action="Resources">Back to List</a>
 </div>
 
+
+@section Scripts
+{
 <script type="text/javascript">
     
-    static coutnSerials = 0;
+    let SerialList = [];
     
+    @foreach (var serial in Model.SerialsList)
+    {
+        <text>
+        SerialList.push([@serial.Id, @serial.Name]);
+        </text>
+    }
+    
+    function ShowSerial()
+    {
+        let buff = "Serials : <br />";
+
+        for (let i = 0; i < SerialList.length; i++) 
+        {  
+            buff += "<div>\n" +
+                "<div class=\"form-group\">\n" +
+                    "<input type=\"hidden\" id=\"RolesList_" + i + "__Id\" name=\"RolesList[" + i + "].Id\" value=\"" + SerialList[i][0] + "\">\n" +
+                    "<input class=\"form-control\" type=\"text\" id=\"SerialsList_" + i + "__Name\" name=\"SerialsList[" + i + "].Name\" value=\"" + SerialList[i][1] + "\">\n" +
+                    "<button type=\"button\" onClick=\"RemoveSerial(" + i + ")\">X</button>" +
+                "</div>\n" +
+            "</div>\n";
+        }
+
+        document.getElementById("SerialsBox").innerHTML = buff;
+    }
+
     function AddSerial()
     {
-        //Sdocument.getElementById("SerialsBox").innerHTML;
-    
+        SerialList.push(["", ""]);
+        ShowSerial();
     }
     
-    function RemoveSerial(var number)
+    function RemoveSerial(number)
     {
-    
+        SerialList.splice(number, 1);
+        ShowSerial();
     }
 
+    AddSerial();
 </script>
-
+}

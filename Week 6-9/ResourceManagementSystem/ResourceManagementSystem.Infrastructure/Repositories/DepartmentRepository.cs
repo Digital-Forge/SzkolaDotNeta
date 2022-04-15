@@ -22,11 +22,12 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             {
                 var buff = new Department
                 {
+                    Id = new Guid(),
                     Name = name
                 };
                 _context.Departments.Add(buff);
                 _context.SaveChanges();
-                return buff.Id;
+                return buff.Id.ToString();
             }
             catch
             {
@@ -41,16 +42,7 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
 
         public bool AddUserToDepartment(string userId, string departmentId)
         {
-            try
-            {
-                _context.UsersToDepartments.Add(new UserToDepartment { AppUserId = userId, DepartmentId = departmentId });
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return AddUserToDepartment(userId, new Guid(departmentId));
         }
 
         public bool DeleteDepartmentByName(string name)
@@ -73,20 +65,7 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
 
         public bool DeleteDepartmentById(string id)
         {
-            try
-            {
-                var buff = _context.Departments.FirstOrDefault(x => x.Id == id);
-
-                if (buff == null) return false;
-
-                _context.Departments.Remove(buff);
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return DeleteDepartmentById(new Guid(id));
         }
 
         public IQueryable<Department> GetDepartmentsList()
@@ -106,20 +85,7 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
 
         public bool RemoveUserFromDepartment(string userId, string departmentId)
         {
-            try
-            {
-                var buff = _context.UsersToDepartments.FirstOrDefault(x => x.AppUserId == userId && x.DepartmentId == departmentId);
-
-                if (buff == null) return false;
-
-                _context.UsersToDepartments.Remove(buff);
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return RemoveUserFromDepartment(userId, new Guid(departmentId));
         }
 
         public bool UpdateDepartment(Department department)
@@ -138,12 +104,12 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
 
         public Department GetDepartmentById(string id)
         {
-            return _context.Departments.FirstOrDefault(x => x.Id == id);
+            return GetDepartmentById(new Guid(id));
         }
 
         public IQueryable<AppUser> GetUsersListByDepartment(string departmentId)
         {
-            return _context.UsersToDepartments.Where(x => x.DepartmentId == departmentId).Select(y => y.AppUser);
+            return GetUsersListByDepartment(new Guid(departmentId));
         }
 
         public bool AddItemToDepartment(Item item, Department department)
@@ -152,6 +118,81 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
         }
 
         public bool AddItemToDepartment(string itemId, string departmentId)
+        {
+            return AddItemToDepartment(new Guid(itemId), new Guid(departmentId));
+        }
+
+        public bool RemoveItemFromDepartment(Item item, Department department)
+        {
+            return RemoveItemFromDepartment(item.Id, department.Id);
+        }
+
+        public bool RemoveItemFromDepartment(string itemId, string departmentId)
+        {
+            return RemoveItemFromDepartment(new Guid(itemId), new Guid(departmentId));
+        }
+
+        public bool DeleteDepartmentById(Guid id)
+        {
+            try
+            {
+                var buff = _context.Departments.FirstOrDefault(x => x.Id == id);
+
+                if (buff == null) return false;
+
+                _context.Departments.Remove(buff);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool AddUserToDepartment(string userId, Guid departmentId)
+        {
+            try
+            {
+                _context.UsersToDepartments.Add(new UserToDepartment { AppUserId = userId, DepartmentId = departmentId });
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveUserFromDepartment(string userId, Guid departmentId)
+        {
+            try
+            {
+                var buff = _context.UsersToDepartments.FirstOrDefault(x => x.AppUserId == userId && x.DepartmentId == departmentId);
+
+                if (buff == null) return false;
+
+                _context.UsersToDepartments.Remove(buff);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public IQueryable<AppUser> GetUsersListByDepartment(Guid departmentId)
+        {
+            return _context.UsersToDepartments.Where(x => x.DepartmentId == departmentId).Select(y => y.AppUser);
+        }
+
+        public Department GetDepartmentById(Guid id)
+        {
+            return _context.Departments.FirstOrDefault(x => x.Id == id);
+        }
+
+        public bool AddItemToDepartment(Guid itemId, Guid departmentId)
         {
             try
             {
@@ -165,12 +206,7 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             }
         }
 
-        public bool RemoveItemFromDepartment(Item item, Department department)
-        {
-            return RemoveItemFromDepartment(item.Id, department.Id);
-        }
-
-        public bool RemoveItemFromDepartment(string itemId, string departmentId)
+        public bool RemoveItemFromDepartment(Guid itemId, Guid departmentId)
         {
             try
             {

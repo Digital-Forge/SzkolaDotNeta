@@ -59,12 +59,13 @@ namespace ResourceManagementSystem.Application.Services
                 buff.DepartmentsList = _departmentRepo.GetDepartmentsList()
                     .Select(x => new AddRemoveStatusVM
                     {
-                        Id = x.Id,
+                        Id = x.Id.ToString().ToLower(),
                         Name = x.Name,
                         Status = false
                     }).ToList();
 
                 buff.RolesList = _accessConfigRepo.GetRolesList()
+                    .Where(x => x.Name != "User")
                     .Select(x => new AddRemoveStatusVM
                     {
                         Id = x.Id,
@@ -95,22 +96,25 @@ namespace ResourceManagementSystem.Application.Services
             {
                 newUser = _userManager.Users.Where(x => x.UserName == newUser.UserName).FirstOrDefault();
 
-                _userManager.SetEmailAsync(newUser, input.Email);
+                _userManager.SetEmailAsync(newUser, input.Email).Wait();
                 SetActiveUser(input.SetActive, newUser);
 
-                foreach (var role in input.RolesList)
+                if(moderator.IsInRole("Admin"))
                 {
-                    if (role.Status)
+                    foreach (var role in input.RolesList.ToList())
                     {
-                        _userManager.AddToRoleAsync(newUser, role.Name);
+                        if (role.Status)
+                        {
+                            _accessConfigRepo.AddRoleToUser(role.Name, newUser);
+                        }
                     }
-                }
 
-                foreach (var department in input.DepartmentsList)
-                {
-                    if (department.Status)
+                    foreach (var department in input.DepartmentsList.ToList())
                     {
-                        _departmentRepo.AddUserToDepartment(newUser.Id, department.Id);
+                        if (department.Status)
+                        {
+                            _departmentRepo.AddUserToDepartment(newUser.Id, department.Id);
+                        }
                     }
                 }
             }
@@ -123,14 +127,14 @@ namespace ResourceManagementSystem.Application.Services
             {
                 if (!_userManager.IsInRoleAsync(user, "User").Result)
                 {
-                    if (!_userManager.AddToRoleAsync(user, "User").Result.Succeeded) return false;
+                    if (!_accessConfigRepo.AddRoleToUser("User", user)) return false;
                 }
             }
             else
             {
                 if (_userManager.IsInRoleAsync(user, "User").Result)
                 {
-                    if (!_userManager.RemoveFromRoleAsync(user, "User").Result.Succeeded) return false;
+                    if (!_accessConfigRepo.RemoveRoleFromUser("User", user)) return false;
                 }
             }
 
@@ -150,12 +154,12 @@ namespace ResourceManagementSystem.Application.Services
             var VM = _mapper.Map<DetailsEditUserVM>(user);
             if (VM == null) return null;
 
-            foreach (var department in user.Departments)
+            foreach (var department in _departmentRepo.GetDepartmentsListByUser(userId))
             {
-                VM.DepartmentsList.Add(new AddRemoveStatusVM { Name = department.Department.Name });
+                VM.DepartmentsList.Add(new AddRemoveStatusVM { Name = department.Name });
             }
 
-            foreach (var role in _accessConfigRepo.GetRolesList())
+            foreach (var role in _accessConfigRepo.GetRolesList().ToList())
             {
                 if (_userManager.IsInRoleAsync(user, role.Name).Result && role.Name != "User")
                 {
@@ -163,9 +167,9 @@ namespace ResourceManagementSystem.Application.Services
                 } 
             }
 
-            foreach (var item in _reservationRepo.GetReservationListByUser(userId))
+            foreach (var item in _reservationRepo.GetReservationListByUser(userId).Select(x => x.Item))
             {
-                VM.ReservationItemList.Add(new AddRemoveStatusVM { Name = item.Item.Name });
+                VM.ReservationItemList.Add(new AddRemoveStatusVM { Name = item.Name });
             }
 
             return VM;
@@ -184,36 +188,21 @@ namespace ResourceManagementSystem.Application.Services
 
             if (moderator.IsInRole("Admin"))
             {
-                foreach (var department in _departmentRepo.GetDepartmentsList())
+                VM.DepartmentsList = _departmentRepo.GetDepartmentsList().Select(x => new AddRemoveStatusVM
                 {
-                    if (user.Departments.Any(x => x.DepartmentId == department.Id))
-                    {
-                        VM.DepartmentsList.Add(new AddRemoveStatusVM
-                        {
-                            Id = department.Id,
-                            Name = department.Name,
-                            Status = true
-                        });
-                    }
-                    else
-                    {
-                        VM.DepartmentsList.Add(new AddRemoveStatusVM
-                        {
-                            Id = department.Id,
-                            Name = department.Name,
-                            Status = false
-                        });
-                    }
-                }
+                    Id = x.Id.ToString().ToLower(),
+                    Name = x.Name,
+                    Status = x.AppUsers != null ? x.AppUsers.Any(y => y.AppUserId == userId) : false
+                }).ToList();
             }
             else
             {
-                foreach (var department in user.Departments)
+                foreach (var department in _departmentRepo.GetDepartmentsListByUser(userId))
                 {
                     VM.DepartmentsList.Add(new AddRemoveStatusVM
                     {
-                        Id = department.DepartmentId,
-                        Name = department.Department.Name,
+                        Id = department.Id.ToString().ToLower(),
+                        Name = department.Name,
                         Status = true
                     });
                 }
@@ -221,7 +210,7 @@ namespace ResourceManagementSystem.Application.Services
 
             if (moderator.IsInRole("Admin"))
             {
-                foreach (var role in _accessConfigRepo.GetRolesList())
+                foreach (var role in _accessConfigRepo.GetRolesList().ToList())
                 {
                     if (role.Name != "User")
                     {
@@ -240,6 +229,9 @@ namespace ResourceManagementSystem.Application.Services
         {
             var user = _userRepo.GetUserById(input.Id);
 
+            if ((!moderator.IsInRole("Admin"))
+                && _userManager.IsInRoleAsync(user, "Admin").Result) return false;
+
             user.UserName = input.UserName;
             user.FullName = input.FullName;
             user.PhoneNumber = input.Phone;
@@ -256,9 +248,11 @@ namespace ResourceManagementSystem.Application.Services
 
             if (moderator.IsInRole("Admin"))
             {
-                foreach (var department in input.DepartmentsList)
+                user.Departments = _departmentRepo.GetDepartmentsListByUser(user.Id).SelectMany(x => x.AppUsers).Where(x => x.AppUserId == user.Id).ToList();
+
+                foreach (var department in input.DepartmentsList ?? Enumerable.Empty<AddRemoveStatusVM>())
                 {
-                    if (user.Departments.Any(x => x.Department.Name == department.Name))
+                    if (user.Departments.Any(x => x.DepartmentId.ToString() == department.Id))
                     {
                         if (!department.Status) _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
                     }
@@ -267,27 +261,29 @@ namespace ResourceManagementSystem.Application.Services
                         if (department.Status) _departmentRepo.AddUserToDepartment(user.Id, department.Id);
                     }
                 }
+
+                foreach (var role in input.RolesList ?? Enumerable.Empty<AddRemoveStatusVM>())
+                {
+                    if (_userManager.IsInRoleAsync(user, role.Name).Result)
+                    {
+                        if (!role.Status) _accessConfigRepo.RemoveRoleFromUser(role.Name, user);
+                        //_userManager.RemoveFromRoleAsync(user, role.Name);
+                    }
+                    else
+                    {
+                        if (role.Status) _accessConfigRepo.AddRoleToUser(role.Name, user);
+                        //_userManager.AddToRoleAsync(user, role.Name);
+                    }
+                }
             }
             else
             {
-                foreach (var department in input.DepartmentsList)
+                foreach (var department in input.DepartmentsList ?? Enumerable.Empty<AddRemoveStatusVM>())
                 {
                     if (user.Departments.Any(x => x.Department.Name == department.Name))
                     {
                         if (!department.Status) _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
                     }
-                }
-            }
-
-            foreach (var role in input.RolesList)
-            {
-                if (_userManager.IsInRoleAsync(user, role.Name).Result)
-                {
-                    if (!role.Status) _userManager.RemoveFromRoleAsync(user, role.Name);
-                }
-                else
-                {
-                    if (role.Status) _userManager.AddToRoleAsync(user, role.Name);
                 }
             }
             return true;
@@ -300,11 +296,11 @@ namespace ResourceManagementSystem.Application.Services
             if ((!moderator.IsInRole("Admin"))
                 && _userManager.IsInRoleAsync(user, "Admin").Result) return 1;
 
-            if (user.Reservations.Count != 0) return 2;
+            if (user.Reservations != null && user.Reservations.Count != 0) return 2;
 
-            foreach (var department in user.Departments)
+            foreach (var department in _departmentRepo.GetDepartmentsListByUser(userId))
             {
-                _departmentRepo.RemoveUserFromDepartment(user.Id, department.DepartmentId);
+                _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
             }
 
             if (!_userManager.DeleteAsync(user).Result.Succeeded) return -1;
@@ -316,7 +312,7 @@ namespace ResourceManagementSystem.Application.Services
             return _reservationRepo.GetReservationListByUser(userId)
                 .Select(x => new AddRemoveStatusVM
                 {
-                    Id = x.Id,
+                    Id = x.Id.ToString().ToLower(),
                     Name = $"{x.Item.Name} - {x.ItemId}"
                 }).ToList();
         }

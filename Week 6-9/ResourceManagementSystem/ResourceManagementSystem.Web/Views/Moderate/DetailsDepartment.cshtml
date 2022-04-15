@@ -26,7 +26,7 @@
 <div>
     Users
     <div>
-        #@foreach (var user in Model.UsersList)
+        @foreach (var user in Model.UsersList)
         {
         <span>@user.Id - @user.Name</span><br>
         }
@@ -35,7 +35,7 @@
 <div>
     Items
     <div>
-        #@foreach (var item in Model.UsersList)
+        @foreach (var item in Model.ItemsList)
         {
             <span>@item.Name</span><br>
         }
@@ -44,5 +44,6 @@
 <div>
     @Html.ActionLink("Edit", "EditDepartment", new { id = Model.Id }) |
     @Html.ActionLink("Add/Remove Users", "AddRemoveUsersToDepartment", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Delete", "DeleteDepartment", new { id = Model.Id }) |
+    <a asp-action="Departments">Back to List</a>
 </div>

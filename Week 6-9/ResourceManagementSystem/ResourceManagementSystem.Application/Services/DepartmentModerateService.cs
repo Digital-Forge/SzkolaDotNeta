@@ -4,6 +4,7 @@ using ResourceManagementSystem.Application.Interfaces;
 using ResourceManagementSystem.Application.ViewModel.Departments;
 using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
 using ResourceManagementSystem.Domain.Interface;
+using ResourceManagementSystem.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,48 +41,48 @@ namespace ResourceManagementSystem.Application.Services
 
         public bool Delete(string id)
         {
-            var department = _departmentRepo.GetDepartmentById(id);
+            var department = _departmentRepo.GetDepartmentsList().Where(x => x.Id.ToString().ToLower() == id);
 
-            foreach (var user in department.AppUsers)
+            foreach (var user in department.SelectMany(x => x.AppUsers))
             {
-                _departmentRepo.RemoveUserFromDepartment(user.AppUserId, department.Id);
+                _departmentRepo.RemoveUserFromDepartment(user.AppUserId, id);
             }
 
-            foreach (var item in department.Items)
+            foreach (var item in department.SelectMany(x => x.Items))
             {
-                _departmentRepo.RemoveItemFromDepartment(item.ItemId, department.Id);
+                _departmentRepo.RemoveItemFromDepartment(item.ItemId, new Guid(id));
             }
 
-            return _departmentRepo.DeleteDepartmentById(department.Id);
+            return _departmentRepo.DeleteDepartmentById(id);
         }
 
         public DetailsEditDepartmentVM GetDetailsEdit(string id)
         {
-            var department = _departmentRepo.GetDepartmentById(id);
-            var VM = _mapper.Map<DetailsEditDepartmentVM>(department);
+            var department = _departmentRepo.GetDepartmentsList().Where(x => x.Id.ToString().ToLower() == id);
+            var VM = _mapper.Map<DetailsEditDepartmentVM>(department.ToList()[0]);
 
-            VM.UsersList = department.AppUsers
-                .Select(x => new AddRemoveStatusVM
+            VM.UsersList = department?.SelectMany(x => x.AppUsers)
+                ?.Select(x => new AddRemoveStatusVM
                 { 
                     Id = x.AppUserId,
                     Name = x.AppUser.FullName,
                     Status = true
-                }).ToList();
+                }).ToList() ?? new List<AddRemoveStatusVM>();
 
-            VM.ItemsList = department.Items
-                .Select(x => new AddRemoveStatusVM
+            VM.ItemsList = department?.SelectMany(x => x.Items)
+                ?.Select(x => new AddRemoveStatusVM
                 {
-                    Id = x.ItemId,
+                    Id = x.ItemId.ToString().ToLower(),
                     Name = x.Item.Name,
                     Status = true
-                }).ToList();
+                }).ToList() ?? new List<AddRemoveStatusVM>();
 
             return VM;
         }
 
         public bool Update(DetailsEditDepartmentVM input)
         {
-            foreach (var item in input.ItemsList)
+            foreach (var item in input.ItemsList ?? Enumerable.Empty<AddRemoveStatusVM>())
             {
                 if (!item.Status)
                 {
@@ -89,7 +90,7 @@ namespace ResourceManagementSystem.Application.Services
                 }
             }
 
-            foreach (var item in input.UsersList)
+            foreach (var item in input.UsersList ?? Enumerable.Empty<AddRemoveStatusVM>())
             {
                 if (!item.Status)
                 {
@@ -109,41 +110,39 @@ namespace ResourceManagementSystem.Application.Services
 
             var VM = new StatusUsersInDepartmentVM
             {
-                Id = buff.Id,
+                Id = buff.Id.ToString().ToLower(),
                 Name = buff.Name,
                 UsersList = new List<AddRemoveStatusVM>()
             };
 
-            foreach (var user in _userRepo.GetUsersList())
+            VM.UsersList = _userRepo.GetUsersList().Select(x => new AddRemoveStatusVM
             {
-                VM.UsersList.Add(new AddRemoveStatusVM
-                {
-                    Id = user.Id,
-                    Name = user.FullName,
-                    Status = user.Departments.Any(x => x.DepartmentId == departmentId)
-                });
-            }
+                Id = x.Id,
+                Name = x.FullName,
+                Status = x.Departments != null ? x.Departments.Any(x => x.DepartmentId.ToString().ToLower() == departmentId) : false
+            }).ToList();
+
             return VM;
         }
 
         public void UpdateUsersInDepartment(StatusUsersInDepartmentVM input)
         {
-            var department = _departmentRepo.GetDepartmentById(input.Id);
+            var department = _departmentRepo.GetDepartmentsList().Where(x => x.Id.ToString().ToLower() == input.Id).SelectMany(x => x.AppUsers);
 
-            foreach (var user in input.UsersList)
+            foreach (var user in input.UsersList ?? Enumerable.Empty<AddRemoveStatusVM>())
             {
                 if (user.Status)
                 {
-                    if (!department.AppUsers.Any(x => x.AppUserId == user.Id))
+                    if (!(department?.Any(x => x.AppUserId == user.Id) ?? false))
                     {
-                        _departmentRepo.AddUserToDepartment(user.Id, department.Id);
+                        _departmentRepo.AddUserToDepartment(user.Id, input.Id);
                     }
                 }
                 else
                 {
-                    if (department.AppUsers.Any(x => x.AppUserId == user.Id))
+                    if (department?.Any(x => x.AppUserId == user.Id) ?? false)
                     {
-                        _departmentRepo.RemoveUserFromDepartment(user.Id, department.Id);
+                        _departmentRepo.RemoveUserFromDepartment(user.Id, input.Id);
                     }
                 }
             }

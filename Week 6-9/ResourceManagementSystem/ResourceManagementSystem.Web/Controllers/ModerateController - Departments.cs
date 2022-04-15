@@ -18,6 +18,7 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "DepartmentModerator, Admin")]
         public IActionResult Departments()
         {
+            ViewData["mode"] = "DepartmentModerator";
             return View(_departmentModerateService.GetDepartmentsList());
         }
 
@@ -64,7 +65,7 @@ namespace ResourceManagementSystem.Web.Controllers
         [Authorize(Roles = "DepartmentModerator, Admin")]
         public IActionResult EditDepartment(DetailsEditDepartmentVM input)
         {
-            if (_departmentModerateService.Update(input)) return RedirectToAction("DetailsDepartment", input.Id);
+            if (_departmentModerateService.Update(input)) return RedirectToAction("DetailsDepartment", new { input.Id });
             return BadRequest();
         }
 
@@ -88,7 +89,7 @@ namespace ResourceManagementSystem.Web.Controllers
         public IActionResult AddRemoveUsersToDepartment(StatusUsersInDepartmentVM input)
         {
             _departmentModerateService.UpdateUsersInDepartment(input);
-            return RedirectToAction("DetailsDepartment", input.Id);
+            return RedirectToAction("DetailsDepartment", new { input.Id });
         }
 
 

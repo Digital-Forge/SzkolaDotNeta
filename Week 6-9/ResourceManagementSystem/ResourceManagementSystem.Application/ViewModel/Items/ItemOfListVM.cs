@@ -17,7 +17,8 @@ namespace ResourceManagementSystem.Application.ViewModel.Items
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Item, ItemOfListVM>()
-                .ForMember(p => p.Count, opt => opt.MapFrom(s => s.Serials.Count))
+                .ForMember(p => p.Id, opt => opt.MapFrom(s => s.Id.ToString().ToLower()))
+                .ForMember(p => p.Count, opt => opt.MapFrom(s => s.Serials != null ? s.Serials.Count : 0))
                 .ForMember(p => p.CountInUse, opt => opt.MapFrom(s => s.Reservations.Count));
         }
     }

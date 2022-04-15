@@ -12,15 +12,19 @@ namespace ResourceManagementSystem.Application.ViewModel.Departments
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public List<AddRemoveStatusVM> UsersList { get; set; }
-        public List<AddRemoveStatusVM> ItemsList { get; set; }
+        public List<AddRemoveStatusVM> UsersList { get; set; } = new List<AddRemoveStatusVM>();
+        public List<AddRemoveStatusVM> ItemsList { get; set; } = new List<AddRemoveStatusVM>();
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Department, DetailsEditDepartmentVM>()
+                .ForMember(p => p.Id, opt => opt.MapFrom(s => s.Id.ToString().ToLower()))
                 .ForMember(p => p.UsersList, opt => opt.Ignore())
-                .ForMember(p => p.ItemsList, opt => opt.Ignore())
-                .ReverseMap();
+                .ForMember(p => p.ItemsList, opt => opt.Ignore());
+
+            profile.CreateMap<DetailsEditDepartmentVM, Department>()
+                .ForMember(p => p.Id, opt => opt.MapFrom(s => new Guid(s.Id)));
+                
         }
     }
 }

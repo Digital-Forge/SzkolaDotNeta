@@ -14,11 +14,12 @@ namespace ResourceManagementSystem.Application.ViewModel.Departments
         public int CountOfUsers { get; set; }
         public int CountOfItems { get; set; }
 
-        private void Mapping(Profile profile)
+        public void Mapping(Profile profile)
         {
             profile.CreateMap<Department, DepartmentOfListVM>()
-                .ForMember(p => p.CountOfItems, opt => opt.MapFrom(s => s.Items.Count))
-                .ForMember(p => p.CountOfUsers, opt => opt.MapFrom(s => s.AppUsers.Count));
+                .ForMember(p => p.Id, opt => opt.MapFrom(s => s.Id.ToString().ToLower()))
+                .ForMember(p => p.CountOfItems, opt => opt.MapFrom(s => s.Items != null ? s.Items.Count : 0))
+                .ForMember(p => p.CountOfUsers, opt => opt.MapFrom(s => s.AppUsers != null ? s.AppUsers.Count : 0));
         }
     }
 }

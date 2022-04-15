@@ -380,3 +380,6 @@ C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSys
 C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.Views.pdb
 C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.csproj.CopyComplete
 C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\ResourceManagementSystem.Web.genruntimeconfig.cache
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateItem.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
+D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\PickupPoint\Index.cshtml.g.cs

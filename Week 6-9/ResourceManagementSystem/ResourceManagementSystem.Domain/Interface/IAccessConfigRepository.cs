@@ -9,7 +9,7 @@ namespace ResourceManagementSystem.Domain.Interface
 {
     public interface IAccessConfigRepository
     {
-        bool AddRole(string name);
+        bool AddRole(string name); 
         bool AddRoleToUser(string ruleName, AppUser user);
         bool RemoveRoleFromUser(string ruleName, AppUser user);
 

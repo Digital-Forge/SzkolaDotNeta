@@ -18,8 +18,8 @@ namespace ResourceManagementSystem.Application.ViewModel.Users
         public bool SetActive { get; set; } = true;
         public bool SendEmail { get; set; } = false;
 
-        public List<AddRemoveStatusVM> DepartmentsList { get; set; }
-        public List<AddRemoveStatusVM> RolesList { get; set; }
+        public List<AddRemoveStatusVM> DepartmentsList { get; set; } = new List<AddRemoveStatusVM>();
+        public List<AddRemoveStatusVM> RolesList { get; set; } = new List<AddRemoveStatusVM>();
     }
 
     public class CreateUserValidation : AbstractValidator<CreateUserVM>

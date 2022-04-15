@@ -53,5 +53,23 @@ namespace ResourceManagementSystem.Infrastructure.Repositories
             }
             return buff;
         }
+
+        public string GetImagesDestinationPath()
+        {
+            try
+            {
+                string buff = _config["ImagesPath"];
+
+                if (string.IsNullOrEmpty(buff))
+                {
+                    buff = "Images";
+                }
+                return buff;
+            }
+            catch (Exception)
+            {
+                return "Images";                
+            }
+        }
     }
 }

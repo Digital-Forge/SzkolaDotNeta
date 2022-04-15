@@ -9,5 +9,6 @@ namespace ResourceManagementSystem.Domain.Interface
     {
         bool FakeSendEmail();
         EmailConfig GetEmailConfig();
+        string GetImagesDestinationPath();
     }
 }

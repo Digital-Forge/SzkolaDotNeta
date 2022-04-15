@@ -8,7 +8,7 @@ namespace ResourceManagementSystem.Domain.Model
     public class Department
     {
         [Key]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
 
