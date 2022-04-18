@@ -7656,19 +7656,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jan\\.nuget\\packages\\": {}
+    "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Tests\\ResourceManagementSystem.Tests.csproj",
+      "projectUniqueName": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Tests\\ResourceManagementSystem.Tests.csproj",
       "projectName": "ResourceManagementSystem.Tests",
-      "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Tests\\ResourceManagementSystem.Tests.csproj",
-      "packagesPath": "C:\\Users\\Jan\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Tests\\obj\\",
+      "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Tests\\ResourceManagementSystem.Tests.csproj",
+      "packagesPath": "C:\\Users\\CyfrowaKuźnia\\.nuget\\packages\\",
+      "outputPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Tests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Jan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\CyfrowaKuźnia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7682,8 +7687,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj": {
-              "projectPath": "D:\\Project\\C#\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj"
+            "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj": {
+              "projectPath": "C:\\Project\\SzkolaDotNeta\\Week 6-9\\ResourceManagementSystem\\ResourceManagementSystem.Application\\ResourceManagementSystem.Application.csproj"
             }
           }
         }

@@ -1,23 +1,27 @@
 ﻿@model ResourceManagementSystem.Application.ViewModel.Items.ItemVM
 
 @{
-    ViewData["Title"] = "CreateItem";
+    ViewData["Title"] = "EditItem";
 }
 
-<h1>Create Item</h1>
+<h1>Edit Item</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateItem">
+        <form asp-action="EditItem" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="form-group">
                 <label class="control-label">Image</label>
-                <input asp-for="ImageObj" class="custom-file-input" accept="image/*" />
+                <img src="@Model.ImagePath"/>
+                <input asp-for="ImageObj" type="file" accept="image/*" />
                 <span asp-validation-for="ImageObj" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" type="hidden" class="form-control" />
+                @Model.Id
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -28,7 +32,7 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-
+            
 
             <div id="SerialsBox">
                 
@@ -53,16 +57,21 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
+    <a asp-action="DeleteItem" asp-route-id=@Model.Id>Delete</a>
+</div>
+<div>
+    <a asp-action="DetailsItem" asp-route-id=@Model.Id>Back to Details</a>
+</div>
+<div>
     <a asp-action="Resources">Back to List</a>
 </div>
-
 
 @section Scripts
 {
@@ -72,7 +81,9 @@
     
     @foreach (var serial in Model.SerialsList)
     {
+        //<text>
         @:SerialList.push(["@serial.Id", "@serial.Name", "@(serial.Status ? "true" : "false")"]);
+        //</text>
     }
     
     function ShowSerial()
@@ -81,13 +92,34 @@
 
         for (let i = 0; i < SerialList.length; i++) 
         {  
-            buff += "<div>\n" +
-                "<div class=\"form-group\">\n" +
-                    "<input type=\"hidden\" id=\"SerialsList_" + i + "__Id\" name=\"SerialsList[" + i + "].Id\" value=\"" + SerialList[i][0] + "\">\n" +
-                    "<input class=\"form-control\" type=\"text\" id=\"SerialsList_" + i + "__Name\" name=\"SerialsList[" + i + "].Name\" value=\"" + SerialList[i][1] + "\">\n" +
-                    "<button type=\"button\" onClick=\"RemoveSerial(" + i + ")\">X</button>" +
-                "</div>\n" +
-            "</div>\n";
+            if(SerialList[i][0] == "")
+            {
+                buff += "<div>\n" +
+                    "<div class=\"form-group\">\n" +
+                        "<input type=\"hidden\" id=\"SerialsList_" + i + "__Id\" name=\"SerialsList[" + i + "].Id\" value=\"" + SerialList[i][0] + "\">\n" +
+                        "<input class=\"form-control\" type=\"text\" id=\"SerialsList_" + i + "__Name\" name=\"SerialsList[" + i + "].Name\" value=\"" + SerialList[i][1] + "\">\n" +
+                        "<button type=\"button\" onClick=\"RemoveSerial(" + i + ")\">X</button>" +
+                    "</div>\n" +
+                "</div>\n";
+            }
+            else
+            {
+                buff += "<div>\n" +
+                    "<div class=\"form-group\">\n" +
+                        "<input type=\"hidden\" id=\"SerialsList_" + i + "__Id\" name=\"SerialsList[" + i + "].Id\" value=\"" + SerialList[i][0] + "\">\n" +
+                        "<input type=\"hidden\" id=\"SerialsList_" + i + "__Name\" name=\"SerialsList[" + i + "].Name\" value=\"" + SerialList[i][1] + "\">\n" +
+                        " " + SerialList[i][1];
+                        
+                        if(SerialList[i][2] == "true")
+                        {
+                            buff += " - Reservated";
+                        }
+                                                
+                buff += "\n" +
+                        "<button type=\"button\" onClick=\"RemoveSerial(" + i + ")\">X</button>" +
+                    "</div>\n" +
+                "</div>\n";
+            }
         }
 
         document.getElementById("SerialsBox").innerHTML = buff;
@@ -100,7 +132,7 @@
             SerialList[i][1] = document.getElementById("SerialsList_" + i + "__Name").value;
         }
 
-        SerialList.push(["", ""]);
+        SerialList.push(["", "", ""]);
         ShowSerial();
     }
     
@@ -115,6 +147,6 @@
         ShowSerial();
     }
 
-    AddSerial();
+    ShowSerial();
 </script>
 }

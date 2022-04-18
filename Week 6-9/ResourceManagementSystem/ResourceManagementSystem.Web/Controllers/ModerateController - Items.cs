@@ -34,7 +34,7 @@ namespace ResourceManagementSystem.Web.Controllers
         public IActionResult CreateItem(ItemVM input)
         {
             var buff = _itemModerateService.CreateItem(input);
-            if (buff != "") return RedirectToAction("DetailsItem", new { input.Id });
+            if (buff != "") return RedirectToAction("DetailsItem", new { id = buff });
             else return BadRequest();
         }
 

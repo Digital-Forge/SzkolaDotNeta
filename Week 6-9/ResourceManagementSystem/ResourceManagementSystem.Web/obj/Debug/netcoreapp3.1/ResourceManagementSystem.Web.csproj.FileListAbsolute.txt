@@ -383,3 +383,8 @@ C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSys
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateItem.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
 D:\Project\C#\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\PickupPoint\Index.cshtml.g.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\CreateItem.cshtml.g.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\PickupPoint\Index.cshtml.g.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\DetailsItem.cshtml.g.cs
+C:\Project\SzkolaDotNeta\Week 6-9\ResourceManagementSystem\ResourceManagementSystem.Web\obj\Debug\netcoreapp3.1\Razor\Views\Moderate\EditItem.cshtml.g.cs

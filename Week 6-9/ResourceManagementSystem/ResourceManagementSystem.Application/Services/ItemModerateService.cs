@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using ResourceManagementSystem.Application.Interfaces;
 using ResourceManagementSystem.Application.ViewModel.ExtraViewModel;
@@ -21,6 +22,7 @@ namespace ResourceManagementSystem.Application.Services
         private readonly IDepartmentRepository _departmentRepo;
         private readonly IAppSettingPropertyRepository _appSettingPropertyRepo;
         private readonly IReservationRepository _reservationRepo;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public ItemModerateService(IItemRepository itemRepository,
                                    IMapper mapper,
@@ -74,8 +76,8 @@ namespace ResourceManagementSystem.Application.Services
             VM.SerialsList = _itemRepo.GetSerialItemsListByItem(id).Select(x => new AddRemoveStatusVM
             {
                 Id = x.Id.ToString().ToLower(),
-                Name = $"{x.SerialNumber} - Reservated",
-                Status = true
+                Name = x.SerialNumber,
+                Status = x.Reservation != null
             }).ToList();
 
             VM.DepartmentsList = _departmentRepo.GetDepartmentsList().Select(x => new AddRemoveStatusVM
@@ -122,8 +124,9 @@ namespace ResourceManagementSystem.Application.Services
 
             if (imageObj != null)
             {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + imageObj.FileName;
-                string filePath = Path.Combine(_appSettingPropertyRepo.GetImagesDestinationPath(), uniqueFileName);
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     imageObj.CopyTo(fileStream);
@@ -141,31 +144,23 @@ namespace ResourceManagementSystem.Application.Services
 
             if (input.ImageObj != null)
             {
-                DeleteOldItemImage(item.ImagePath);
+                if(string.IsNullOrEmpty(item.ImagePath)) DeleteOldItemImage(item.ImagePath);
                 item.ImagePath = UploadedImageSave(input.ImageObj);
             }
 
             var itemDepartments = _itemRepo.GetDepartmentListByItem(input.Id);
 
-            foreach (var department in _departmentRepo.GetDepartmentsList())
+            foreach (var department in input.DepartmentsList ?? Enumerable.Empty<AddRemoveStatusVM>())
             {
-                if (input.DepartmentsList.Any(x => x.Id == department.Id.ToString().ToLower()))
+                if (itemDepartments.Any(x => x.Id.ToString() == department.Id))
                 {
-                    if (!itemDepartments.Any(x => x.Id == department.Id))
-                    {
-                        _itemRepo.AddDepartmentToItem(department.Id, item.Id);
-                    }
+                    if (!department.Status) _itemRepo.RemoveDepartmentFromItem(new Guid(department.Id), item.Id);
                 }
                 else
                 {
-                    if (itemDepartments.Any(x => x.Id == department.Id))
-                    {
-                        _itemRepo.RemoveDepartmentFromItem(department.Id, item.Id);
-                    }
+                    if (department.Status) _itemRepo.AddDepartmentToItem(new Guid(department.Id), item.Id);
                 }
             }
-
-
 
             foreach (var serial in _itemRepo.GetSerialItemsListByItem(item.Id))
             {
@@ -179,7 +174,8 @@ namespace ResourceManagementSystem.Application.Services
 
             foreach (var serial in input.SerialsList)
             {
-                if (!buffSerialsItem.Any(x => x.Id.ToString().ToLower() == serial.Id))
+                if (string.IsNullOrEmpty(serial.Name)) continue;
+                if (!buffSerialsItem.Any(x => x.Id.ToString().ToLower() == serial.Id || x.SerialNumber == serial.Name))
                 {
                     _itemRepo.AddSerialToItem(new SerialItem { SerialNumber = serial.Name }, item);
                 }
