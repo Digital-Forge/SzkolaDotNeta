@@ -52,7 +52,7 @@
             <div>
                 @if (User.IsInRole("Admin"))
                 {
-                    <div>
+                    <div class="card">
                         Roles
                         @for (int i = 0; i < Model.RolesList?.Count; i++)
                         {
@@ -65,7 +65,7 @@
                         }
                     </div>
                 }
-                <div>
+                <div class="card">
                     Departments
                     @for (int i = 0; i < Model.DepartmentsList?.Count; i++)
                     {

@@ -90,11 +90,11 @@ namespace ResourceManagementSystem.Application.Services
                 }
             }
 
-            foreach (var item in input.UsersList ?? Enumerable.Empty<AddRemoveStatusVM>())
+            foreach (var user in input.UsersList ?? Enumerable.Empty<AddRemoveStatusVM>())
             {
-                if (!item.Status)
+                if (!user.Status)
                 {
-                    _departmentRepo.RemoveItemFromDepartment(item.Id, input.Id);
+                    _departmentRepo.RemoveUserFromDepartment(user.Id, input.Id);
                 }
             }
 

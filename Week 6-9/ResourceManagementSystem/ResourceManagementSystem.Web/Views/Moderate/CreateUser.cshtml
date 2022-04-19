@@ -4,7 +4,7 @@
     ViewData["Title"] = "CreateUser";
 }
 
-<h1>CreateUser</h1>
+<h1>Create User</h1>
 
 <hr />
 <div class="row">
@@ -51,7 +51,7 @@
             @if (User.IsInRole("Admin"))
             {
                 <div>
-                    <div>
+                    <div class="card">
                         Roles
                         @for (int i = 0; i < Model.RolesList?.Count; i++)
                         {
@@ -63,7 +63,7 @@
                             </div>
                         }
                     </div>
-                    <div>
+                    <div class="card">
                         Departments
                         @for (int i = 0; i < Model.DepartmentsList?.Count; i++)
                         {
