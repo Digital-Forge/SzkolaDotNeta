@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString));
+
+// Add middleware
+builder.Services.AddExceptionHandler<ServiceExceptionMiddleware>();
+builder.Services.AddExceptionHandler<GeneralExceptionMiddleware>();
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
@@ -61,11 +66,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
