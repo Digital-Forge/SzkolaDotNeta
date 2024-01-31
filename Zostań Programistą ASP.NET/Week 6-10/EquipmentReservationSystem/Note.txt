@@ -1,2 +1,5 @@
 Equipment Reservation System
-​
+
+dotnet ef migrations add Init --project Infrastructure --startup-project Web
+
+​dotnet ef database update --project Infrastructure --startup-project Web
