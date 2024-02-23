@@ -1,15 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="about">
+    <NavBar :view-type="'home'"></NavBar>
+    <h1>Home</h1>
   </div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar.vue";
 
 export default {
   name: "HomeView",
   components: {
+    NavBar,
   },
   data() {
     return {};

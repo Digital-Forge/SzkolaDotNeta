@@ -134,6 +134,7 @@ namespace Application.Services
 
         public async Task<bool> IsAccessToPickUpPoint(Guid? userId = null)
         {
+            if (await IsUserAdmin(userId)) return true;
             return await _roleRepository.CheckUserHasRole(Constans.Constans.RoleName.PickUpPoint, userId);
         }
     }

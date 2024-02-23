@@ -49,7 +49,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Constans.RoleName.PickUpPoint)]
+        [Authorize(Roles = $"{Constans.RoleName.PickUpPoint},{Constans.RoleName.Administration}")]
         public async Task<IActionResult> CheckPickUpPointAuth()
         {
             var check = await _authService.IsAccessToPickUpPoint();

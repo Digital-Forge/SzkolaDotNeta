@@ -2,6 +2,7 @@
 {
     public partial interface IUserService
     {
-        public Guid CreateUser(CreateUserModel user);
+        UserPanelAccessModel GetPanelAccess();
+        Guid CreateUser(CreateUserModel user);
     }
 }

@@ -1,11 +1,13 @@
 <template>
   <div class="about">
+    <NavBar :view-type="'pickup'"></NavBar>
     <h1>Pick up point</h1>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import NavBar from "@/components/NavBar.vue";
 
 const authAdministrationArea = async () => {
   try {
@@ -18,6 +20,9 @@ const authAdministrationArea = async () => {
 
 export default {
   name: "PickUpPointView",
+  components: {
+    NavBar,
+  },
   data() {
     return {};
   },

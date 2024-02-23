@@ -9,5 +9,11 @@
             public string Password { get; set; }
             public IList<Guid> DepartmentIdList { get; set; }
         }
+
+        class UserPanelAccessModel
+        {
+            public bool PickUpPoint { get; set; }
+            public bool Admin { get; set; }
+        }
     }
 }
