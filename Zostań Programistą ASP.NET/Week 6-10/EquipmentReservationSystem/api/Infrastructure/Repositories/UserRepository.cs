@@ -10,9 +10,14 @@ namespace Infrastructure.Repositories
     [AutoRegisterTransientRepository(typeof(IUserRepository))]
     public class UserRepository(Context _context) : IUserRepository
     {
-        public UserData GetUser(string username)
+        public UserData GetContextUser()
         {
-            return _context.Users.AsNoTracking().FirstOrDefault(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete && x.NormalizedUserName == username.ToUpper());
+            return _context.GetContextUser();
+        }
+
+        public UserData GetUser(string email)
+        {
+            return _context.Users.AsNoTracking().FirstOrDefault(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete && x.NormalizedEmail == email.ToUpper());
         }
 
         public UserData GetUser(Guid id)

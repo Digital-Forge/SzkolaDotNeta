@@ -2,18 +2,18 @@
 {
     public partial interface IFileService
     {
-        interface IDataFileInfoModel
+        class DataFileInfoModel
         {
-            Guid Id { get; set; }
-            string Name { get; set; }
-            DateTime Date { get; set; }
-            bool IsMissing { get; set; }
+            public Guid Id { get; set; }
+            public string Name { get; set; }
+            public DateTime Date { get; set; }
+            public bool IsMissing { get; set; }
         }
 
-        interface IFileModel
+        class FileModel
         {
-            IDataFileInfoModel Info { get; set; }
-            string DataBase64 { get; set; }
+            public DataFileInfoModel Info { get; set; }
+            public string DataBase64 { get; set; }
         }
     }
 }

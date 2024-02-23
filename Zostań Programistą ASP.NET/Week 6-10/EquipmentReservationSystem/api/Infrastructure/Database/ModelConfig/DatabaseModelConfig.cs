@@ -9,13 +9,10 @@ namespace Infrastructure.Database.ModelConfig
         void Config(ModelBuilder builder);
     }
 
-    public class DatabaseModelConfig<TEntity> : IDatabaseConfig
+    public abstract class DatabaseModelConfig<TEntity> : IDatabaseConfig
         where TEntity : class
     {
-        public virtual void ModelConfig(EntityTypeBuilder<TEntity> builder)
-        {
-
-        }
+        public abstract void ModelConfig(EntityTypeBuilder<TEntity> builder);
 
         public void Config(ModelBuilder builder)
         {

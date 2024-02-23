@@ -13,6 +13,9 @@ namespace Web.Middleware
 
             switch (serviceException.TypeAction)
             {
+                case ServiceException.ExceptionTypeAction.Error:
+                    httpContext.Response.StatusCode = 500; // INTERNAL SERVER ERROR
+                    break;
                 case ServiceException.ExceptionTypeAction.Argument:
                     httpContext.Response.StatusCode = 400; // Bad Request
                     break;

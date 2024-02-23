@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Application.Services
 {
-    [AutoRegisterSingletonService(typeof(IFileService))]
+    [AutoRegisterTransientService(typeof(IFileService))]
     public partial class FileService : IFileService
     {
         private readonly string _path;
@@ -17,14 +17,14 @@ namespace Application.Services
             _path = config["FilesPath"] ?? "";
         }
 
-        public async Task<IFileService.IDataFileInfoModel> GetFileInfoAsync(Guid Id)
+        public async Task<IFileService.DataFileInfoModel> GetFileInfoAsync(Guid Id)
         {
-            return DataFileInfoModel.Map(await _fileRepository.GetDataFileAsync(Id, true) ?? throw new FileNotFoundException());
+            return DataFileInfoModel.Map(await _fileRepository.GetDataFileAsync(Id) ?? throw new FileNotFoundException());
         }
 
-        public async Task<IFileService.IFileModel> GetFileObjectAsync(Guid Id)
+        public async Task<IFileService.FileModel> GetFileObjectAsync(Guid Id)
         {
-            var data = new FileModel()
+            var data = new IFileService.FileModel()
             {
                 Info = await GetFileInfoAsync(Id)
             };
@@ -50,7 +50,7 @@ namespace Application.Services
             return data;
         }
 
-        public async Task<Guid> SaveFileAsync(IFileService.IFileModel data)
+        public async Task<Guid> SaveFileAsync(IFileService.FileModel data)
         {
             var entity = DataFileInfoModel.Map(data.Info);
             entity.EntityStatus = Domain.Utils.EntityStatus.Buffer;

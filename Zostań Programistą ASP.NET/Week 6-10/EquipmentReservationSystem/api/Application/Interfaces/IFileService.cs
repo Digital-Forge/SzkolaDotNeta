@@ -4,8 +4,8 @@ namespace Application.Interfaces
 {
     public partial interface IFileService
     {
-        Task<IFileModel> GetFileObjectAsync(Guid Id);
-        Task<IDataFileInfoModel> GetFileInfoAsync(Guid Id);
-        Task<Guid> SaveFileAsync(IFileModel data);
+        Task<FileModel> GetFileObjectAsync(Guid Id);
+        Task<DataFileInfoModel> GetFileInfoAsync(Guid Id);
+        Task<Guid> SaveFileAsync(FileModel data);
     }
 }

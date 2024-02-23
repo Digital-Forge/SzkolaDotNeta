@@ -34,7 +34,7 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -67,7 +67,7 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -90,7 +90,7 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,7 +108,7 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -129,12 +129,26 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    life_time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,7 +296,7 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -334,7 +348,7 @@ namespace Infrastructure.Migrations
                     create_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     update_by = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     update_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    entity_status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -445,6 +459,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ItemsToDepartments");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "Reservations");

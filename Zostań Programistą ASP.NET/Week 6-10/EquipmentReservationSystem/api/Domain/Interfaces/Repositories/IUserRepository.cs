@@ -5,7 +5,8 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        UserData GetUser(string username);
+        UserData GetContextUser();
+        UserData GetUser(string email);
         UserData GetUser(Guid id);
         IEnumerable<IdentityRole<Guid>> GetUserRoles(Guid userId);
     }

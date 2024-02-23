@@ -1,20 +1,45 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import axios from "axios";
+import LoginView from "../views/LoginView.vue";
+import store from "../store";
+
+const authGuard = async (to, from, next) => {
+  if (store.getters.isAuth) {
+    const respons = await axios.get("Auth/CheckAuth");
+    if (respons.status === 204) next();
+    else next({ name: "login" });
+  } else next({ name: "login" });
+};
+
+const notAuthGuard = async (to, from, next) => {
+  if (!store.getters.isAuth) next();
+  else next({ name: "home" });
+};
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "login",
+    component: LoginView,
+    beforeEnter: notAuthGuard,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/home",
+    name: "home",
+    component: () => import("@/views/HomeView.vue"),
+    beforeEnter: authGuard,
+  },
+  {
+    path: "/administration",
+    name: "admin",
+    component: () => import("@/views/AdminView.vue"),
+    beforeEnter: authGuard,
+  },
+  {
+    path: "/pickup-point",
+    name: "pickuppoint",
+    component: () => import("@/views/PickUpPointView.vue"),
+    beforeEnter: authGuard,
   },
 ];
 

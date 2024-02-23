@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240114130835_Init")]
+    [Migration("20240209180630_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -50,7 +50,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("description");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");
@@ -103,7 +102,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("description");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");
@@ -160,7 +158,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("durability_status");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");
@@ -247,7 +244,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("create_time");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");
@@ -307,7 +303,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("create_time");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");
@@ -361,7 +356,6 @@ namespace Infrastructure.Migrations
                         .HasColumnName("create_time");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");
@@ -401,6 +395,33 @@ namespace Infrastructure.Migrations
                     b.ToTable("Dictionaries");
                 });
 
+            modelBuilder.Entity("Domain.Models.System.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("LifeTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("life_time");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("token");
+
+                    b.Property<Guid>("UserId")
+                        .IsUnicode(true)
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Domain.Models.UserData", b =>
                 {
                     b.Property<Guid>("Id")
@@ -435,7 +456,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("EntityStatus")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("entity_status");

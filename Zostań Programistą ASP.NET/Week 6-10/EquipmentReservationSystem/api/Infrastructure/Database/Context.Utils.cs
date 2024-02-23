@@ -1,9 +1,12 @@
 ﻿using Domain.Interfaces.Models;
+using Domain.Models;
+using Infrastructure.Database.ModelConfig;
 using Infrastructure.Database.ModelConfig.Business;
 using Infrastructure.Database.ModelConfig.Business.MiddleTabs;
 using Infrastructure.Database.ModelConfig.System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Infrastructure.Database
 {
@@ -25,7 +28,7 @@ namespace Infrastructure.Database
             var type = typeof(IDatabaseConfig);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && !type.IsInterface && !type.IsAbstract);
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract);
 
             foreach (var modelConfig in types)
             {
@@ -34,10 +37,10 @@ namespace Infrastructure.Database
             }
             */
 
-            AlfaFixManulaConfig(builder);
+            ManulaFixDBModelConfig(builder);
         }
 
-        private void AlfaFixManulaConfig(ModelBuilder builder)
+        private void ManulaFixDBModelConfig(ModelBuilder builder)
         {
             (new UserDataConfig()).Config(builder);
             (new ReservationConfig()).Config(builder);
@@ -47,10 +50,10 @@ namespace Infrastructure.Database
             (new ItemToDepartmentConfig()).Config(builder);
             (new UserToDepartmentConfig()).Config(builder);
 
+            (new RefreshTokenConfig()).Config(builder);
             (new DataFileConfig()).Config(builder);
             (new DictionaryConfig()).Config(builder);
         }
-
         public override int SaveChanges()
         {
             EntityAudit();
@@ -65,15 +68,20 @@ namespace Infrastructure.Database
 
         private void EntityAudit()
         {
-            foreach (var entity in ChangeTracker.Entries<IAuditableEntity>())
+            var user = GetContextUser();
+            var changeTrackerList = ChangeTracker.Entries<IAuditableEntity>();
+
+            if (user == null && changeTrackerList.Any()) throw new UserUnrecognizedException();
+
+            foreach (var entity in changeTrackerList)
             {
-                //entity.Entity.UpdateBy = 
+                entity.Entity.UpdateBy = user.Id;
                 entity.Entity.UpdateTime = DateTime.Now;
 
                 switch (entity.State)
                 {
                     case EntityState.Added:
-                        //entity.Entity.CreateBy = new 
+                        entity.Entity.CreateBy = user.Id;
                         entity.Entity.CreateTime = DateTime.Now;
                         entity.Entity.EntityStatus ??= Domain.Utils.EntityStatus.Use; 
                         break;
@@ -85,6 +93,22 @@ namespace Infrastructure.Database
                         break;
                 }
             }
+        }
+
+        public UserData GetContextUser()
+        {
+            var claimsIdentity = _httpContextAccessor?.HttpContext?.User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+                var userIdClaim = claimsIdentity.Claims
+                    .FirstOrDefault(x => x.Type == "XID")?.Value;
+
+                if (userIdClaim != null)
+                {
+                    return Users.FirstOrDefault(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete && x.Id.ToString() == userIdClaim);
+                }
+            }
+            return null;
         }
     }
 }

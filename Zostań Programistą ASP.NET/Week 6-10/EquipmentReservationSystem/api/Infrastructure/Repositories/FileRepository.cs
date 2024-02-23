@@ -6,32 +6,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    [AutoRegisterSingletonRepository(typeof(IFileRepository))]
-    public class FileRepository(Context _context) : IFileRepository
+    [AutoRegisterTransientRepository(typeof(IFileRepository))]
+    public class FileRepository : IFileRepository
     {
-        public async Task<DataFile?> GetDataFileAsync(Guid id, bool asNoTracking = false)
+        private readonly Context _context;
+
+        public FileRepository(Context context)
         {
-            return asNoTracking 
-                ? await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete) 
-                : await _context.Files.FirstOrDefaultAsync(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete);
+            _context = context;
+        }
+
+        public async Task<DataFile?> GetDataFileAsync(Guid id)
+        {
+            return await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete);
         }
 
         public async Task<Guid> SaveDataFileAsync(DataFile file)
         {
             var isExist = (await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == file.Id)) != null;
 
-            if (isExist)
-                _context.Files.Update(file);
-            else
-                _context.Files.Add(file);
+            if (isExist) _context.Files.Update(file);
+            else _context.Files.Add(file);
 
             await _context.SaveChangesAsync();
             return file.Id;
         }
 
-        public async Task DeleteDataFileAsync(Guid id)
+        public async Task RemoveDataFileAsync(Guid id)
         {
-            var entity = await _context.Files.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null) return;
 
             _context.Files.Remove(entity);

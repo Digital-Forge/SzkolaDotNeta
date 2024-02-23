@@ -5,14 +5,9 @@ namespace Application.Services
 {
     public partial class FileService
     {
-        public class DataFileInfoModel : IFileService.IDataFileInfoModel
+        public class DataFileInfoModel : IFileService.DataFileInfoModel
         {
-            public Guid Id { get; set; }
-            public string Name { get; set; }
-            public DateTime Date { get; set; }
-            public bool IsMissing { get; set; }
-
-            public static IFileService.IDataFileInfoModel Map(DataFile entity)
+            public static IFileService.DataFileInfoModel Map(DataFile entity)
             {
                 return new DataFileInfoModel
                 {
@@ -22,7 +17,7 @@ namespace Application.Services
                 };
             }
 
-            public static DataFile Map(IFileService.IDataFileInfoModel model, DataFile entity = null)
+            public static DataFile Map(IFileService.DataFileInfoModel model, DataFile entity = null)
             {
                 if (entity == null) entity = new DataFile();
 
@@ -32,12 +27,6 @@ namespace Application.Services
 
                 return entity;
             }
-        }
-
-        public class FileModel : IFileService.IFileModel
-        {
-            public IFileService.IDataFileInfoModel Info { get; set; }
-            public string DataBase64{ get; set; }
         }
     }
 }

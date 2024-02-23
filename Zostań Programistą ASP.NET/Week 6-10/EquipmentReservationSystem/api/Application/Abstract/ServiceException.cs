@@ -15,7 +15,8 @@
             Argument,     // BadRequest
             Unauthoryze,  // Unautorize
             NotFound,     // Not Found
-            NotAccess     // Forbriden
+            NotAccess,    // Forbriden
+            Error     // INTERNAL SERVER ERROR
         }
     }
 }
