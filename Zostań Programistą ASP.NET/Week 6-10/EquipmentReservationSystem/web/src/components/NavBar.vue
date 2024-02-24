@@ -70,6 +70,7 @@ export default {
   border-radius: 0.55rem;
   display: flex;
   justify-content: right;
+  border: 2px black dashed;
 
   Button {
     margin-right: 0.3rem;

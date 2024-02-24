@@ -1,7 +1,10 @@
 <template>
-  <div class="about">
+  <div id="admin_container">
     <NavBar :view-type="'admin'"></NavBar>
-    <h1>ADMIN</h1>
+    <div id="admin_box">
+      <div class="menu">test</div>
+      <div class="content_box">test</div>
+    </div>
   </div>
 </template>
 
@@ -34,3 +37,45 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+#admin_container {
+  display: block;
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  border-left: 2px lightgrey solid;
+  border-right: 2px lightgrey solid;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding: 0;
+  margin: 0;
+
+  #admin_box {
+    //display: inline-block;
+    height: 95.5%;
+    width: 100%;
+
+    .content_box {
+      display: inline-block;
+      width: 75%;
+      height: 100%;
+      overflow: auto;
+      vertical-align: top;
+
+      background-color: white;
+    }
+
+    .menu {
+      display: inline-block;
+      width: 25%;
+      height: 100%;
+      overflow: auto;
+      vertical-align: top;
+
+      background-color: lightgray;
+      border: 4px magenta groove;
+    }
+  }
+}
+</style>
