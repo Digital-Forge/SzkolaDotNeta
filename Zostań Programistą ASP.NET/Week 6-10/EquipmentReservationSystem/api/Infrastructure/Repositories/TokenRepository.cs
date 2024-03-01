@@ -9,7 +9,7 @@ namespace Infrastructure.Repositories
     [AutoRegisterTransientRepository(typeof(ITokenRepository))]
     public class TokenRepository(Context _context) : ITokenRepository
     {
-        public async Task SaveTokenAsync(RefreshToken token)
+        public async Task SaveAsync(RefreshToken token)
         {
             var isExist = await _context.RefreshTokens.AsNoTracking().FirstOrDefaultAsync(x => x.UserId == token.UserId);
 

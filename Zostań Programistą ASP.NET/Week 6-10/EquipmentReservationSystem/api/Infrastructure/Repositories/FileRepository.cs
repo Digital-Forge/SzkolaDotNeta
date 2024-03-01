@@ -16,12 +16,12 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<DataFile?> GetDataFileAsync(Guid id)
+        public async Task<DataFile?> GetAsync(Guid id)
         {
             return await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete);
         }
 
-        public async Task<Guid> SaveDataFileAsync(DataFile file)
+        public async Task<Guid> SaveAsync(DataFile file)
         {
             var isExist = (await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == file.Id)) != null;
 
@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories
             return file.Id;
         }
 
-        public async Task RemoveDataFileAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             var entity = await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null) return;

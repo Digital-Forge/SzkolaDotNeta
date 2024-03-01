@@ -5,9 +5,13 @@ import store from "../store";
 
 const authGuard = async (to, from, next) => {
   if (store.getters.isAuth) {
-    const respons = await axios.get("Auth/CheckAuth");
-    if (respons.status === 204) next();
-    else next({ name: "login" });
+    try {
+      const respons = await axios.get("Auth/CheckAuth");
+      if (respons.status === 204) next();
+      else next({ name: "login" });
+    } catch (error) {
+      next({ name: "login" });
+    }
   } else next({ name: "login" });
 };
 

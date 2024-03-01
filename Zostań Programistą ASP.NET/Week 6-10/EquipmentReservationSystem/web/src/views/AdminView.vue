@@ -1,9 +1,28 @@
 <template>
   <div id="admin_container">
     <NavBar :view-type="'admin'"></NavBar>
-    <div id="admin_box">
-      <div class="menu">test</div>
-      <div class="content_box">test</div>
+    <div id="admin_box" :key="view.refreskKey">
+      <div class="menu">
+        <h2>Menu</h2>
+        <div class="position" :class="{ active: view.isUsers }">
+          <div @click="showUsers">Users</div>
+        </div>
+        <div class="position" :class="{ active: view.isDepartments }">
+          <div @click="showDepartments">Departments</div>
+        </div>
+        <div class="position" :class="{ active: view.isItems }">
+          <div @click="showItems">Items</div>
+        </div>
+        <div class="position" :class="{ active: view.isReservations }">
+          <div @click="showReservations">Reservations</div>
+        </div>
+      </div>
+      <div class="content_box">
+        <UserArea v-if="view.isUsers"></UserArea>
+        <ItemArea v-if="view.isItems"></ItemArea>
+        <DepartmentArea v-if="view.isDepartments"></DepartmentArea>
+        <ReservationArea v-if="view.isReservations"></ReservationArea>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +30,10 @@
 <script>
 import axios from "axios";
 import NavBar from "@/components/NavBar.vue";
+import UserArea from "@/components/admin/UserArea.vue";
+import ItemArea from "@/components/admin/ItemArea.vue";
+import DepartmentArea from "@/components/admin/DepartmentArea.vue";
+import ReservationArea from "@/components/admin/ReservationArea.vue";
 
 const authAdministrationArea = async () => {
   try {
@@ -25,11 +48,52 @@ export default {
   name: "AdminView",
   components: {
     NavBar,
+    UserArea,
+    ItemArea,
+    DepartmentArea,
+    ReservationArea,
   },
   data() {
-    return {};
+    return {
+      view: {
+        isUsers: false,
+        isDepartments: false,
+        isItems: false,
+        isReservations: false,
+        refreskKey: 0,
+      },
+    };
   },
-  methods: {},
+  methods: {
+    async showUsers() {
+      this.view.isUsers = true;
+      this.view.isDepartments = false;
+      this.view.isItems = false;
+      this.view.isReservations = false;
+      this.view.refreskKey++;
+    },
+    async showDepartments() {
+      this.view.isUsers = false;
+      this.view.isDepartments = true;
+      this.view.isItems = false;
+      this.view.isReservations = false;
+      this.view.refreskKey++;
+    },
+    async showItems() {
+      this.view.isUsers = false;
+      this.view.isDepartments = false;
+      this.view.isItems = true;
+      this.view.isReservations = false;
+      this.view.refreskKey++;
+    },
+    async showReservations() {
+      this.view.isUsers = false;
+      this.view.isDepartments = false;
+      this.view.isItems = false;
+      this.view.isReservations = true;
+      this.view.refreskKey++;
+    },
+  },
   async beforeRouteEnter(to, from, next) {
     const result = await authAdministrationArea();
     if (result) next();
@@ -75,6 +139,19 @@ export default {
 
       background-color: lightgray;
       border: 4px magenta groove;
+
+      .position {
+        margin-top: 0.4rem;
+      }
+
+      .active {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 1.5);
+      }
+
+      .position:hover {
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
     }
   }
 }

@@ -19,7 +19,7 @@ namespace Application.Services
 
         public async Task<IFileService.DataFileInfoModel> GetFileInfoAsync(Guid Id)
         {
-            return DataFileInfoModel.Map(await _fileRepository.GetDataFileAsync(Id) ?? throw new FileNotFoundException());
+            return DataFileInfoModel.Map(await _fileRepository.GetAsync(Id) ?? throw new FileNotFoundException());
         }
 
         public async Task<IFileService.FileModel> GetFileObjectAsync(Guid Id)
@@ -54,12 +54,12 @@ namespace Application.Services
         {
             var entity = DataFileInfoModel.Map(data.Info);
             entity.EntityStatus = Domain.Utils.EntityStatus.Buffer;
-            await _fileRepository.SaveDataFileAsync(entity);
+            await _fileRepository.SaveAsync(entity);
 
             var file = Convert.FromBase64String(data.DataBase64);
             await File.WriteAllBytesAsync(Path.Combine(_path, entity.Id.ToString()), file);
             entity.EntityStatus = Domain.Utils.EntityStatus.Use;
-            await _fileRepository.SaveDataFileAsync(entity);
+            await _fileRepository.SaveAsync(entity);
 
             return entity.Id;
         }

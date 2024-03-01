@@ -111,7 +111,7 @@ namespace Application.Services
                 LifeTime = await GetLifeTimeRefresh(timeSource),
                 UserId = user.Id
             };
-            await _tokenRepository.SaveTokenAsync(token);
+            await _tokenRepository.SaveAsync(token);
             return refreshToken;
         }
 

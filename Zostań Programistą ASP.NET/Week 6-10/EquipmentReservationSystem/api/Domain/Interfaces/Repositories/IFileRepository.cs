@@ -4,8 +4,8 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IFileRepository
     {
-        Task<Guid> SaveDataFileAsync(DataFile file);
-        Task<DataFile?> GetDataFileAsync(Guid id);
-        Task RemoveDataFileAsync(Guid id);
+        Task<Guid> SaveAsync(DataFile file);
+        Task<DataFile?> GetAsync(Guid id);
+        Task RemoveAsync(Guid id);
     }
 }

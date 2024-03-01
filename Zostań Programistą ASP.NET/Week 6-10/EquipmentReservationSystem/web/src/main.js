@@ -42,7 +42,7 @@ axios.interceptors.response.use(
       axios.isAxiosError(error) &&
       error.response &&
       error.response.status === 401 &&
-      store.state.authInfo.refresh !== null
+      store.state.authInfo.refresh
     ) {
       try {
         const newToken = await refreshAxios.post(
@@ -50,12 +50,14 @@ axios.interceptors.response.use(
         );
         if (newToken.status !== 200) {
           store.commit("removeAccerssToken");
+          router.push({ name: "login" });
           return Promise.reject(error);
         }
         store.commit("setAccessToken", newToken.data);
         return axios(setAuthHeders(error.config));
       } catch (innsererror) {
         store.commit("removeAccerssToken");
+        router.push({ name: "login" });
         return Promise.reject(error);
       }
     }
