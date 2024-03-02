@@ -7,6 +7,7 @@ module.exports = {
     "plugin:vue/essential",
     "airbnb-base",
     "plugin:prettier/recommended",
+    "eslint:recommended",
   ],
   parserOptions: {
     ecmaVersion: 12,

@@ -46,7 +46,8 @@ axios.interceptors.response.use(
     ) {
       try {
         const newToken = await refreshAxios.post(
-          `RefreshToken?token=${store.state.authInfo.refresh}`
+          "RefreshToken",
+          store.state.authInfo.refresh
         );
         if (newToken.status !== 200) {
           store.commit("removeAccerssToken");

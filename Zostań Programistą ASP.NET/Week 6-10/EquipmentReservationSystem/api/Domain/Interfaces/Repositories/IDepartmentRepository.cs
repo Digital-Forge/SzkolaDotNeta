@@ -4,10 +4,10 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IDepartmentRepository
     {
-        Task<ICollection<Department>> GetAllAsync();
-        Task<ICollection<Department>> GetAllWithUserAsync();
-        Task<ICollection<Department>> GetAllWithItemAsync();
-        Task<ICollection<Department>> GetAllFullAsync();
+        IQueryable<Department> GetAllQuery();
+        IQueryable<Department> GetAllWithUserQuery();
+        IQueryable<Department> GetAllWithItemQuery();
+        IQueryable<Department> GetAllFullQuery();
         Task<Guid> AddAsync(Department entity);
         Task DeleteAsync(Guid id);
         Task<Department?> GetFullAsync(Guid id);

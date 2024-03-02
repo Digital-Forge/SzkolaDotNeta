@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="pt-2">Departments</h2>
-    <div v-if="departments.length > 0">
+    <div v-if="departments">
       <div>
         <button type="button" @click="add">Add</button>
         <button type="button" @click="edit">Edit</button>
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      departments: [],
+      departments: null,
       selectedRow: null,
       modalMode: null,
       showModal: false,
@@ -87,7 +87,7 @@ export default {
         );
         if (respons.status !== 200) return;
         this.selectedRow = null;
-        this.departments = [];
+        this.departments = null;
         await this.loadData();
       } catch (error) {
         console.log(error);

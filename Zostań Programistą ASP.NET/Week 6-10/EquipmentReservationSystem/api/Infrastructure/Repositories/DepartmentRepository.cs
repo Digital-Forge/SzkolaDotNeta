@@ -23,41 +23,38 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Department>> GetAllAsync()
+        public IQueryable<Department> GetAllQuery()
         {
-            return await _context.Departments.AsNoTracking().Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete).ToListAsync();
+            return _context.Departments.AsNoTracking().Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete);
         }
 
-        public async Task<ICollection<Department>> GetAllFullAsync()
+        public IQueryable<Department> GetAllFullQuery()
         {
-            return await _context.Departments
-                .Include(i => i.Users)
+            return _context.Departments
+                .Include(i => i.Users.Where(x => x.User.EntityStatus != Domain.Utils.EntityStatus.Delete))
                 .ThenInclude(i => i.User)
-                .Include(i => i.Items)
+                .Include(i => i.Items.Where(x => x.Item.EntityStatus != Domain.Utils.EntityStatus.Delete))
                 .ThenInclude(i => i.Item)
                 .AsNoTracking()
-                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete)
-                .ToListAsync();
+                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete);
         }
 
-        public async Task<ICollection<Department>> GetAllWithItemAsync()
+        public IQueryable<Department> GetAllWithItemQuery()
         {
-            return await _context.Departments
-                .Include(i => i.Items)
+            return _context.Departments
+                .Include(i => i.Items.Where(x => x.Item.EntityStatus != Domain.Utils.EntityStatus.Delete))
                 .ThenInclude(i => i.Item)
                 .AsNoTracking()
-                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete)
-                .ToListAsync();
+                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete);    
         }
 
-        public async Task<ICollection<Department>> GetAllWithUserAsync()
+        public IQueryable<Department> GetAllWithUserQuery()
         {
-            return await _context.Departments
-                .Include(i => i.Users)
+            return _context.Departments
+                .Include(i => i.Users.Where(x => x.User.EntityStatus != Domain.Utils.EntityStatus.Delete))
                 .ThenInclude(i => i.User)
                 .AsNoTracking()
-                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete)
-                .ToListAsync();
+                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete);
         }
 
         public async Task<Department?> GetFullAsync(Guid id)

@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Business;
 using Domain.Models.Business.MiddleTabs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
@@ -11,14 +12,14 @@ namespace Application.Services
     {
         public async Task<ICollection<IDepartmentService.DepartmentBaseModel>> GetAllAsync()
         {
-            return (await _departmentRepository.GetAllFullAsync()).Select(s => new IDepartmentService.DepartmentBaseModel
+            return await _departmentRepository.GetAllFullQuery().Select(s => new IDepartmentService.DepartmentBaseModel
             {
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
                 UserCount = s.Users.Count,
                 ItemTypeCount = s.Items.Count,
-            }).ToList();
+            }).ToListAsync();
         }
 
         public async Task<Guid> AddAsync(IDepartmentService.DepartmentBaseModel model)

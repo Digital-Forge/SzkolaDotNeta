@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.DTO;
 
 namespace Web.Controllers
 {
@@ -18,10 +19,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RefreshToken(string token)
+        public async Task<IActionResult> RefreshToken(SingleData<string> token)
         {
-            if (token == null) return BadRequest();
-            var newToken = await _authService.RefreshAsync(token);
+            if (token?.Data == null) return BadRequest();
+            var newToken = await _authService.RefreshAsync(token.Data);
             return Ok(newToken);
         }
 

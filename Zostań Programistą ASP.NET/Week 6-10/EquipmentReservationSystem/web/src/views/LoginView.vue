@@ -17,6 +17,7 @@
           type="password"
           v-model="password"
           :disabled="showLoader"
+          @keyup.enter="loginSubmit"
         />
       </div>
       <div class="row mt-2 action_area">
