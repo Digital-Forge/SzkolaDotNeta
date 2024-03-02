@@ -6,8 +6,8 @@ namespace Domain.Models.Business
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public List<Guid> Images { get; set; }
-        public List<Guid> AddictionFiles { get; set; }
+        public ICollection<Guid> Images { get; set; }
+        public ICollection<Guid> AddictionFiles { get; set; }
 
         //Relations
         public virtual ICollection<ItemInstance> Instances { get; set; }

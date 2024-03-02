@@ -1,6 +1,9 @@
-﻿using Domain.Models.Business;
+﻿using Domain.Interfaces.Models;
+using Domain.Models.Business;
+using Domain.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Database.ModelConfig.Business
 {
@@ -13,10 +16,9 @@ namespace Infrastructure.Database.ModelConfig.Business
                 .HasMaxLength(200);
 
             builder.Property(e => e.Starus)
-                .HasColumnName("status");
-
-            builder.Property(e => e.DurabilityStatus)
-                .HasColumnName("durability_status");
+                .HasColumnName("status")
+                .HasConversion(new EnumToStringConverter<ItemInstanceStatus>())
+                .HasMaxLength(20);
 
             builder.Property(e => e.AddedDate)
                 .HasColumnName("added_date");

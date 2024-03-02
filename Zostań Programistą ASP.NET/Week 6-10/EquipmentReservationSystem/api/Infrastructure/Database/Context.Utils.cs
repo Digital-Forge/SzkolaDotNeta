@@ -52,7 +52,6 @@ namespace Infrastructure.Database
 
             (new RefreshTokenConfig()).Config(builder);
             (new DataFileConfig()).Config(builder);
-            (new DictionaryConfig()).Config(builder);
         }
         public override int SaveChanges()
         {

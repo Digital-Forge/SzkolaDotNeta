@@ -1,6 +1,8 @@
 ﻿using Domain.Models.Business;
+using Domain.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Database.ModelConfig.Business
 {
@@ -15,7 +17,9 @@ namespace Infrastructure.Database.ModelConfig.Business
                 .HasColumnName("to");
 
             builder.Property(e => e.Status)
-                .HasColumnName("status");
+                .HasColumnName("status")
+                .HasConversion(new EnumToStringConverter<ReservationStatus>())
+                .HasMaxLength(30);
 
             //Relations
             builder.HasOne(r => r.ItemInstance)
