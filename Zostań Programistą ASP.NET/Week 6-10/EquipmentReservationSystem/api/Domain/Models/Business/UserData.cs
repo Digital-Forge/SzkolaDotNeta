@@ -16,7 +16,7 @@ namespace Domain.Models
         public bool Active { get; set; }
 
         //Relations
-        public virtual ICollection<UserToDepartment> Departments { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual List<UserToDepartment> Departments { get; set; } = new List<UserToDepartment>();
+        public virtual List<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

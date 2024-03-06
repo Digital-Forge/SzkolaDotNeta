@@ -17,16 +17,16 @@
             public string Name { get; set; }
             public string Description { get; set; }
             public DateOnly? Create { get; set; }
-            public List<DepartmentUser> Users { get; set; }
-            public List<DepartmentItem> Items { get; set; }
+            public List<DepartmentUserModel> Users { get; set; }
+            public List<DepartmentItemModel> Items { get; set; }
         }
 
-        public class DepartmentUser {
+        public class DepartmentUserModel {
             public Guid Id { get; set;}
             public string Fullname { get; set; }
 
         }
-        public class DepartmentItem {
+        public class DepartmentItemModel {
             public Guid Id { get; set; }
             public string Name { get; set; }
         }

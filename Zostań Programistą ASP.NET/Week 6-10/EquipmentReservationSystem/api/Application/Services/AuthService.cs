@@ -129,13 +129,13 @@ namespace Application.Services
 
         public async Task<bool> IsUserAdmin(Guid? userId = null)
         {
-            return await _roleRepository.CheckUserHasRole(Constans.Constans.RoleName.Administration, userId);
+            return await _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.Administration, userId);
         }
 
         public async Task<bool> IsAccessToPickUpPoint(Guid? userId = null)
         {
             if (await IsUserAdmin(userId)) return true;
-            return await _roleRepository.CheckUserHasRole(Constans.Constans.RoleName.PickUpPoint, userId);
+            return await _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.PickupPoint, userId);
         }
     }
 }

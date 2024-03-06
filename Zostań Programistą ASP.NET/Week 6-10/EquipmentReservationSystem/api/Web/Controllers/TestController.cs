@@ -33,12 +33,5 @@ namespace Web.Controllers
         {
             return Ok(_testService.Test());
         }
-
-        [HttpPost]
-        public IActionResult TestUser(IUserService.CreateUserModel model)
-        {
-            _userService.CreateUser(model);
-            return Ok();
-        }
     }
 }

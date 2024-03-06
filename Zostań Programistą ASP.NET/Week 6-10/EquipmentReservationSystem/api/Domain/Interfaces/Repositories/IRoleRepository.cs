@@ -6,7 +6,7 @@ namespace Domain.Interfaces.Repositories
     public interface IRoleRepository
     {
         Task AddRoleToUser(IdentityRole<Guid> role, UserData user);
-        Task AddRoleToUser(Guid roleId, Guid userId);
+        Task AddRoleToUserAsync(Guid roleId, Guid userId);
         Task RemoveRoleFromUser(IdentityRole<Guid> role, UserData user);
         Task RemoveRoleFromUser(Guid roleId, Guid userId);
         Task<IEnumerable<IdentityRole<Guid>>> GetAllRoles();

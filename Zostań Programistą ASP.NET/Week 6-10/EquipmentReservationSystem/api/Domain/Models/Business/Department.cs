@@ -8,7 +8,7 @@ namespace Domain.Models.Business
         public string Description { get; set; }
 
         //Relations
-        public virtual ICollection<ItemToDepartment> Items { get; set; }
-        public virtual ICollection<UserToDepartment> Users { get; set; }
+        public virtual List<ItemToDepartment> Items { get; set; } = new List<ItemToDepartment>();
+        public virtual List<UserToDepartment> Users { get; set; } = new List<UserToDepartment>();
     }
 }

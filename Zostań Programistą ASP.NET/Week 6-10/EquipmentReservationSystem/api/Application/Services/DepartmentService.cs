@@ -12,25 +12,17 @@ namespace Application.Services
     {
         public async Task<ICollection<IDepartmentService.DepartmentBaseModel>> GetAllAsync()
         {
-            return await _departmentRepository.GetAllFullQuery().Select(s => new IDepartmentService.DepartmentBaseModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Description = s.Description,
-                UserCount = s.Users.Count,
-                ItemTypeCount = s.Items.Count,
-            }).ToListAsync();
-        }
-
-        public async Task<Guid> AddAsync(IDepartmentService.DepartmentBaseModel model)
-        {
-            var entity = new Department()
-            {
-                Name = model.Name,
-                Description = model.Description,
-            };
-
-            return await _departmentRepository.AddAsync(entity);
+            return await _departmentRepository.QueryBuilder(false, true, false)
+                .IncludeItems()
+                .IncludeUsers()
+                .Query.Select(s => new IDepartmentService.DepartmentBaseModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description,
+                    UserCount = s.Users.Count,
+                    ItemTypeCount = s.Items.Count,
+                }).ToListAsync();
         }
 
         public async Task DeleteAsync(Guid id)
@@ -40,26 +32,28 @@ namespace Application.Services
 
         public async Task<IDepartmentService.DepartmentFullModel> GetFullAsync(Guid id)
         {
-            var dep = await _departmentRepository.GetFullAsync(id) ?? throw new NotFoundDepartment();
+            var dep = await _departmentRepository.QueryBuilder(asNoTracking: true)
+                .IncludeItems()
+                .IncludeUsers()
+                .GetDepartmentByIdAsync(id) ?? throw new NotFoundDepartment();
 
-            return new IDepartmentService.DepartmentFullModel 
-            { 
+            return new IDepartmentService.DepartmentFullModel
+            {
                 Id = dep.Id,
                 Name = dep.Name,
-                Description= dep.Description,
+                Description = dep.Description,
                 Create = DateOnly.FromDateTime(dep.CreateTime),
-                Users = dep.Users.Select(s => new IDepartmentService.DepartmentUser
+                Users = dep.Users.Select(s => new IDepartmentService.DepartmentUserModel
                 {
                     Id = s.User.Id,
                     Fullname = s.User.UserName
                 }).ToList(),
-                Items = dep.Items.Select(s => new IDepartmentService.DepartmentItem
+                Items = dep.Items.Select(s => new IDepartmentService.DepartmentItemModel
                 {
-                    Id= s.Item.Id,
+                    Id = s.Item.Id,
                     Name = s.Item.Name,
                 }).ToList(),
             };
-
         }
 
         public async Task<Guid> Create(IDepartmentService.DepartmentFullModel model)
@@ -71,7 +65,7 @@ namespace Application.Services
                 EntityStatus = Domain.Utils.EntityStatus.Buffer
             };
 
-            await _departmentRepository.Save(entity);
+            await _departmentRepository.SaveAsync(entity);
 
             entity.Users = model.Users.Select(s => new UserToDepartment()
             {
@@ -87,13 +81,16 @@ namespace Application.Services
 
             entity.EntityStatus = Domain.Utils.EntityStatus.Use;
 
-            await _departmentRepository.Save(entity);
+            await _departmentRepository.SaveAsync(entity);
             return entity.Id;
         }
 
         public async Task Update(IDepartmentService.DepartmentFullModel model)
         {
-            var entity = await _departmentRepository.GetFullAsync(model.Id.Value);
+            var entity = await _departmentRepository.QueryBuilder()
+                .IncludeUsers()
+                .IncludeItems()
+                .GetDepartmentByIdAsync(model.Id.Value);
 
             entity.Name = model.Name;
             entity.Description = model.Description;
@@ -110,7 +107,7 @@ namespace Application.Services
                 ItemId = s.Id
             }).ToList();
 
-            await _departmentRepository.Save(entity);
+            await _departmentRepository.SaveAsync(entity);
             return;
         }
     }

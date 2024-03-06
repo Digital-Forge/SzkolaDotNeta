@@ -12,10 +12,10 @@ namespace Infrastructure.Repositories
     {
         public async Task AddRoleToUser(IdentityRole<Guid> role, UserData user)
         {
-            await AddRoleToUser(role.Id, user.Id);
+            await AddRoleToUserAsync(role.Id, user.Id);
         }
 
-        public async Task AddRoleToUser(Guid roleId, Guid userId)
+        public async Task AddRoleToUserAsync(Guid roleId, Guid userId)
         {
             if (_context.UserRoles.AsNoTracking().Any(x => x.UserId == userId && x.RoleId == roleId)) return;
             await _context.UserRoles.AddAsync(new IdentityUserRole<Guid>() 

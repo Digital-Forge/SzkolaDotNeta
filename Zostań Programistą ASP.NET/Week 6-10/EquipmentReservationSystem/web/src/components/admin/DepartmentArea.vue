@@ -9,13 +9,13 @@
         <button type="button" @click="info">Info</button>
       </div>
       <div class="tab">
-        <div class="row header_table">
+        <div class="row header_tab">
           <div class="col-6"><b>Name</b></div>
           <div class="col-3"><b>User count</b></div>
           <div class="col-3"><b>Item type count</b></div>
         </div>
         <div
-          class="row row_table"
+          class="row row_tab"
           :class="[
             index % 2 === 0 ? 'row_color_1' : 'row_color_2',
             { active: selectedRow === department.id },
@@ -111,36 +111,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.tab {
-  border: 2px black solid;
-  margin-top: 0.5rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-
-  .header_table {
-    background-color: pink;
-    margin: 0;
-    padding: 0;
-  }
-
-  .row_table {
-    border-top: 1px black solid;
-    margin: 0;
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .row_color_1 {
-    background-color: rgb(226, 221, 141);
-  }
-
-  .row_color_2 {
-    background-color: rgb(171, 221, 151);
-  }
-
-  .active {
-    border: 2px rgba(255, 0, 0, 0.404) dashed;
-  }
-}
-</style>
+<style lang="scss"></style>

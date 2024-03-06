@@ -42,7 +42,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Constans.RoleName.Administration)]
+        [Authorize(Roles = Constans.Role.Name.Administration)]
         public async Task<IActionResult> CheckAdminAuth()
         {
             var check = await _authService.IsUserAdmin();
@@ -50,7 +50,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{Constans.RoleName.PickUpPoint},{Constans.RoleName.Administration}")]
+        [Authorize(Roles = $"{Constans.Role.Name.PickupPoint},{Constans.Role.Name.Administration}")]
         public async Task<IActionResult> CheckPickUpPointAuth()
         {
             var check = await _authService.IsAccessToPickUpPoint();

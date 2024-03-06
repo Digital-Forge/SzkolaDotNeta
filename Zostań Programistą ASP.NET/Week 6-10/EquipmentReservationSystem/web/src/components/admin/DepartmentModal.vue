@@ -63,12 +63,12 @@
           </div>
           <div v-if="selectedPage == 'users'" class="users_info">
             <div class="tab">
-              <div class="row header_table">
+              <div class="row header_tab">
                 <div class="col-10"><b>Fullname</b></div>
                 <div class="col-2"><b>Remove</b></div>
               </div>
               <div
-                class="row row_table"
+                class="row row_tab"
                 :class="[index % 2 === 0 ? 'row_color_1' : 'row_color_2']"
                 v-for="(user, index) in model.users"
                 :key="user.id"
@@ -80,12 +80,12 @@
           </div>
           <div v-if="selectedPage == 'items'" class="items_info">
             <div class="tab">
-              <div class="row header_table">
+              <div class="row header_tab">
                 <div class="col-10"><b>Item name</b></div>
                 <div class="col-2"><b>Remove</b></div>
               </div>
               <div
-                class="row row_table"
+                class="row row_tab"
                 :class="[index % 2 === 0 ? 'row_color_1' : 'row_color_2']"
                 v-for="(item, index) in model.items"
                 :key="item.id"
@@ -101,8 +101,8 @@
         </div>
       </template>
       <template v-slot:footer>
-        <div class="save_box">
-          <button class="save" type="button" @click="save">save</button>
+        <div v-if="mode != 'info'" class="save_box">
+          <button class="save" type="button" @click="save">Save</button>
         </div>
       </template>
     </modal>
@@ -263,29 +263,6 @@ export default {
         height: 20rem;
       }
     }
-  }
-
-  .save {
-    border-radius: 1rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-right: 1rem;
-
-    border: 1px black dashed;
-    background-color: rgb(201, 112, 40);
-  }
-
-  .save:hover {
-    background-color: rgb(153, 255, 0);
-    border: 1px black solid;
-  }
-
-  .save_box {
-    float: left;
-    display: flex;
-    align-items: right;
-    justify-content: right;
-    width: 100%;
   }
 
   .loader_fix {

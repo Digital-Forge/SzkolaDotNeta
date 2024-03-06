@@ -1,16 +1,22 @@
-﻿using Domain.Models.Business;
+﻿using Domain.Interfaces.Repositories.Abstract;
+using Domain.Models.Business;
+using static Domain.Interfaces.Repositories.IDepartmentRepository;
 
 namespace Domain.Interfaces.Repositories
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository : IRepository<IDepartmentQuery, Department>
     {
-        IQueryable<Department> GetAllQuery();
-        IQueryable<Department> GetAllWithUserQuery();
-        IQueryable<Department> GetAllWithItemQuery();
-        IQueryable<Department> GetAllFullQuery();
-        Task<Guid> AddAsync(Department entity);
-        Task DeleteAsync(Guid id);
-        Task<Department?> GetFullAsync(Guid id);
-        Task<Guid> Save(Department entity);
+        interface IDepartmentQuery : IRepositoryQuerybuilder<Department>
+        {
+            IDepartmentQuery IncludeItems();
+            IDepartmentQuery IncludeUsers();
+            IDepartmentQuery Where(System.Linq.Expressions.Expression<Func<Department, bool>> predicate);
+            Department? GetDepartmentById(Guid id);
+            Task<Department?> GetDepartmentByIdAsync(Guid id);
+            Department? GetDepartmentByName(string name);
+            Task<Department?> GetDepartmentByNameAsync(string name);
+            List<Department> GetDepartments();
+            Task<List<Department>> GetDepartmentsAsync();
+        }
     }
 }

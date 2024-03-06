@@ -1,8 +1,14 @@
-﻿namespace Application.Interfaces
+﻿
+namespace Application.Interfaces
 {
     public partial interface IUserService
     {
         UserPanelAccessModel GetPanelAccess();
-        Guid CreateUser(CreateUserModel user);
+
+        Task<ICollection<UserBaseModel>> GetAllAsync();
+        Task DeleteAsync(Guid id);
+        Task<UserFullModel> GetFullAsync(Guid id);
+        Task<Guid> Create(UserFullModel model);
+        Task Update(UserFullModel model);
     }
 }

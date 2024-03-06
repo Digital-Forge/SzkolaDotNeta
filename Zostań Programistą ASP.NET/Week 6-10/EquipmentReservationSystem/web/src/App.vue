@@ -29,6 +29,8 @@
   margin-top: 0;
 }
 
+//------------------------------------------------------------- loader
+
 .loader {
   width: 48px;
   height: 48px;
@@ -73,6 +75,99 @@
   }
   100% {
     transform: rotate(-360deg);
+  }
+}
+
+//------------------------------------------------------------- table
+.tab {
+  border: 2px black solid;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  .header_tab {
+    background-color: pink;
+    margin: 0;
+    padding: 0;
+  }
+
+  .row_tab {
+    border-top: 1px black solid;
+    margin: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .row_color_1 {
+    background-color: rgb(226, 221, 141);
+  }
+
+  .row_color_2 {
+    background-color: rgb(171, 221, 151);
+  }
+
+  .active {
+    border: 2px rgba(255, 0, 0, 0.404) dashed;
+  }
+
+  .tab_removeBtn {
+    border-radius: 1rem;
+    background-color: grey;
+    border: 1px solid black;
+    cursor: pointer;
+    padding: 0.1rem;
+
+    &:hover {
+      background-color: yellow;
+      border: 1px solid red;
+    }
+  }
+}
+
+//------------------------------------------------------------- modal
+
+.modalplate {
+  .save {
+    border-radius: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin: 0.2rem;
+    margin-right: 1rem;
+
+    background-color: silver;
+
+    border: 4px #525252 dotted;
+    box-shadow: 0 0 0 1px rgb(150, 150, 150);
+  }
+
+  .save:hover {
+    border: 4px #525252 dashed;
+    box-shadow: 0 0 0 2px rgb(150, 150, 150);
+  }
+
+  .save_box {
+    float: left;
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    width: 100%;
+  }
+
+  .modal_tab_add {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    button {
+      width: 100%;
+      border-radius: 1rem;
+      border: 2px black dashed;
+      background-color: lightgray;
+
+      &:hover {
+        border: 2px black solid;
+      }
+    }
   }
 }
 </style>

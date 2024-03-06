@@ -2,6 +2,6 @@
 {
     public class SingleData<T>
     {
-        public T Data { get; set; }
+        public T? Data { get; set; }
     }
 }

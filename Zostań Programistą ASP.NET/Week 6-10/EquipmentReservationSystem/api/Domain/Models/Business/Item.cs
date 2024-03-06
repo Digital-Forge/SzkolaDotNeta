@@ -6,11 +6,11 @@ namespace Domain.Models.Business
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<Guid> Images { get; set; }
-        public ICollection<Guid> AddictionFiles { get; set; }
+        public List<Guid> Images { get; set; } = new List<Guid>();
+        public List<Guid> AddictionFiles { get; set; } = new List<Guid>();
 
         //Relations
-        public virtual ICollection<ItemInstance> Instances { get; set; }
-        public virtual ICollection<ItemToDepartment> Departments { get; set; }
+        public virtual List<ItemInstance> Instances { get; set; } = new List<ItemInstance>();
+        public virtual List<ItemToDepartment> Departments { get; set; } = new List<ItemToDepartment>();
     }
 }

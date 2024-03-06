@@ -12,6 +12,6 @@ namespace Domain.Models.Business
         //Relations
         public Guid ItemId { get; set; }
         public virtual Item Item { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual List<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

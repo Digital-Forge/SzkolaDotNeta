@@ -2,18 +2,53 @@
 {
     public partial interface IUserService
     {
-        class CreateUserModel
-        {
-            public string Email { get; set; }
-            public string UserName { get; set; }
-            public string Password { get; set; }
-            public IList<Guid> DepartmentIdList { get; set; }
-        }
-
         class UserPanelAccessModel
         {
             public bool PickUpPoint { get; set; }
             public bool Admin { get; set; }
+        }
+
+        class UserBaseModel
+        {
+            public Guid Id { get; set; }
+            public bool Active { get; set; }
+            public string Email { get; set; }
+            public string Phone { get; set; }
+            public string Username { get; set; }
+            public bool IsAdmin { get; set; }
+            public bool IsPickupPoint { get; set; }
+            public int RentedItemsCount { get; set; }
+            public int DepartmentsCount { get; set; }
+        }
+
+        class UserFullModel
+        {
+            public Guid? Id { get; set; }
+            public bool Active { get; set; }
+            public string Email { get; set; }
+            public string? Password { get; set; }
+            public string? Phone { get; set; }
+            public string Username { get; set; }
+            public bool isAdmin { get; set; }
+            public bool isPickupPoint { get; set; }
+            public List<UserItemsModel> ItemHistory { get; set; }
+            public List<UserDepartmentsModel> Departments { get; set; }
+            public DateOnly? Created { get; set; }
+        }
+
+        class UserItemsModel
+        {
+            public Guid Id { get; set; }
+            public DateOnly From { get; set; }
+            public DateOnly? To { get; set; }
+            public string Name { get; set; }
+            public string Status { get; set; }
+        }
+
+        class UserDepartmentsModel
+        {
+            public Guid Id { get; set; }
+            public string Name { get; set; }
         }
     }
 }
