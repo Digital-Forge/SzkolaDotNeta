@@ -10,18 +10,33 @@ namespace Application.Services
     [AutoRegisterTransientService(typeof(IDepartmentService))]
     public partial class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
     {
-        public async Task<ICollection<IDepartmentService.DepartmentBaseModel>> GetAllAsync()
+        public async Task<ICollection<IDepartmentService.DepartmentTableModel>> GetAllAsync()
         {
             return await _departmentRepository.QueryBuilder(false, true, false)
                 .IncludeItems()
                 .IncludeUsers()
-                .Query.Select(s => new IDepartmentService.DepartmentBaseModel
+                .Query
+                .OrderBy(o => o.Name)
+                .Select(s => new IDepartmentService.DepartmentTableModel
                 {
                     Id = s.Id,
                     Name = s.Name,
+                    Active = s.Active,
                     Description = s.Description,
                     UserCount = s.Users.Count,
                     ItemTypeCount = s.Items.Count,
+                }).ToListAsync();
+        }
+
+        public async Task<ICollection<IDepartmentService.DepartmentComboModel>> GetAllComboAsync()
+        {
+            return await _departmentRepository.QueryBuilder(true, true, false)
+                .Query
+                .OrderBy(o => o.Name)
+                .Select(s => new IDepartmentService.DepartmentComboModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
                 }).ToListAsync();
         }
 
@@ -30,23 +45,25 @@ namespace Application.Services
             await _departmentRepository.DeleteAsync(id);
         }
 
-        public async Task<IDepartmentService.DepartmentFullModel> GetFullAsync(Guid id)
+        public async Task<IDepartmentService.DepartmentModel> GetModelAsync(Guid id)
         {
             var dep = await _departmentRepository.QueryBuilder(asNoTracking: true)
                 .IncludeItems()
                 .IncludeUsers()
                 .GetDepartmentByIdAsync(id) ?? throw new NotFoundDepartment();
 
-            return new IDepartmentService.DepartmentFullModel
+            return new IDepartmentService.DepartmentModel
             {
                 Id = dep.Id,
                 Name = dep.Name,
+                Active = dep.Active,
                 Description = dep.Description,
                 Create = DateOnly.FromDateTime(dep.CreateTime),
                 Users = dep.Users.Select(s => new IDepartmentService.DepartmentUserModel
                 {
                     Id = s.User.Id,
-                    Fullname = s.User.UserName
+                    Fullname = s.User.UserName,
+                    Email = s.User.Email,                   
                 }).ToList(),
                 Items = dep.Items.Select(s => new IDepartmentService.DepartmentItemModel
                 {
@@ -56,7 +73,7 @@ namespace Application.Services
             };
         }
 
-        public async Task<Guid> Create(IDepartmentService.DepartmentFullModel model)
+        public async Task<Guid> CreateAsync(IDepartmentService.DepartmentModel model)
         {
             var entity = new Department()
             {
@@ -85,7 +102,7 @@ namespace Application.Services
             return entity.Id;
         }
 
-        public async Task Update(IDepartmentService.DepartmentFullModel model)
+        public async Task UpdateAsync(IDepartmentService.DepartmentModel model)
         {
             var entity = await _departmentRepository.QueryBuilder()
                 .IncludeUsers()
@@ -93,6 +110,7 @@ namespace Application.Services
                 .GetDepartmentByIdAsync(model.Id.Value);
 
             entity.Name = model.Name;
+            entity.Active = model.Active;
             entity.Description = model.Description;
 
             entity.Users = model.Users.Select(s => new UserToDepartment()

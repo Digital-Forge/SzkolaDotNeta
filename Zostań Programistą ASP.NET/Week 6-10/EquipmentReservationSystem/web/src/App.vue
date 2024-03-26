@@ -78,6 +78,15 @@
   }
 }
 
+.loader_modal_fix {
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  display: flex;
+  height: 100%;
+}
+
 //------------------------------------------------------------- table
 .tab {
   border: 2px black solid;
@@ -166,6 +175,69 @@
 
       &:hover {
         border: 2px black solid;
+      }
+    }
+  }
+
+  .content {
+    .page_select {
+      border: 1px black solid;
+      background-color: gray;
+      padding: 0;
+      margin: 0;
+    }
+
+    .page_select:hover {
+      background-color: magenta;
+      font-weight: bold;
+    }
+
+    .page_select_active {
+      background-color: greenyellow;
+    }
+
+    .name_value {
+      background-color: transparent;
+      text-align: right;
+      justify-content: center;
+      justify-items: center;
+      margin: auto;
+      padding: 0;
+      color: black;
+    }
+
+    .name_value_list {
+      background-color: transparent;
+      text-align: right;
+      justify-content: center;
+      justify-items: center;
+      padding: 0;
+      color: black;
+    }
+
+    .box_value {
+      padding-right: 2rem;
+      padding-left: 0.5rem;
+      margin: 0;
+
+      input {
+        width: 100%;
+      }
+
+      textarea {
+        width: 100%;
+        height: 20rem;
+      }
+    }
+
+    .box_value_chackbox {
+      margin-left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+
+      input {
+        margin-right: 0.25rem;
       }
     }
   }

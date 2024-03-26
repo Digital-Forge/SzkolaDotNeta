@@ -16,6 +16,13 @@ namespace Web.Controllers
             return Ok(await _departmentService.GetAllAsync());
         }
 
+        [HttpGet]
+        [Authorize(Roles = $"{Constans.Role.Name.PickupPoint},{Constans.Role.Name.Administration}")]
+        public async Task<IActionResult> GetAllCombo()
+        {
+            return Ok(await _departmentService.GetAllComboAsync());
+        }
+
         [HttpDelete]
         [Authorize(Roles = Constans.Role.Name.Administration)]
         public async Task<IActionResult> Delete(Guid id)
@@ -26,23 +33,23 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> GetFull(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return Ok(await _departmentService.GetFullAsync(id));
+            return Ok(await _departmentService.GetModelAsync(id));
         }
 
         [HttpPut]
         [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> Create(IDepartmentService.DepartmentFullModel model)
+        public async Task<IActionResult> Create(IDepartmentService.DepartmentModel model)
         {
-            return Ok(await _departmentService.Create(model));
+            return Ok(await _departmentService.CreateAsync(model));
         }
 
         [HttpPatch]
         [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> Update(IDepartmentService.DepartmentFullModel model)
+        public async Task<IActionResult> Update(IDepartmentService.DepartmentModel model)
         {
-            await _departmentService.Update(model);
+            await _departmentService.UpdateAsync(model);
             return Ok();
         }
     }

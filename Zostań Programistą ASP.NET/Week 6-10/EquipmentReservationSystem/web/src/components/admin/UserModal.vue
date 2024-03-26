@@ -166,15 +166,15 @@
                 v-for="(item, index) in model.itemHistory"
                 :key="item.id"
               >
-                <div class="col-10">{{ item.name }}</div>
-                <div class="col-10">{{ item.from }}</div>
-                <div class="col-10">{{ item.to }}</div>
-                <div class="col-10">{{ item.status }}</div>
+                <div class="col-5">{{ item.name }}</div>
+                <div class="col-2">{{ item.from }}</div>
+                <div class="col-2">{{ item.to }}</div>
+                <div class="col-3">{{ item.status }}</div>
               </div>
             </div>
           </div>
         </div>
-        <div v-else class="loader_fix">
+        <div v-else class="loader_modal_fix">
           <span class="loader"></span>
         </div>
       </template>
@@ -317,7 +317,7 @@ export default {
     },
     async loadDepartments() {
       try {
-        const respons = await this.axios.get(`Department/GetAll`);
+        const respons = await this.axios.get(`Department/GetAllCombo`);
         if (respons.status !== 200) return;
         this.departmentsList = respons.data;
       } catch (error) {
@@ -388,76 +388,5 @@ export default {
 
 <style lang="scss">
 .user_modal {
-  .content {
-    .page_select {
-      border: 1px black solid;
-      background-color: gray;
-      padding: 0;
-      margin: 0;
-    }
-
-    .page_select:hover {
-      background-color: magenta;
-      font-weight: bold;
-    }
-
-    .page_select_active {
-      background-color: greenyellow;
-    }
-
-    .name_value {
-      background-color: transparent;
-      text-align: right;
-      justify-content: center;
-      justify-items: center;
-      margin: auto;
-      padding: 0;
-      color: black;
-    }
-
-    .name_value_list {
-      background-color: transparent;
-      text-align: right;
-      justify-content: center;
-      justify-items: center;
-      padding: 0;
-      color: black;
-    }
-
-    .box_value {
-      padding-right: 2rem;
-      padding-left: 0.5rem;
-      margin: 0;
-
-      input {
-        width: 100%;
-      }
-
-      textarea {
-        width: 100%;
-        height: 20rem;
-      }
-    }
-
-    .box_value_chackbox {
-      margin-left: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: baseline;
-
-      input {
-        margin-right: 0.25rem;
-      }
-    }
-  }
-
-  .loader_fix {
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    display: flex;
-    height: 100%;
-  }
 }
 </style>

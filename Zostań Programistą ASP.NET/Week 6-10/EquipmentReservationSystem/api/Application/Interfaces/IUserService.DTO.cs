@@ -8,7 +8,21 @@
             public bool Admin { get; set; }
         }
 
-        class UserBaseModel
+        class UserComboModel
+        {
+            public Guid Id { get; set; }
+            public string Email { get; set; }
+            public string Username { get; set; }
+        }
+
+        class UserComboParams
+        {
+            public string? Search { get; set; }
+            public int? Take { get; set; } = null;
+            public int? Skip { get; set; } = null;
+        }
+
+            class UserTableModel
         {
             public Guid Id { get; set; }
             public bool Active { get; set; }
@@ -21,7 +35,7 @@
             public int DepartmentsCount { get; set; }
         }
 
-        class UserFullModel
+        class UserModel
         {
             public Guid? Id { get; set; }
             public bool Active { get; set; }

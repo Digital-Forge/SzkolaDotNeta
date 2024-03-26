@@ -10,7 +10,8 @@
       </div>
       <div class="tab">
         <div class="row header_tab">
-          <div class="col-6"><b>Name</b></div>
+          <div class="col-1"><b>Active</b></div>
+          <div class="col-5"><b>Name</b></div>
           <div class="col-3"><b>User count</b></div>
           <div class="col-3"><b>Item type count</b></div>
         </div>
@@ -24,7 +25,14 @@
           :key="department.id"
           @click="selectedRow = department.id"
         >
-          <div class="col-6">{{ department.name }}</div>
+          <div class="p-0 col-1">
+            <input
+              type="checkbox"
+              v-model="department.active"
+              :disabled="true"
+            />
+          </div>
+          <div class="col-5">{{ department.name }}</div>
           <div class="col-3">{{ department.userCount }}</div>
           <div class="col-3">{{ department.itemTypeCount }}</div>
         </div>

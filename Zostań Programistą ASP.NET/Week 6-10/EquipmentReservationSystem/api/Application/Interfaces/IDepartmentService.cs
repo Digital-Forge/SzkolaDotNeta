@@ -2,10 +2,11 @@
 {
     public partial interface IDepartmentService
     {
-        public Task<ICollection<DepartmentBaseModel>> GetAllAsync();
+        public Task<ICollection<DepartmentTableModel>> GetAllAsync();
+        public Task<ICollection<DepartmentComboModel>> GetAllComboAsync();
         public Task DeleteAsync(Guid id);
-        public Task<DepartmentFullModel> GetFullAsync(Guid id);
-        public Task<Guid> Create(DepartmentFullModel model);
-        public Task Update(DepartmentFullModel model);
+        public Task<DepartmentModel> GetModelAsync(Guid id);
+        public Task<Guid> CreateAsync(DepartmentModel model);
+        public Task UpdateAsync(DepartmentModel model);
     }
 }

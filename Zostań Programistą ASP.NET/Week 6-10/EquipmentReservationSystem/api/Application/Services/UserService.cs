@@ -39,12 +39,14 @@ namespace Application.Services
             };
         }
 
-        public async Task<ICollection<UserBaseModel>> GetAllAsync()
+        public async Task<ICollection<UserTableModel>> GetAllAsync()
         {
             var list = await _userRepository.QueryBuilder(asNoTracking: true)
                 .IncludeDepartments()
                 .IncludeReservation()
-                .Query.Select(s => new UserBaseModel()
+                .Query
+                .OrderBy(o => o.UserName)
+                .Select(s => new UserTableModel()
                 {
                     Id = s.Id,
                     Active = s.Active,
@@ -66,14 +68,35 @@ namespace Application.Services
             return list;
         }
 
-        public async Task<UserFullModel> GetFullAsync(Guid id)
+        public async Task<ICollection<UserComboModel>> GetAllComboAsync(UserComboParams filter)
+        {
+            var query = _userRepository.QueryBuilder(true, true)
+                .Query
+                .OrderBy(o => o.UserName)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter?.Search)) query = query.Where(x => x.UserName.Contains(filter.Search));
+            if (filter?.Skip != null) query = query.Skip(filter.Skip.Value);
+            if (filter?.Take != null) query = query.Take(filter.Take.Value);
+
+            var users = await query.Select(s => new UserComboModel()
+            {
+                Id = s.Id,
+                Username = s.UserName,
+                Email = s.Email,
+            }).ToListAsync();
+
+            return users;
+        }
+
+        public async Task<UserModel> GetFullAsync(Guid id)
         {
             var entity = await _userRepository.QueryBuilder(asNoTracking: true)
                 .IncludeReservation()
                 .IncludeDepartments()
                 .GetUserByIdAsync(id) ?? throw new UserNotFoundException();
 
-            var model = new UserFullModel()
+            var model = new UserModel()
             {
                 Id = entity.Id,
                 Active = entity.Active,
@@ -109,7 +132,7 @@ namespace Application.Services
             return model;
         }
 
-        public async Task<Guid> Create(UserFullModel model)
+        public async Task<Guid> Create(UserModel model)
         {
             var newUser = new UserData()
             {
@@ -138,7 +161,7 @@ namespace Application.Services
             return newUser.Id;
         }
 
-        public async Task Update(UserFullModel model)
+        public async Task Update(UserModel model)
         {
             var entity = await _userRepository.QueryBuilder()
                 .IncludeDepartments()

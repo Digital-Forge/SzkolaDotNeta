@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.DTO;
 
 namespace Web.Controllers
 {
@@ -23,6 +24,13 @@ namespace Web.Controllers
             return Ok(await _userService.GetAllAsync());
         }
 
+        [HttpPost]
+        [Authorize(Roles = $"{Constans.Role.Name.PickupPoint},{Constans.Role.Name.Administration}")]
+        public async Task<IActionResult> GetAllCombo(IUserService.UserComboParams filter)
+        {
+            return Ok(await _userService.GetAllComboAsync(filter));
+        }
+
         [HttpDelete]
         [Authorize(Roles = Constans.Role.Name.Administration)]
         public async Task<IActionResult> Delete(Guid id)
@@ -40,14 +48,14 @@ namespace Web.Controllers
 
         [HttpPut]
         [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> Create(IUserService.UserFullModel model)
+        public async Task<IActionResult> Create(IUserService.UserModel model)
         {
             return Ok(await _userService.Create(model));
         }
 
         [HttpPatch]
         [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> Update(IUserService.UserFullModel model)
+        public async Task<IActionResult> Update(IUserService.UserModel model)
         {
             await _userService.Update(model);
             return Ok();

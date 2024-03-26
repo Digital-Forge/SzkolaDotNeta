@@ -5,10 +5,11 @@ namespace Application.Interfaces
     {
         UserPanelAccessModel GetPanelAccess();
 
-        Task<ICollection<UserBaseModel>> GetAllAsync();
+        Task<ICollection<UserTableModel>> GetAllAsync();
+        Task<ICollection<UserComboModel>> GetAllComboAsync(UserComboParams filter);
         Task DeleteAsync(Guid id);
-        Task<UserFullModel> GetFullAsync(Guid id);
-        Task<Guid> Create(UserFullModel model);
-        Task Update(UserFullModel model);
+        Task<UserModel> GetFullAsync(Guid id);
+        Task<Guid> Create(UserModel model);
+        Task Update(UserModel model);
     }
 }
