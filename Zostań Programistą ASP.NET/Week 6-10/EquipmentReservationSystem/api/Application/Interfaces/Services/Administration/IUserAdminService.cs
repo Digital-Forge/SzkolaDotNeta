@@ -1,7 +1,8 @@
-﻿
+﻿using static Application.Interfaces.IUserAdminService;
+
 namespace Application.Interfaces
 {
-    public partial interface IUserService
+    public partial interface IUserAdminService : IPaginationTable<UserTableModel>
     {
         UserPanelAccessModel GetPanelAccess();
 

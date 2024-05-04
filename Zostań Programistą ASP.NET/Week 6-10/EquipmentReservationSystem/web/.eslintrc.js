@@ -24,5 +24,6 @@ module.exports = {
     "no-plusplus": "off",
     "no-restricted-globals": "off",
     "no-alert": "off",
+    "no-continue": "off",
   },
 };

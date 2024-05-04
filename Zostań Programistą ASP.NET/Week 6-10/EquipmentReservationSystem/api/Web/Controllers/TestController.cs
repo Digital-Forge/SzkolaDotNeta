@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -8,9 +9,9 @@ namespace Web.Controllers
     public class TestController : ControllerBase
     {
         private readonly ITestService _testService;
-        private readonly IUserService _userService;
+        private readonly IUserAdminService _userService;
 
-        public TestController(ITestService testService, IUserService userService)
+        public TestController(ITestService testService, IUserAdminService userService)
         {
             _testService = testService;
             _userService = userService;

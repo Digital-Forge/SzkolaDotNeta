@@ -98,6 +98,11 @@
     background-color: pink;
     margin: 0;
     padding: 0;
+
+    .simple_header {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .row_tab {
@@ -117,6 +122,19 @@
 
   .active {
     border: 2px rgba(255, 0, 0, 0.404) dashed;
+  }
+
+  .tab_infoBtn {
+    border-radius: 1rem;
+    background-color: rgb(49, 187, 233);
+    border: 1px solid black;
+    cursor: pointer;
+    padding: 0.1rem;
+
+    &:hover {
+      background-color: lightgreen;
+      border: 1px solid yellowgreen;
+    }
   }
 
   .tab_removeBtn {

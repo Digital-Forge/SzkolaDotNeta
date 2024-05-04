@@ -80,7 +80,10 @@
               <div class="row header_tab">
                 <div class="col-5"><b>Fullname</b></div>
                 <div class="col-5"><b>Email</b></div>
-                <div class="col-2"><b>Remove</b></div>
+                <div :class="[globalDisable ? 'col-2' : 'col-1']">
+                  <b>Info</b>
+                </div>
+                <div class="col-1" v-if="!globalDisable"><b>Remove</b></div>
               </div>
               <div
                 class="row row_tab"
@@ -90,7 +93,12 @@
               >
                 <div class="col-5">{{ user.fullname }}</div>
                 <div class="col-5">{{ user.email }}</div>
-                <div v-if="!globalDisable" class="col-2">
+                <div :class="[globalDisable ? 'col-2' : 'col-1']">
+                  <span class="tab_infoBtn" @click="openUserInfo(user.id)">
+                    I
+                  </span>
+                </div>
+                <div v-if="!globalDisable" class="col-1">
                   <span class="tab_removeBtn" @click="removeUser(user.id)">
                     X
                   </span>
@@ -130,7 +138,7 @@
       v-if="showAddUserModal"
       :z-index="addModalZIndex"
       :width="30"
-      :height="76"
+      :height="90"
       @close="closeUserAddModal"
     >
       <template v-slot:header><b>Select user</b></template>
@@ -173,15 +181,24 @@
         </div>
       </template>
     </modal>
+    <user-modal
+      v-if="showUserInfo"
+      :z-index-fix="addModalZIndex"
+      :mode="'info'"
+      :id="selectUserInfo"
+      @close="closeUserInfo"
+    ></user-modal>
   </div>
 </template>
 
 <script>
 import modal from "@/components/ModalWindow.vue";
+import userModal from "@/components/admin/UserModal.vue";
 
 export default {
   components: {
     modal,
+    userModal,
   },
   props: {
     mode: {
@@ -208,9 +225,19 @@ export default {
         show: 30,
         skip: 0,
       },
+      showUserInfo: false,
+      selectUserInfo: null,
     };
   },
   methods: {
+    async openUserInfo(id) {
+      this.selectUserInfo = id;
+      this.showUserInfo = true;
+    },
+    async closeUserInfo() {
+      this.showUserInfo = false;
+      this.selectUserInfo = null;
+    },
     setPage(name) {
       this.selectedPage = name;
     },
@@ -221,8 +248,8 @@ export default {
       try {
         const respons =
           this.model.id == null
-            ? await this.axios.put(`Department/Create`, this.model)
-            : await this.axios.patch(`Department/Update`, this.model);
+            ? await this.axios.put(`Admin/Department/Create`, this.model)
+            : await this.axios.patch(`Admin/Department/Update`, this.model);
         if (respons.status !== 200) return;
         this.$emit("close");
       } catch (error) {
@@ -264,7 +291,7 @@ export default {
     async loadUsers() {
       this.addModalLoader = true;
       try {
-        const respons = await this.axios.post(`User/GetAllCombo`, {
+        const respons = await this.axios.post(`Admin/User/GetAllCombo`, {
           take: this.addUserPaging.show,
           skip: this.addUserPaging.skip,
           search: this.searchUser,
@@ -284,7 +311,9 @@ export default {
       }
 
       try {
-        const respons = await this.axios.get(`Department/Get?id=${this.id}`);
+        const respons = await this.axios.get(
+          `Admin/Department/Get?id=${this.id}`
+        );
         if (respons.status !== 200) return;
         this.model = respons.data;
         this.isReady = true;

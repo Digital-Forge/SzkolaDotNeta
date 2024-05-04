@@ -3,13 +3,13 @@ using static Application.Abstract.ServiceException;
 
 namespace Application.Services
 {
-    public partial class UserService
+    public partial class UserAdminService
     {
         public abstract class UserServiceException : ServiceException
         {
             public UserServiceException(string message, Exception innerException = null) : base(message, innerException)
             {
-                this.Occurred = nameof(UserService);
+                this.Occurred = nameof(UserAdminService);
             }
         }
 

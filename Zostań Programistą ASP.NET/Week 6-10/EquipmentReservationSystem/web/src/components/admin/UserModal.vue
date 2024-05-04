@@ -1,6 +1,6 @@
 <template>
   <div class="user_modal">
-    <modal ref="mainModal" @close="close">
+    <modal ref="mainModal" :z-index="zIndexFix" @close="close">
       <template v-slot:header
         ><span
           ><b>{{ title }}</b></span
@@ -236,6 +236,10 @@ export default {
       type: String,
       required: false,
     },
+    zIndexFix: {
+      type: Number,
+      required: false,
+    },
   },
   data() {
     return {
@@ -289,8 +293,8 @@ export default {
       try {
         const respons =
           this.model.id == null
-            ? await this.axios.put(`User/Create`, this.model)
-            : await this.axios.patch(`User/Update`, this.model);
+            ? await this.axios.put(`Admin/User/Create`, this.model)
+            : await this.axios.patch(`Admin/User/Update`, this.model);
         if (respons.status !== 200) return;
         this.$emit("close");
       } catch (error) {
@@ -305,7 +309,9 @@ export default {
       }
 
       try {
-        const respons = await this.axios.get(`User/GetFull?id=${this.id}`);
+        const respons = await this.axios.get(
+          `Admin/User/GetFull?id=${this.id}`
+        );
         if (respons.status !== 200) return;
         this.model = respons.data;
         this.isReady = true;
@@ -317,7 +323,7 @@ export default {
     },
     async loadDepartments() {
       try {
-        const respons = await this.axios.get(`Department/GetAllCombo`);
+        const respons = await this.axios.get(`Admin/Department/GetAllCombo`);
         if (respons.status !== 200) return;
         this.departmentsList = respons.data;
       } catch (error) {

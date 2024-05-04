@@ -8,7 +8,7 @@ namespace Web.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AuthController(IAuthService _authService) : ControllerBase
+    public class AuthController(IAuthService _authService, IUserAdminService _userService) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Login(IAuthService.LoginModel login)
@@ -55,6 +55,13 @@ namespace Web.Controllers
         {
             var check = await _authService.IsAccessToPickUpPoint();
             return check ? Ok() : Forbid();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult PanelAccess()
+        {
+            return Ok(_userService.GetPanelAccess());
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Application.Interfaces
+﻿using static Application.Interfaces.IDepartmentAdminService;
+
+namespace Application.Interfaces
 {
-    public partial interface IDepartmentService
+    public partial interface IDepartmentAdminService : IPaginationTable<DepartmentTableModel>
     {
         public Task<ICollection<DepartmentTableModel>> GetAllAsync();
         public Task<ICollection<DepartmentComboModel>> GetAllComboAsync();

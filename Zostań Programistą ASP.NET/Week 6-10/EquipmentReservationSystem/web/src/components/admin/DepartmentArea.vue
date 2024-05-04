@@ -1,12 +1,35 @@
 <template>
-  <div>
+  <div class="department_area">
     <h2 class="pt-2">Departments</h2>
-    <div v-if="departments">
-      <div>
-        <button type="button" @click="add">Add</button>
-        <button type="button" @click="edit">Edit</button>
-        <button type="button" @click="remove">Remove</button>
-        <button type="button" @click="info">Info</button>
+    <div>
+      <div class="action_bar">
+        <span class="action">Search</span>
+        <input class="action" type="text" v-model="search" />
+        <button
+          class="action"
+          type="button"
+          :disabled="!selectedRow"
+          @click="info"
+        >
+          Info
+        </button>
+        <button class="action" type="button" @click="add">Add</button>
+        <button
+          class="action"
+          type="button"
+          :disabled="!selectedRow"
+          @click="edit"
+        >
+          Edit
+        </button>
+        <button
+          class="action"
+          type="button"
+          :disabled="!selectedRow"
+          @click="remove"
+        >
+          Remove
+        </button>
       </div>
       <div class="tab">
         <div class="row header_tab">
@@ -15,30 +38,39 @@
           <div class="col-3"><b>User count</b></div>
           <div class="col-3"><b>Item type count</b></div>
         </div>
-        <div
-          class="row row_tab"
-          :class="[
-            index % 2 === 0 ? 'row_color_1' : 'row_color_2',
-            { active: selectedRow === department.id },
-          ]"
-          v-for="(department, index) in departments"
-          :key="department.id"
-          @click="selectedRow = department.id"
-        >
-          <div class="p-0 col-1">
-            <input
-              type="checkbox"
-              v-model="department.active"
-              :disabled="true"
-            />
+        <div v-if="departments">
+          <div
+            class="row row_tab"
+            :class="[
+              index % 2 === 0 ? 'row_color_1' : 'row_color_2',
+              { active: selectedRow === department.id },
+            ]"
+            v-for="(department, index) in departments"
+            :key="department.id"
+            @click="selectedRow = department.id"
+          >
+            <div class="p-0 col-1">
+              <input
+                type="checkbox"
+                v-model="department.active"
+                :disabled="true"
+              />
+            </div>
+            <div class="col-5">{{ department.name }}</div>
+            <div class="col-3">{{ department.userCount }}</div>
+            <div class="col-3">{{ department.itemTypeCount }}</div>
           </div>
-          <div class="col-5">{{ department.name }}</div>
-          <div class="col-3">{{ department.userCount }}</div>
-          <div class="col-3">{{ department.itemTypeCount }}</div>
         </div>
+        <span v-else class="loader"></span>
+        <pagging-bar
+          :api-path="'Admin/Department/GetAll'"
+          :show="20"
+          :search="search"
+          @changePage="updateTable"
+          :key="refresh"
+        ></pagging-bar>
       </div>
     </div>
-    <span v-else class="loader"></span>
     <department-modal
       v-if="showModal"
       :id="selectedRow"
@@ -50,10 +82,12 @@
 
 <script>
 import departmentModal from "@/components/admin/DepartmentModal.vue";
+import paggingBar from "@/components/PagingBar.vue";
 
 export default {
   components: {
     departmentModal,
+    paggingBar,
   },
   data() {
     return {
@@ -61,7 +95,14 @@ export default {
       selectedRow: null,
       modalMode: null,
       showModal: false,
+      search: null,
+      refresh: 0,
     };
+  },
+  watch: {
+    async search() {
+      this.selectedRow = null;
+    },
   },
   methods: {
     async add() {
@@ -81,7 +122,7 @@ export default {
     async close() {
       this.showModal = false;
       this.modalMode = null;
-      await this.loadData();
+      this.refresh++;
     },
     async remove() {
       if (!this.selectedRow) return;
@@ -91,32 +132,35 @@ export default {
 
       try {
         const respons = await this.axios.delete(
-          `Department/Delete?id=${this.selectedRow}`
+          `Admin/Department/Delete?id=${this.selectedRow}`
         );
         if (respons.status !== 200) return;
         this.selectedRow = null;
         this.departments = null;
-        await this.loadData();
       } catch (error) {
-        console.log(error);
         alert("Error occured");
       }
+      this.refresh++;
     },
-    async loadData() {
-      try {
-        const respons = await this.axios.get("Department/GetAll");
-        if (respons.status !== 200) return;
-        this.departments = respons.data;
-      } catch (error) {
-        console.log(error);
-        alert("Error occured");
-      }
+    updateTable(data) {
+      this.departments = data;
     },
-  },
-  async mounted() {
-    await this.loadData();
   },
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.department_area {
+  .action_bar {
+    display: flex;
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+    .action {
+      flex: 1;
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+    }
+  }
+}
+</style>

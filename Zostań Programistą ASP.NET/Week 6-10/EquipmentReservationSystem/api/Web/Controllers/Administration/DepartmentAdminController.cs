@@ -3,28 +3,26 @@ using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Controllers.Administration
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class DepartmentController(IDepartmentService _departmentService) : ControllerBase
+    [Route("api/Admin/Department/[action]")]
+    [Authorize(Roles = Constans.Role.Name.Administration)]
+    public class DepartmentAdminController(IDepartmentAdminService _departmentService) : ControllerBase
     {
-        [HttpGet]
-        [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> GetAll()
+        [HttpPost]
+        public async Task<IActionResult> GetAll(IPaginationTable<IDepartmentAdminService.DepartmentTableModel>.TableOptions options)
         {
-            return Ok(await _departmentService.GetAllAsync());
+            return Ok(await _departmentService.GetTablAsync(options));
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{Constans.Role.Name.PickupPoint},{Constans.Role.Name.Administration}")]
         public async Task<IActionResult> GetAllCombo()
         {
             return Ok(await _departmentService.GetAllComboAsync());
         }
 
         [HttpDelete]
-        [Authorize(Roles = Constans.Role.Name.Administration)]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _departmentService.DeleteAsync(id);
@@ -32,22 +30,19 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Constans.Role.Name.Administration)]
         public async Task<IActionResult> Get(Guid id)
         {
             return Ok(await _departmentService.GetModelAsync(id));
         }
 
         [HttpPut]
-        [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> Create(IDepartmentService.DepartmentModel model)
+        public async Task<IActionResult> Create(IDepartmentAdminService.DepartmentModel model)
         {
             return Ok(await _departmentService.CreateAsync(model));
         }
 
         [HttpPatch]
-        [Authorize(Roles = Constans.Role.Name.Administration)]
-        public async Task<IActionResult> Update(IDepartmentService.DepartmentModel model)
+        public async Task<IActionResult> Update(IDepartmentAdminService.DepartmentModel model)
         {
             await _departmentService.UpdateAsync(model);
             return Ok();

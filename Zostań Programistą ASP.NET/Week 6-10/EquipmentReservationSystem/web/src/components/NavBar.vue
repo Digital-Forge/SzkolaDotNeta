@@ -55,7 +55,7 @@ export default {
     },
   },
   async mounted() {
-    const respons = await this.axios.get("User/PanelAccess");
+    const respons = await this.axios.get("Auth/PanelAccess");
     if (respons.status !== 200) return;
     this.adminAccess = respons.data.admin;
     this.pickupAccess = respons.data.pickUpPoint;

@@ -1,5 +1,5 @@
 ﻿using Application.Attributes;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using Domain.Interfaces.Repositories;
 
 namespace Application.Services
