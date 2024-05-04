@@ -32,14 +32,14 @@ namespace Infrastructure.Repositories
                     if (AsNoTracking) _query = _query.AsNoTracking();
                     if (OnlyActive) _query = _query.Where(x => x.Active);
 
-                    return _query.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer)));
+                    return _query.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer)));
                 } 
             }
 
             public IUserQuery IncludeDepartments()
             {
                 _query = _query
-                    .Include(i => i.Departments.Where(x => !(x.Department.EntityStatus == Domain.Utils.EntityStatus.Delete || (AllowBuffer && x.Department.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
+                    .Include(i => i.Departments.Where(x => !(x.Department.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.Department.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
                     .ThenInclude(i => i.Department);
 
                 return this;
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             public IUserQuery IncludeReservation()
             {
                 _query = _query
-                    .Include(i => i.Reservations.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer))));
+                    .Include(i => i.Reservations.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer))));
 
                 return this;
             }

@@ -3,8 +3,8 @@
     public class UserToDepartment
     {
         public Guid UserId { get; set; }
-        public UserData User { get; set; }
+        public virtual UserData User { get; set; }
         public Guid DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

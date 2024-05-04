@@ -45,7 +45,7 @@ namespace Web.Controllers
         [Authorize(Roles = Constans.Role.Name.Administration)]
         public async Task<IActionResult> CheckAdminAuth()
         {
-            var check = await _authService.IsUserAdmin();
+            var check = await _authService.IsUserAdminAsync();
             return check ? Ok() : Forbid();
         }
 
@@ -53,7 +53,7 @@ namespace Web.Controllers
         [Authorize(Roles = $"{Constans.Role.Name.PickupPoint},{Constans.Role.Name.Administration}")]
         public async Task<IActionResult> CheckPickUpPointAuth()
         {
-            var check = await _authService.IsAccessToPickUpPoint();
+            var check = await _authService.IsAccessToPickUpPointAsync();
             return check ? Ok() : Forbid();
         }
 

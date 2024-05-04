@@ -59,13 +59,13 @@ namespace Application.Services
                 Active = dep.Active,
                 Description = dep.Description,
                 Create = DateOnly.FromDateTime(dep.CreateTime),
-                Users = dep.Users.Select(s => new IDepartmentAdminService.DepartmentUserModel
+                Users = dep.Users.Select(s => new IDepartmentAdminService.DepartmentModel.UserModel
                 {
                     Id = s.User.Id,
                     Fullname = s.User.UserName,
                     Email = s.User.Email,                   
                 }).ToList(),
-                Items = dep.Items.Select(s => new IDepartmentAdminService.DepartmentItemModel
+                Items = dep.Items.Select(s => new IDepartmentAdminService.DepartmentModel.ItemModel
                 {
                     Id = s.Item.Id,
                     Name = s.Item.Name,

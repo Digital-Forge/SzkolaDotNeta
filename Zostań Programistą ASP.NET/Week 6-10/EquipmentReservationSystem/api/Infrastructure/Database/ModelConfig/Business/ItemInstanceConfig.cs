@@ -15,7 +15,7 @@ namespace Infrastructure.Database.ModelConfig.Business
                 .HasColumnName("serial_number")
                 .HasMaxLength(200);
 
-            builder.Property(e => e.Starus)
+            builder.Property(e => e.Status)
                 .HasColumnName("status")
                 .HasConversion(new EnumToStringConverter<ItemInstanceStatus>())
                 .HasMaxLength(20);

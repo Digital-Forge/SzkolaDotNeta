@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 using Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,11 +29,18 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.ToString());
+});
 
 // Authorize
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -91,11 +99,10 @@ app.UseCors(options =>
            .AllowAnyMethod()
            .AllowAnyHeader();
 });
-//app.UseCors("AllowSpecificOrigin");
+
 app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-//app.MapIdentityApi<UserData>();
 app.MapControllers();
 app.Run();

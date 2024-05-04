@@ -14,9 +14,25 @@ namespace Application.Services
 
         public class FileNotFoundException : FileServiceException
         {
-            public FileNotFoundException(Exception innerException = null) : base("Not found file", innerException) 
+            public FileNotFoundException(Exception innerException = null) : base("Not found file", innerException)
             {
                 this.TypeAction = ExceptionTypeAction.NotFound;
+            }
+        }
+
+        public class FilePathException : FileServiceException
+        {
+            public FilePathException(Exception innerException = null) : base("Path to file is wrong", innerException)
+            {
+                this.TypeAction = ExceptionTypeAction.NotFound;
+            }
+        }
+
+        public class FileBufferStatusException : FileServiceException
+        {
+            public FileBufferStatusException(Exception innerException = null) : base("File have buffer status and user is not admin", innerException)
+            {
+                this.TypeAction = ExceptionTypeAction.NotAccess;
             }
         }
     }

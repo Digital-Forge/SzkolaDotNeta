@@ -73,7 +73,7 @@
             </div>
 
             <div class="row mt-2">
-              <div class="col-3 name_value"><span>Phone</span></div>
+              <div class="col-3 name_value"><span>Phone number</span></div>
               <div class="col-9 box_value">
                 <input
                   type="text"
@@ -392,7 +392,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .user_modal {
 }
 </style>

@@ -10,8 +10,8 @@ namespace Domain.Models.Business
 
         //Relations
         public Guid ItemInstanceId { get; set; }
-        public ItemInstance ItemInstance { get; set; }
+        public virtual ItemInstance ItemInstance { get; set; }
         public Guid UserId { get; set; }
-        public UserData User { get; set; }
+        public virtual UserData User { get; set; }
     }
 }

@@ -10,16 +10,23 @@ namespace Application.Services
     {
         private readonly string _path;
         private readonly IFileRepository _fileRepository;
+        private readonly IAuthService _authService;
 
-        public FileService(IFileRepository fileRepository, IConfiguration config)
+        public FileService(IFileRepository fileRepository, IAuthService authService, IConfiguration config)
         {
+            _authService = authService;
             _fileRepository = fileRepository;
             _path = config["FilesPath"] ?? "";
         }
 
         public async Task<IFileService.DataFileInfoModel> GetFileInfoAsync(Guid Id)
         {
-            return DataFileInfoModel.Map(await _fileRepository.GetAsync(Id) ?? throw new FileNotFoundException());
+            var entity = await _fileRepository.GetAsync(Id) ?? throw new FileNotFoundException();
+
+            if (entity.EntityStatus == Domain.Utils.EntityStatus.Buffer)
+                if (!await _authService.IsUserAdminAsync()) throw new FileBufferStatusException();
+
+            return DataFileInfoModel.Map(entity);
         }
 
         public async Task<IFileService.FileModel> GetFileObjectAsync(Guid Id)
@@ -50,18 +57,60 @@ namespace Application.Services
             return data;
         }
 
-        public async Task<Guid> SaveFileAsync(IFileService.FileModel data)
+        public async Task<Guid> SaveFileAsync(IFileService.FileModel data, bool isTemporary = false)
         {
             var entity = DataFileInfoModel.Map(data.Info);
             entity.EntityStatus = Domain.Utils.EntityStatus.Buffer;
             await _fileRepository.SaveAsync(entity);
 
             var file = Convert.FromBase64String(data.DataBase64);
+
+            if(!Directory.Exists(_path)) Directory.CreateDirectory(_path);
+
             await File.WriteAllBytesAsync(Path.Combine(_path, entity.Id.ToString()), file);
-            entity.EntityStatus = Domain.Utils.EntityStatus.Use;
-            await _fileRepository.SaveAsync(entity);
+
+            if (!isTemporary)
+            {
+                entity.EntityStatus = Domain.Utils.EntityStatus.Use;
+                await _fileRepository.SaveAsync(entity);
+            }
 
             return entity.Id;
+        }
+
+        public async Task UpdateFileInfo(IFileService.DataFileInfoModel model, bool isTemporary = false)
+        {
+            var entity = await _fileRepository.GetAsync(model.Id.Value);
+            DataFileInfoModel.Map(model, entity);
+
+            entity.EntityStatus = isTemporary 
+                ? Domain.Utils.EntityStatus.Buffer 
+                : Domain.Utils.EntityStatus.Use;
+
+            await _fileRepository.SaveAsync(entity);
+        }
+
+        public async Task DeleteFileAsync(Guid Id)
+        {
+            var entity = _fileRepository.GetAsync(Id);
+
+            var path = Path.Combine(_path, entity?.Id.ToString() ?? throw new FilePathException()) ?? string.Empty;
+
+            if (File.Exists(path))
+                File.Delete(path);
+
+            await _fileRepository.RemoveAsync(Id);
+        }
+
+        public async Task UpdateTemporary(Guid id, bool isTemporary)
+        {
+            var entity = await _fileRepository.GetAsync(id);
+
+            entity.EntityStatus = isTemporary
+                ? Domain.Utils.EntityStatus.Buffer
+                : Domain.Utils.EntityStatus.Use;
+
+            await _fileRepository.SaveAsync(entity);
         }
     }
 }

@@ -4,10 +4,11 @@
     {
         class DataFileInfoModel
         {
-            public Guid Id { get; set; }
+            public Guid? Id { get; set; }
+            public bool Active { get; set; }
             public string Name { get; set; }
-            public DateTime Date { get; set; }
-            public bool IsMissing { get; set; }
+            public DateTime? Date { get; set; }
+            public bool? IsMissing { get; set; }
         }
 
         class FileModel

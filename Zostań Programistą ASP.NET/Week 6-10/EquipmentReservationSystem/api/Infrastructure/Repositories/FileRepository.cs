@@ -6,19 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    [AutoRegisterTransientRepository(typeof(IFileRepository))]
+    [AutoRegisterScopedRepository(typeof(IFileRepository))]
     public class FileRepository : IFileRepository
     {
         private readonly Context _context;
+        private readonly SemaphoreSlim _semaphore;
 
         public FileRepository(Context context)
         {
             _context = context;
+            _semaphore = new SemaphoreSlim(1, 1);
         }
 
         public async Task<DataFile?> GetAsync(Guid id)
         {
-            return await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete);
+            await _semaphore.WaitAsync();
+            try
+            {
+                return await _context.Files
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<Guid> SaveAsync(DataFile file)
@@ -29,6 +41,7 @@ namespace Infrastructure.Repositories
             else _context.Files.Add(file);
 
             await _context.SaveChangesAsync();
+            _context.Entry(file).State = EntityState.Detached;
             return file.Id;
         }
 

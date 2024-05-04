@@ -25,19 +25,22 @@
             public string? Description { get; set; }
             public bool Active { get; set; }
             public DateOnly? Create { get; set; }
-            public List<DepartmentUserModel> Users { get; set; }
-            public List<DepartmentItemModel> Items { get; set; }
-        }
+            public List<UserModel> Users { get; set; }
+            public List<ItemModel> Items { get; set; }
 
-        public class DepartmentUserModel {
-            public Guid Id { get; set;}
-            public string Fullname { get; set; }
-            public string Email { get; set; }
+            public class UserModel
+            {
+                public Guid Id { get; set; }
+                public string Fullname { get; set; }
+                public string Email { get; set; }
 
-        }
-        public class DepartmentItemModel {
-            public Guid Id { get; set; }
-            public string Name { get; set; }
+            }
+
+            public class ItemModel
+            {
+                public Guid Id { get; set; }
+                public string Name { get; set; }
+            }
         }
     }
 }

@@ -112,6 +112,12 @@
     padding-left: 0;
   }
 
+  .row_tab_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .row_color_1 {
     background-color: rgb(226, 221, 141);
   }

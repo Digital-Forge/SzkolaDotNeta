@@ -54,6 +54,11 @@ export default {
       required: false,
       type: String,
     },
+    searchExtraData: {
+      default: null,
+      required: false,
+      type: Array,
+    },
   },
   data() {
     return {
@@ -72,6 +77,10 @@ export default {
       if (oldValue === newValue) return;
       await this.clickPage(1);
     },
+    async searchExtraData(oldValue, newValue) {
+      if (oldValue === newValue) return;
+      await this.clickPage(1);
+    },
   },
   methods: {
     async clickPage(pageNumber) {
@@ -80,6 +89,12 @@ export default {
         skip: (pageNumber - 1) * this.show,
         search: this.search,
       };
+
+      if (this.searchExtraData) {
+        this.searchExtraData.forEach((element) => {
+          tableOptions[element.name] = element.value;
+        });
+      }
 
       const respons = await this.axios.post(this.apiPath, tableOptions);
       if (!respons || !respons.data || respons.status !== 200) {

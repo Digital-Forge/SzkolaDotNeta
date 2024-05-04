@@ -8,7 +8,7 @@ namespace Application.Interfaces
         Task<TokenModel> RefreshAsync(string refreshToken);
         Task<TokenModel> GenerateTokenAsync(UserData user);
         Task LogoutAsync();
-        Task<bool> IsUserAdmin(Guid? userId = null);
-        Task<bool> IsAccessToPickUpPoint(Guid? userId = null);
+        Task<bool> IsUserAdminAsync(Guid? userId = null);
+        Task<bool> IsAccessToPickUpPointAsync(Guid? userId = null);
     }
 }

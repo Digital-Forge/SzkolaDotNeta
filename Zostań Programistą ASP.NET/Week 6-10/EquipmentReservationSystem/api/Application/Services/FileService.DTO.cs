@@ -12,7 +12,8 @@ namespace Application.Services
                 return new DataFileInfoModel
                 {
                     Id = entity.Id,
-                    Name = $"{entity.OriginName}.{entity.Format}",
+                    Active = entity.Active,
+                    Name = $"{entity.OriginName}{entity.Format}",
                     Date = entity.CreateTime
                 };
             }
@@ -21,7 +22,7 @@ namespace Application.Services
             {
                 if (entity == null) entity = new DataFile();
 
-                entity.Active = true;
+                entity.Active = model.Active;
                 entity.Format = Path.GetExtension(model.Name);
                 entity.OriginName = Path.GetFileNameWithoutExtension(model.Name);
 

@@ -127,14 +127,14 @@ namespace Application.Services
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<bool> IsUserAdmin(Guid? userId = null)
+        public async Task<bool> IsUserAdminAsync(Guid? userId = null)
         {
             return await _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.Administration, userId);
         }
 
-        public async Task<bool> IsAccessToPickUpPoint(Guid? userId = null)
+        public async Task<bool> IsAccessToPickUpPointAsync(Guid? userId = null)
         {
-            if (await IsUserAdmin(userId)) return true;
+            if (await IsUserAdminAsync(userId)) return true;
             return await _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.PickupPoint, userId);
         }
     }

@@ -33,14 +33,14 @@ namespace Infrastructure.Repositories
                     if (AsNoTracking) _query = _query.AsNoTracking();
                     if (OnlyActive) _query = _query.Where(x => x.Active);
 
-                    return _query.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer)));
+                    return _query.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer)));
                 }
             }
 
             public IDepartmentQuery IncludeItems()
             {
                 _query = _query
-                    .Include(i => i.Items.Where(x => !(x.Item.EntityStatus == Domain.Utils.EntityStatus.Delete || (AllowBuffer && x.Item.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
+                    .Include(i => i.Items.Where(x => !(x.Item.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.Item.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
                     .ThenInclude(i => i.Item);
 
                 return this;
@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
             public IDepartmentQuery IncludeUsers()
             {
                 _query = _query
-                    .Include(i => i.Users.Where(x => !(x.User.EntityStatus == Domain.Utils.EntityStatus.Delete || (AllowBuffer && x.User.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
+                    .Include(i => i.Users.Where(x => !(x.User.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.User.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
                     .ThenInclude(i => i.User);
 
                 return this;
