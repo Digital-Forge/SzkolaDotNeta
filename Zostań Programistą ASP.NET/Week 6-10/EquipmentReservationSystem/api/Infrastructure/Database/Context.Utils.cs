@@ -24,7 +24,7 @@ namespace Infrastructure.Database
             base.OnModelCreating(builder);
 
             // Waiting for Microsoft.Data.SqlClient 5.2.0 who fix SqlGuidCaster with GetAssemblies()
-            /*
+            
             var type = typeof(IDatabaseConfig);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
@@ -35,9 +35,9 @@ namespace Infrastructure.Database
                 var configModel = Activator.CreateInstance(modelConfig);
                 (Activator.CreateInstance(modelConfig) as IDatabaseConfig)?.Config(builder);
             }
-            */
+            
 
-            ManulaFixDBModelConfig(builder);
+           // ManulaFixDBModelConfig(builder);
         }
 
         private void ManulaFixDBModelConfig(ModelBuilder builder)
@@ -59,10 +59,10 @@ namespace Infrastructure.Database
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             EntityAudit();
-            return base.SaveChangesAsync(cancellationToken);
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         private void EntityAudit()
