@@ -25,5 +25,6 @@ module.exports = {
     "no-restricted-globals": "off",
     "no-alert": "off",
     "no-continue": "off",
+    "vue/no-v-model-argument": "warn",
   },
 };
