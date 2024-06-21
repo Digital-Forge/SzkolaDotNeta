@@ -5,15 +5,15 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IRoleRepository
     {
-        Task AddRoleToUser(IdentityRole<Guid> role, UserData user);
+        Task AddRoleToUserAsync(IdentityRole<Guid> role, UserData user);
         Task AddRoleToUserAsync(Guid roleId, Guid userId);
-        Task RemoveRoleFromUser(IdentityRole<Guid> role, UserData user);
-        Task RemoveRoleFromUser(Guid roleId, Guid userId);
-        Task<IEnumerable<IdentityRole<Guid>>> GetAllRoles();
-        Task<IEnumerable<IdentityRole<Guid>>> GetAllUserRoles(Guid userId);
-        Task<IdentityRole<Guid>> GetRole(Guid id);
-        Task<IdentityRole<Guid>> GetRole(string name);
-        Task<bool> CheckUserHasRole(Guid roleId, Guid? userId = null);
-        Task<bool> CheckUserHasRole(string name, Guid? userId = null);
+        Task RemoveRoleFromUserAsync(IdentityRole<Guid> role, UserData user);
+        Task RemoveRoleFromUserAsync(Guid roleId, Guid userId);
+        Task<IEnumerable<IdentityRole<Guid>>> GetAllRolesAsync();
+        Task<IEnumerable<IdentityRole<Guid>>> GetAllUserRolesAsync(Guid userId);
+        Task<IdentityRole<Guid>> GetRoleAsync(Guid id);
+        Task<IdentityRole<Guid>> GetRoleAsync(string name);
+        Task<bool> CheckUserHasRoleAsync(Guid roleId, Guid? userId = null);
+        Task<bool> CheckUserHasRoleAsync(string name, Guid? userId = null);
     }
 }

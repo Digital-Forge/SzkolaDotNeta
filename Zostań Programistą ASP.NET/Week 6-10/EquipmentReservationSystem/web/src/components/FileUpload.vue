@@ -6,6 +6,7 @@
       type="file"
       :accept="acceptedFormat"
       :multiple="multiple"
+      :value="uploadValue"
     />
     <span v-show="uploadProcess" class="loader mt-2"></span>
     <span v-show="!uploadProcess">UPLAOD</span>
@@ -29,6 +30,7 @@ export default {
   data() {
     return {
       uploadProcess: false,
+      uploadValue: null,
     };
   },
   methods: {
@@ -75,6 +77,7 @@ export default {
 
       this.$emit("resId", responsIdList);
       this.uploadProcess = false;
+      this.uploadValue = null;
       if (respons.length !== responsIdList.length) alert("Operation inwalid");
     },
     async sendFile(data) {
@@ -90,6 +93,7 @@ export default {
   mounted() {
     this.$refs.uploader.addEventListener("change", this.upload);
     this.$refs.uploader.addEventListener("cancel", () => {
+      this.uploadValue = null;
       this.uploadProcess = false;
     });
   },

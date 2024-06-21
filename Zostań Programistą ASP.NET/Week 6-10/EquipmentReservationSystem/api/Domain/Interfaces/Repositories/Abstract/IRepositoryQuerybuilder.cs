@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.Repositories.Abstract
 {
-    public interface IRepositoryQuerybuilder<E> where E : class, IAuditableEntity
+    public interface IRepositoryQueryBuilder<E> where E : class, IAuditableEntity
     {
         bool AsNoTracking { get; }
         bool OnlyActive { get; }

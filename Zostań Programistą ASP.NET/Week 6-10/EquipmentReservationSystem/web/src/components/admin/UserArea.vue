@@ -52,7 +52,7 @@
         </div>
         <div v-if="users">
           <div
-            class="row row_tab"
+            class="row row_tab row_tab_click"
             :class="[
               index % 2 === 0 ? 'row_color_1' : 'row_color_2',
               { active: selectedRow === user.id },

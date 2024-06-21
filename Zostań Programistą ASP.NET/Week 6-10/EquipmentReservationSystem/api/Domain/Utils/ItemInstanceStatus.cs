@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Utils
+﻿namespace Domain.Utils
 {
     public enum ItemInstanceStatus
     {
@@ -12,6 +6,7 @@ namespace Domain.Utils
         Available,
         Unavailable,
         Service,
-        Withdrawn
+        Withdrawn,
+        Lost
     }
 }

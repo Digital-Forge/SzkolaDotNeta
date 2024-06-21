@@ -148,6 +148,7 @@
                         <option value="Reservations">Reservations</option>
                         <option value="Service" selected>Service</option>
                         <option value="Withdrawn" selected>Withdrawn</option>
+                        <option value="Lost" selected>Lost</option>
                       </select>
                     </div>
                   </div>

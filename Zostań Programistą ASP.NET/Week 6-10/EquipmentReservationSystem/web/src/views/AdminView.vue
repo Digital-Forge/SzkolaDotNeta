@@ -13,15 +13,11 @@
         <div class="position" :class="{ active: view.isItems }">
           <div @click="showItems">Items</div>
         </div>
-        <div class="position" :class="{ active: view.isReservations }">
-          <div @click="showReservations">Reservations</div>
-        </div>
       </div>
       <div class="content_box">
         <UserArea v-if="view.isUsers"></UserArea>
         <ItemArea v-if="view.isItems"></ItemArea>
         <DepartmentArea v-if="view.isDepartments"></DepartmentArea>
-        <ReservationArea v-if="view.isReservations"></ReservationArea>
       </div>
     </div>
   </div>
@@ -33,7 +29,6 @@ import NavBar from "@/components/NavBar.vue";
 import UserArea from "@/components/admin/UserArea.vue";
 import ItemArea from "@/components/admin/ItemArea.vue";
 import DepartmentArea from "@/components/admin/DepartmentArea.vue";
-import ReservationArea from "@/components/admin/ReservationArea.vue";
 
 const authAdministrationArea = async () => {
   try {
@@ -51,7 +46,6 @@ export default {
     UserArea,
     ItemArea,
     DepartmentArea,
-    ReservationArea,
   },
   data() {
     return {
@@ -116,7 +110,6 @@ export default {
   margin: 0;
 
   #admin_box {
-    //display: inline-block;
     height: 95.5%;
     width: 100%;
 

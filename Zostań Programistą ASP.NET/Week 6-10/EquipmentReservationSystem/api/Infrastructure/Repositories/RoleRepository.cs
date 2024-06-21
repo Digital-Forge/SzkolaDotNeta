@@ -10,7 +10,7 @@ namespace Infrastructure.Repositories
     [AutoRegisterTransientRepository(typeof(IRoleRepository))]
     public class RoleRepository(Context _context) : IRoleRepository
     {
-        public async Task AddRoleToUser(IdentityRole<Guid> role, UserData user)
+        public async Task AddRoleToUserAsync(IdentityRole<Guid> role, UserData user)
         {
             await AddRoleToUserAsync(role.Id, user.Id);
         }
@@ -26,24 +26,24 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> CheckUserHasRole(Guid roleId, Guid? userId = null)
+        public async Task<bool> CheckUserHasRoleAsync(Guid roleId, Guid? userId = null)
         {
             userId ??= _context.GetContextUser().Id;
             return await _context.UserRoles.AnyAsync(x => x.RoleId == roleId && x.UserId == userId);
         }
 
-        public async Task<bool> CheckUserHasRole(string name, Guid? userId = null)
+        public async Task<bool> CheckUserHasRoleAsync(string name, Guid? userId = null)
         {
             var role = await _context.Roles.AsNoTracking().FirstAsync(x => x.NormalizedName == name.ToUpper());
-            return await CheckUserHasRole(role.Id, userId);
+            return await CheckUserHasRoleAsync(role.Id, userId);
         }
 
-        public async Task<IEnumerable<IdentityRole<Guid>>> GetAllRoles()
+        public async Task<IEnumerable<IdentityRole<Guid>>> GetAllRolesAsync()
         {
             return await _context.Roles.AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<IdentityRole<Guid>>> GetAllUserRoles(Guid userId)
+        public async Task<IEnumerable<IdentityRole<Guid>>> GetAllUserRolesAsync(Guid userId)
         {
             var userRoles = await _context.UserRoles
                 .AsNoTracking()
@@ -59,22 +59,22 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<IdentityRole<Guid>> GetRole(Guid id)
+        public Task<IdentityRole<Guid>> GetRoleAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IdentityRole<Guid>> GetRole(string name)
+        public Task<IdentityRole<Guid>> GetRoleAsync(string name)
         {
             throw new NotImplementedException();
         }
 
-        public async Task RemoveRoleFromUser(IdentityRole<Guid> role, UserData user)
+        public async Task RemoveRoleFromUserAsync(IdentityRole<Guid> role, UserData user)
         {
-            await RemoveRoleFromUser(role.Id, user.Id);
+            await RemoveRoleFromUserAsync(role.Id, user.Id);
         }
 
-        public async Task RemoveRoleFromUser(Guid roleId, Guid userId)
+        public async Task RemoveRoleFromUserAsync(Guid roleId, Guid userId)
         {
             var relstion = await _context.UserRoles.Where(x => x.UserId == userId && x.RoleId == roleId).ToListAsync();
             _context.UserRoles.RemoveRange(relstion);

@@ -112,6 +112,10 @@
     padding-left: 0;
   }
 
+  .row_tab_click {
+    cursor: pointer;
+  }
+
   .row_tab_center {
     display: flex;
     align-items: center;
