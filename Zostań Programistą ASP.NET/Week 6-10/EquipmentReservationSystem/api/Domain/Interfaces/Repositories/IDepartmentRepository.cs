@@ -6,7 +6,7 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IDepartmentRepository : IRepository<IDepartmentQuery, Department>
     {
-        interface IDepartmentQuery : IRepositoryQuerybuilder<Department>
+        interface IDepartmentQuery : IRepositoryQueryBuilder<Department>
         {
             IDepartmentQuery IncludeItems();
             IDepartmentQuery IncludeUsers();

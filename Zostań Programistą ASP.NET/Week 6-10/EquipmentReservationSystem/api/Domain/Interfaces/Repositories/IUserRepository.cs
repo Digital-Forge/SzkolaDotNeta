@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces.Repositories.Abstract;
 using Domain.Models;
+using Domain.Models.Business;
 using Microsoft.AspNetCore.Identity;
 using static Domain.Interfaces.Repositories.IUserRepository;
 
@@ -11,11 +12,14 @@ namespace Domain.Interfaces.Repositories
         UserData GetUser(string email);
         UserData GetUser(Guid id);
         IEnumerable<IdentityRole<Guid>> GetUserRoles(Guid userId);
+        IEnumerable<Department> GetUserDepartments(Guid userId);
 
-        interface IUserQuery : IRepositoryQuerybuilder<UserData>
+        interface IUserQuery : IRepositoryQueryBuilder<UserData>
         {
             IUserQuery IncludeDepartments();
+            IUserQuery IncludeDepartmentsWithItems();
             IUserQuery IncludeReservation();
+            IUserQuery IncludeReservationItem();
             IUserQuery Where(System.Linq.Expressions.Expression<Func<UserData, bool>> predicate);
             UserData? GetUserById(Guid id);
             Task<UserData?> GetUserByIdAsync(Guid id);

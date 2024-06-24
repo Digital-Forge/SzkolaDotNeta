@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces.Repositories;
 using Domain.Models;
+using Domain.Models.Business;
 using Infrastructure.Attributes;
 using Infrastructure.Database;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,17 @@ namespace Infrastructure.Repositories
             var rolesList = _context.UserRoles.Where(x => x.UserId == userId).Select(s => s.RoleId).ToList();
             if (rolesList.Count == 0) return new List<IdentityRole<Guid>>();
             return _context.Roles.Where(x => rolesList.Contains(x.Id)).ToList();
+        }
+
+        public IEnumerable<Department> GetUserDepartments(Guid userId)
+        {
+            return _context.UsersToDepartments
+                .Include(i => i.Department)
+                .Where(x => x.UserId == userId)
+                .Select(s => s.Department)
+                .Where(x => x.Active)
+                .Where(x => x.EntityStatus != Domain.Utils.EntityStatus.Delete && x.EntityStatus != Domain.Utils.EntityStatus.Buffer)
+                .ToList();
         }
 
         public IUserRepository.IUserQuery QueryBuilder(bool onlyActive = false, bool asNoTracking = false, bool allowBuffor = false)

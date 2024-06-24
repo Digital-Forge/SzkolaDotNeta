@@ -4,9 +4,11 @@ using static Domain.Interfaces.Repositories.IItemRepository;
 
 namespace Domain.Interfaces.Repositories
 {
-    public interface IItemRepository : IRepository<IItemQuery, Item>
+    public interface IItemRepository : IRepository<IItemQuery, Item>, IBaseRepository<ItemInstance>
     {
-        interface IItemQuery : IRepositoryQuerybuilder<Item>
+        Task DeleteAsync(Guid id);
+
+        interface IItemQuery : IRepositoryQueryBuilder<Item>
         {
             IItemQuery IncludeDepartments();
             IItemQuery IncludeInstances();

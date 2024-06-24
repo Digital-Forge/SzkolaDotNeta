@@ -24,7 +24,7 @@ namespace Application.Services
 
         public UserPanelAccessModel GetPanelAccess()
         {
-            var isAdmin = _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.Administration).Result;
+            var isAdmin = _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Name.Administration).Result;
 
             if (isAdmin) return new IUserAdminService.UserPanelAccessModel()
             {
@@ -35,7 +35,7 @@ namespace Application.Services
             return new UserPanelAccessModel()
             {
                 Admin = false,
-                PickUpPoint = _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.PickupPoint).Result
+                PickUpPoint = _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Name.PickupPoint).Result
             };
         }
 
@@ -53,8 +53,8 @@ namespace Application.Services
                     Username = s.UserName,
                     Email = s.Email,
                     Phone = s.PhoneNumber,
-                    DepartmentsCount = s.Departments.Count(),
-                    RentedItemsCount = s.Reservations.Count(x => x.Status == Domain.Utils.ReservationStatus.InPreparation),
+                    DepartmentsCount = s.Departments.Count(x => x.Department.Active),
+                    RentedItemsCount = s.Reservations.Count(x => x.Status == Domain.Utils.ReservationStatus.Issued || x.Status == Domain.Utils.ReservationStatus.ReadyToPickedUp),
                 }).ToListAsync();
 
             foreach (var user in list)
@@ -105,8 +105,8 @@ namespace Application.Services
                 Phone = entity.PhoneNumber,
                 Created = DateOnly.FromDateTime(entity.CreateTime),
 
-                isAdmin = await _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.Administration, entity.Id),
-                isPickupPoint = await _roleRepository.CheckUserHasRole(Constans.Constans.Role.Name.PickupPoint, entity.Id),
+                isAdmin = await _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Name.Administration, entity.Id),
+                isPickupPoint = await _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Name.PickupPoint, entity.Id),
 
                 Departments = entity.Departments.Select(s => new UserDepartmentsModel()
                 {
@@ -188,10 +188,10 @@ namespace Application.Services
             var beforeRoles = _userRepository.GetUserRoles(entity.Id);
 
             if (!beforeRoles.Any(x => x.Id == Constans.Constans.Role.Id.Administration) && model.isAdmin) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.Administration, entity.Id);
-            if (beforeRoles.Any(x => x.Id == Constans.Constans.Role.Id.Administration) && !model.isAdmin) await _roleRepository.RemoveRoleFromUser(Constans.Constans.Role.Id.Administration, entity.Id);
+            if (beforeRoles.Any(x => x.Id == Constans.Constans.Role.Id.Administration) && !model.isAdmin) await _roleRepository.RemoveRoleFromUserAsync(Constans.Constans.Role.Id.Administration, entity.Id);
 
             if (!beforeRoles.Any(x => x.Id == Constans.Constans.Role.Id.PickupPoint) && model.isPickupPoint) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.PickupPoint, entity.Id);
-            if (beforeRoles.Any(x => x.Id == Constans.Constans.Role.Id.PickupPoint) && !model.isPickupPoint) await _roleRepository.RemoveRoleFromUser(Constans.Constans.Role.Id.PickupPoint, entity.Id);
+            if (beforeRoles.Any(x => x.Id == Constans.Constans.Role.Id.PickupPoint) && !model.isPickupPoint) await _roleRepository.RemoveRoleFromUserAsync(Constans.Constans.Role.Id.PickupPoint, entity.Id);
         }
 
         public async Task DeleteAsync(Guid id)
@@ -222,9 +222,15 @@ namespace Application.Services
                 Username = s.UserName,
                 Email = s.Email,
                 Phone = s.PhoneNumber,
-                DepartmentsCount = s.Departments.Count(),
+                DepartmentsCount = s.Departments.Count(x => x.Department.Active),
                 RentedItemsCount = s.Reservations.Count(x => x.Status == Domain.Utils.ReservationStatus.InPreparation),
             }).ToList();
+
+            foreach (var item in data.Data)
+            {
+                item.IsAdmin = _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Id.Administration, item.Id).Result;
+                item.IsPickupPoint = _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Id.PickupPoint, item.Id).Result;
+            }
 
             return data;
         }
@@ -252,9 +258,15 @@ namespace Application.Services
                 Username = s.UserName,
                 Email = s.Email,
                 Phone = s.PhoneNumber,
-                DepartmentsCount = s.Departments.Count(),
+                DepartmentsCount = s.Departments.Count(x => x.Department.Active),
                 RentedItemsCount = s.Reservations.Count(x => x.Status == Domain.Utils.ReservationStatus.InPreparation),
             }).ToListAsync();
+
+            foreach (var item in data.Data)
+            {
+                item.IsAdmin = await _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Id.Administration, item.Id);
+                item.IsPickupPoint = await _roleRepository.CheckUserHasRoleAsync(Constans.Constans.Role.Id.PickupPoint, item.Id);
+            }
 
             return data;
         }

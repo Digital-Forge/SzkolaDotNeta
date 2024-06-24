@@ -44,16 +44,58 @@ namespace Infrastructure.Repositories
 
         public void Delete(Guid id)
         {
-            var entity = _context.Items.First(x => x.Id == id);
+            var entity = _context.Items.Include(i => i.Instances).FirstOrDefault(x => x.Id == id)
+                      ?? _context.ItemInstances.Include(i => i.Item).First(x => x.Id == id).Item;
+
+            foreach (var instance in entity.Instances)
+            {
+                _context.ItemInstances.Remove(instance);
+            }
+
             _context.Items.Remove(entity);
             _context.SaveChanges();
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var entity = await _context.Items.FirstAsync(x => x.Id == id);
+            var entity = (await _context.Items.Include(i => i.Instances).FirstOrDefaultAsync(x => x.Id == id))
+                      ?? (await _context.ItemInstances.Include(i => i.Item).FirstAsync(x => x.Id == id)).Item;
+
+            foreach (var instance in entity.Instances)
+            {
+                _context.ItemInstances.Remove(instance);
+            }
+
             _context.Items.Remove(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public Guid Save(ItemInstance entity)
+        {
+            bool isTracked = _context.ChangeTracker.Entries<ItemInstance>().Any(e => e.Entity == entity);
+            if (!isTracked)
+            {
+                var isExist = (_context.ItemInstances.AsNoTracking().FirstOrDefault(x => x.Id == entity.Id)) != null;
+                if (isExist) _context.ItemInstances.Update(entity);
+                else _context.ItemInstances.Add(entity);
+            }
+
+            _context.SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<Guid> SaveAsync(ItemInstance entity)
+        {
+            bool isTracked = _context.ChangeTracker.Entries<ItemInstance>().Any(e => e.Entity == entity);
+            if (!isTracked)
+            {
+                var isExist = (await _context.ItemInstances.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id)) != null;
+                if (isExist) _context.ItemInstances.Update(entity);
+                else _context.ItemInstances.Add(entity);
+            }
+
+            await _context.SaveChangesAsync();
+            return entity.Id;
         }
     }
 }

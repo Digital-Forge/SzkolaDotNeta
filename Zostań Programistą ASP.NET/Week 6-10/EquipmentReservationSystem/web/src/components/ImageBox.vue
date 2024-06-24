@@ -1,5 +1,8 @@
 <template>
-  <div v-if="load" class="imagebox">
+  <div
+    v-if="load"
+    :class="[verticalMode ? 'imagebox_vertical' : 'imagebox_horizontal']"
+  >
     <img :src="src" alt="" />
   </div>
   <div v-else class="imagebox_loader">
@@ -14,6 +17,10 @@ export default {
       default: "",
       required: true,
       type: String,
+    },
+    verticalMode: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -47,11 +54,21 @@ export default {
 </script>
 
 <style lang="scss">
-.imagebox {
+.imagebox_horizontal {
   max-width: 100%;
 
   img {
     max-width: 100%;
+  }
+}
+
+.imagebox_vertical {
+  max-height: 100%;
+  width: auto;
+
+  img {
+    max-height: 100%;
+    width: auto;
   }
 }
 

@@ -45,10 +45,31 @@ namespace Infrastructure.Repositories
                 return this;
             }
 
+            public IUserQuery IncludeDepartmentsWithItems()
+            {
+                _query = _query
+                    .Include(i => i.Departments.Where(x => !(x.Department.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.Department.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
+                    .ThenInclude(i => i.Department)
+                    .ThenInclude(i => i.Items.Where(x => !(x.Item.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.Item.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
+                    .ThenInclude(i => i.Item);
+
+                return this;
+            }
+
             public IUserQuery IncludeReservation()
             {
                 _query = _query
                     .Include(i => i.Reservations.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer))));
+
+                return this;
+            }
+
+            public IUserQuery IncludeReservationItem()
+            {
+                _query = _query
+                    .Include(i => i.Reservations.Where(x => !(x.EntityStatus == Domain.Utils.EntityStatus.Delete || (!AllowBuffer && x.EntityStatus == Domain.Utils.EntityStatus.Buffer))))
+                    .ThenInclude(i => i.ItemInstance)
+                    .ThenInclude(i => i.Item);
 
                 return this;
             }

@@ -93,6 +93,7 @@ export default {
     text-align: left;
     background-color: rgb(189, 81, 62);
     border-bottom: 0.2rem rgba(255, 255, 255, 0.493) dashed;
+    backface-visibility: hidden;
 
     .modal_header_close {
       float: right;
