@@ -39,16 +39,16 @@
         </div>
       </div>
       <div class="search_box">
-        <div>
+        <div class="search_placeholder">
           <span>Search</span>
         </div>
-        <div>
+        <div class="search_text_input">
           <input type="text" v-model="searchOptions.searchName" />
         </div>
-        <div>
+        <div class="search_placeholder">
           <span>Departments</span>
         </div>
-        <div>
+        <div class="search_department_input">
           <ComboBoxApi
             multiple
             :api="'Department/GetUserDepartments'"
@@ -130,6 +130,24 @@ export default {
   .search_box {
     width: 25%;
     background-color: lightgray;
+
+    .search_placeholder {
+      margin-top: 1rem;
+    }
+
+    .search_text_input {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .search_department_input {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
   }
 
   .home_content_box {
