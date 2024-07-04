@@ -158,9 +158,7 @@ export default {
   },
   computed: {
     isAvailableFile() {
-      return ["InPreparation", "ReadyToPickedUp", "Issued"].includes(
-        this.model.status
-      );
+      return ["ReadyToPickedUp", "Issued"].includes(this.model.status);
     },
   },
   methods: {

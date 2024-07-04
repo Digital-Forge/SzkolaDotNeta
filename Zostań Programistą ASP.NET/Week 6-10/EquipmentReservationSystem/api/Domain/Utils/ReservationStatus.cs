@@ -7,6 +7,7 @@
         Issued,
         Returned,
         Lost,
-        Destroyed
+        Destroyed,
+        Canceled
     }
 }

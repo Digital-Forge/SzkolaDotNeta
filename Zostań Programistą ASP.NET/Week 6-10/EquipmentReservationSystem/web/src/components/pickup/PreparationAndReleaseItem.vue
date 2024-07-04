@@ -1,11 +1,11 @@
 <template>
-  <div class="my_item">
+  <div class="item_history">
     <div class="tab">
       <div class="row header_tab">
         <div class="col-2"><b>Image</b></div>
         <div class="col-4"><b>Name</b></div>
-        <div class="col-2"><b>From</b></div>
-        <div class="col-2"><b>To</b></div>
+        <div class="col-2"><b>Period</b></div>
+        <div class="col-2"><b>User</b></div>
         <div class="col-2"><b>Status</b></div>
       </div>
       <div v-if="items">
@@ -13,20 +13,26 @@
           class="row row_tab row_tab_click"
           :class="[
             index % 2 === 0 ? 'row_color_1' : 'row_color_2',
-            { active: selectedRow === item.id },
-            { item_expired: checkItemExpired(item.to) },
+            { active: selectedRow?.id === item.id },
+            { item_near_expired: itemNearExpired(item.from) },
+            { item_expired: itemExpired(item.from) },
           ]"
           v-for="(item, index) in items"
           :key="item.id"
-          @click="selectedRow = item.id"
+          @click="selectedRow = item"
           @dblclick="showModal = true"
         >
           <div class="col-2 row_tab_center">
-            <image-box class="item_image_table" :id="item.imageId"></image-box>
+            <image-box class="item_image_table" :id="item.image"></image-box>
           </div>
-          <div class="col-4 row_tab_center">{{ item.name }}</div>
-          <div class="col-2 row_tab_center">{{ item.from }}</div>
-          <div class="col-2 row_tab_center">{{ item.to }}</div>
+          <div class="col-4 row_tab_center">{{ item.itemName }}</div>
+          <div class="col-2 row_tab_center">
+            <div>
+              <div class="period_tab_show">{{ item.from }}</div>
+              <div class="period_tab_show" v-if="item.to">{{ item.to }}</div>
+            </div>
+          </div>
+          <div class="col-2 row_tab_center">{{ item.username }}</div>
           <div class="col-2 row_tab_center">
             {{ camelCaseToNormal(item.status) }}
           </div>
@@ -34,31 +40,33 @@
       </div>
       <span v-else class="loader"></span>
       <pagging-bar
-        :api-path="'Reservation/MyReservation'"
+        :api-path="'PickupPoint/Reservation/GetPreparationAndReleaseReservations'"
         :show="20"
         :search="searchData.searchName"
         :searchExtraData="searchExtras"
+        :key="refresh"
         @changePage="updateTable"
       ></pagging-bar>
     </div>
-    <item-info-modal
+    <ReservationModal
       v-if="showModal"
-      :id="selectedRow"
-      @close="showModal = false"
-    ></item-info-modal>
+      :id="selectedRow.id"
+      :mode="selectedRow.status === 'InPreparation' ? 'preparation' : 'release'"
+      @close="closeModal"
+    ></ReservationModal>
   </div>
 </template>
 
 <script>
-import itemInfoModal from "@/components/home/ItemInfoModal.vue";
+import ReservationModal from "@/components/pickup/ReservationModal.vue";
 import paggingBar from "@/components/PagingBar.vue";
 import imageBox from "@/components/ImageBox.vue";
 
 export default {
   components: {
+    ReservationModal,
     paggingBar,
     imageBox,
-    itemInfoModal,
   },
   props: {
     searchData: {
@@ -71,6 +79,7 @@ export default {
       items: null,
       selectedRow: null,
       showModal: false,
+      refresh: 0,
     };
   },
   methods: {
@@ -85,31 +94,56 @@ export default {
 
       return normalText.charAt(0).toUpperCase() + normalText.slice(1);
     },
-    checkItemExpired(to) {
-      if (!to) return false;
+    itemExpired(date) {
+      if (!date) return false;
+      return new Date(date) < new Date(Date.now()).setHours(0, 0, 0, 0);
+    },
+    itemNearExpired(date) {
+      if (!date) return false;
       return (
-        new Date(to).setHours(0, 0, 0, 0) <=
+        new Date(date).setHours(0, 0, 0, 0) ===
         new Date(Date.now()).setHours(0, 0, 0, 0)
       );
+    },
+    closeModal() {
+      this.showModal = false;
+      this.refresh++;
     },
   },
   computed: {
     searchExtras() {
       return [
         {
-          name: "availableInDepartments",
-          value: this.searchData.selectedDepartments,
+          name: "searchItems",
+          value: this.searchData.searchItem,
+        },
+        {
+          name: "SearchUsers",
+          value: this.searchData.searchUser,
+        },
+        {
+          name: "showType",
+          value: this.searchData.showReservationType,
         },
       ];
     },
   },
+  // async mounted() {},
 };
 </script>
 
 <style lang="scss">
-.my_item {
+.item_history {
+  .period_tab_show {
+    display: block;
+  }
+
   .item_expired {
     background-color: red;
+  }
+
+  .item_near_expired {
+    background-color: orangered;
   }
 }
 </style>

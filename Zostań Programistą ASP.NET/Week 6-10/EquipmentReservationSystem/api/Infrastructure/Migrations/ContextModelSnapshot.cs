@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -163,7 +163,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("serial_number");
 
-                    b.Property<string>("Starus")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
@@ -245,6 +245,11 @@ namespace Infrastructure.Migrations
                     b.Property<DateOnly>("From")
                         .HasColumnType("date")
                         .HasColumnName("from");
+
+                    b.Property<string>("InnerNote")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
+                        .HasColumnName("inner_note");
 
                     b.Property<Guid>("ItemInstanceId")
                         .HasColumnType("uniqueidentifier");

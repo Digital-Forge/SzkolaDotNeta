@@ -1,5 +1,5 @@
 <template>
-  <div class="my_item">
+  <div class="item_history">
     <div class="tab">
       <div class="row header_tab">
         <div class="col-2"><b>Image</b></div>
@@ -14,7 +14,6 @@
           :class="[
             index % 2 === 0 ? 'row_color_1' : 'row_color_2',
             { active: selectedRow === item.id },
-            { item_expired: checkItemExpired(item.to) },
           ]"
           v-for="(item, index) in items"
           :key="item.id"
@@ -34,7 +33,7 @@
       </div>
       <span v-else class="loader"></span>
       <pagging-bar
-        :api-path="'Reservation/MyReservation'"
+        :api-path="'Reservation/MyReservationHistory'"
         :show="20"
         :search="searchData.searchName"
         :searchExtraData="searchExtras"
@@ -56,9 +55,9 @@ import imageBox from "@/components/ImageBox.vue";
 
 export default {
   components: {
+    itemInfoModal,
     paggingBar,
     imageBox,
-    itemInfoModal,
   },
   props: {
     searchData: {
@@ -85,13 +84,6 @@ export default {
 
       return normalText.charAt(0).toUpperCase() + normalText.slice(1);
     },
-    checkItemExpired(to) {
-      if (!to) return false;
-      return (
-        new Date(to).setHours(0, 0, 0, 0) <=
-        new Date(Date.now()).setHours(0, 0, 0, 0)
-      );
-    },
   },
   computed: {
     searchExtras() {
@@ -103,13 +95,8 @@ export default {
       ];
     },
   },
+  // async mounted() {},
 };
 </script>
 
-<style lang="scss">
-.my_item {
-  .item_expired {
-    background-color: red;
-  }
-}
-</style>
+<style lang="scss"></style>

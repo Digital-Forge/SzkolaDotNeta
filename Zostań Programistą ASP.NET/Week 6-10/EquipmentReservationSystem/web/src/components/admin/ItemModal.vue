@@ -362,9 +362,11 @@
                 :key="item.id"
               >
                 <div class="col-5">{{ item.serialNumber }}</div>
-                <div class="col-2">{{ item.From }}</div>
-                <div class="col-2">{{ item.To }}</div>
-                <div class="col-3">{{ item.Status }}</div>
+                <div class="col-2">{{ item.from }}</div>
+                <div class="col-2">{{ item.to }}</div>
+                <div class="col-3">
+                  {{ camelCaseToNormal(item.status) }}
+                </div>
               </div>
             </div>
           </div>
@@ -456,6 +458,14 @@ export default {
     };
   },
   methods: {
+    camelCaseToNormal(text) {
+      const normalText = text
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2")
+        .toLowerCase();
+
+      return normalText.charAt(0).toUpperCase() + normalText.slice(1);
+    },
     async setPage(name) {
       this.selectedPage = name;
     },

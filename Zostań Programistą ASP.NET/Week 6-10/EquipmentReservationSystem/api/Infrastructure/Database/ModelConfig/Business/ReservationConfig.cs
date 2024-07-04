@@ -21,6 +21,10 @@ namespace Infrastructure.Database.ModelConfig.Business
                 .HasConversion(new EnumToStringConverter<ReservationStatus>())
                 .HasMaxLength(30);
 
+            builder.Property(e => e.InnerNote)
+                .HasColumnName("inner_note")
+                .HasMaxLength(3000);
+
             //Relations
             builder.HasOne(r => r.ItemInstance)
                 .WithMany(r => r.Reservations)

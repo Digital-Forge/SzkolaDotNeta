@@ -218,6 +218,7 @@
     .page_select:hover {
       background-color: magenta;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .page_select_active {
