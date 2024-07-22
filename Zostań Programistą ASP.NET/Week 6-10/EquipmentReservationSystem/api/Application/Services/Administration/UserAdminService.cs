@@ -92,8 +92,8 @@ namespace Application.Services
         public async Task<UserModel> GetFullAsync(Guid id)
         {
             var entity = await _userRepository.QueryBuilder(asNoTracking: true)
-                .IncludeReservation()
                 .IncludeDepartments()
+                .IncludeReservationItem()
                 .GetUserByIdAsync(id) ?? throw new UserNotFoundException();
 
             var model = new UserModel()

@@ -42,6 +42,13 @@
         </div>
       </div>
       <div class="search_box" :key="refreshPage">
+        <div v-if="page == 'service'" class="search_placeholder">
+          <span>Serial number</span>
+        </div>
+        <div v-if="page == 'service'" class="search_combo_input">
+          <input v-model="searchOptions.searchSerialNumber" />
+        </div>
+
         <div class="search_placeholder">
           <span>Search item</span>
         </div>
@@ -111,6 +118,7 @@ export default {
         searchItem: null,
         searchUser: null,
         showReservationType: "All",
+        searchSerialNumber: null,
       },
     };
   },
@@ -122,7 +130,7 @@ export default {
         case "returns":
           return "PickupPoint/Reservation/GetAvailableReservedItemToReturns";
         case "service":
-          return "PickupPoint/Item/GetAvailableItemInService";
+          return "PickupPoint/Service/GetAvailableItemInService";
         default:
           return null;
       }

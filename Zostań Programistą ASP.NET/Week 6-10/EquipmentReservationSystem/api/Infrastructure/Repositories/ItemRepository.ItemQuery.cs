@@ -2,6 +2,7 @@
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using static Application.Constans.Constans.Role;
 using static Domain.Interfaces.Repositories.IItemRepository;
 
 namespace Infrastructure.Repositories
@@ -102,6 +103,26 @@ namespace Infrastructure.Repositories
             {
                 _query = _query.Where(predicate);
                 return this;
+            }
+
+            public Item? GetItemByInstanceId(Guid id)
+            {
+                return Query.FirstOrDefault(x => x.Instances.Any(y => y.Id == id));
+            }
+
+            public async Task<Item?> GetItemByInstanceIdAsync(Guid id)
+            {
+                return await Query.FirstOrDefaultAsync(x => x.Instances.Any(y => y.Id == id));
+            }
+
+            public Item? GetItemBySerialNumber(string serialNumber)
+            {
+                return Query.FirstOrDefault(x => x.Instances.Any(y => y.SerialNumber.Equals(serialNumber, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            public async Task<Item?> GetItemBySerialNumberAsync(string serialNumber)
+            {
+                return await Query.FirstOrDefaultAsync(x => x.Instances.Any(y => y.SerialNumber.Equals(serialNumber, StringComparison.OrdinalIgnoreCase)));
             }
         }
     }

@@ -16,6 +16,7 @@ namespace Infrastructure.Database
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemInstance> ItemInstances { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ServiceNote> ServiceNotes { get; set; }
 
 
         //Middle Tabs

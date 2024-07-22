@@ -284,6 +284,53 @@ namespace Infrastructure.Migrations
                     b.ToTable("Reservations");
                 });
 
+            modelBuilder.Entity("Domain.Models.Business.ServiceNote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasColumnName("active");
+
+                    b.Property<Guid>("CreateBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("create_by");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("create_time");
+
+                    b.Property<string>("EntityStatus")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("entity_status");
+
+                    b.Property<Guid>("ItemInstanceId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("item_instance_id");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
+                        .HasColumnName("note");
+
+                    b.Property<Guid>("UpdateBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("update_by");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("update_time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceNotes");
+                });
+
             modelBuilder.Entity("Domain.Models.System.DataFile", b =>
                 {
                     b.Property<Guid>("Id")

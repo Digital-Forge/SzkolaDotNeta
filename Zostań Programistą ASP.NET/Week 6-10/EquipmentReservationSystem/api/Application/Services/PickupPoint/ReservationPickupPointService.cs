@@ -74,6 +74,9 @@ namespace Application.Services.PickupPoint
 
                     entity.Status = ReservationStatus.Destroyed;
                     entity.ItemInstance.Status = ItemInstanceStatus.Service;
+
+                    if (!string.IsNullOrWhiteSpace(entity.InnerNote))
+                        await _itemRepository.AddServiceNoteToItemAsync(entity.ItemInstanceId, entity.InnerNote);
                     break;
                 case ReservationStatus.Canceled:
                     if (!(entity.Status == ReservationStatus.InPreparation || entity.Status == ReservationStatus.ReadyToPickedUp) && !model.AdminMode)

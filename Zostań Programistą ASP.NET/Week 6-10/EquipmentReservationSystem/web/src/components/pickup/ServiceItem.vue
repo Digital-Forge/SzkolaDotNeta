@@ -2,11 +2,9 @@
   <div class="item_history">
     <div class="tab">
       <div class="row header_tab">
-        <div class="col-2"><b>Image</b></div>
+        <div class="col-4"><b>Image</b></div>
         <div class="col-4"><b>Name</b></div>
-        <div class="col-2"><b>From</b></div>
-        <div class="col-2"><b>To</b></div>
-        <div class="col-2"><b>Status</b></div>
+        <div class="col-4"><b>Serial number</b></div>
       </div>
       <div v-if="items">
         <div
@@ -20,42 +18,41 @@
           @click="selectedRow = item.id"
           @dblclick="showModal = true"
         >
-          <div class="col-2 row_tab_center">
+          <div class="col-4 row_tab_center">
             <image-box class="item_image_table" :id="item.imageId"></image-box>
           </div>
           <div class="col-4 row_tab_center">{{ item.name }}</div>
-          <div class="col-2 row_tab_center">{{ item.from }}</div>
-          <div class="col-2 row_tab_center">{{ item.to }}</div>
-          <div class="col-2 row_tab_center">
-            {{ camelCaseToNormal(item.status) }}
+          <div class="col-4 row_tab_center">
+            {{ item.serialNumber }}
           </div>
         </div>
       </div>
       <span v-else class="loader"></span>
       <pagging-bar
-        :api-path="'Reservation/MyReservationHistory'"
+        :api-path="'PickupPoint/Service/GetServicesItems'"
         :show="20"
-        :search="searchData.searchName"
+        :search="searchData.searchSerialNumber"
         :searchExtraData="searchExtras"
+        :key="refresh"
         @changePage="updateTable"
       ></pagging-bar>
     </div>
-    <item-info-modal
+    <service-modal
       v-if="showModal"
       :id="selectedRow"
-      @close="showModal = false"
-    ></item-info-modal>
+      @close="closeModal()"
+    ></service-modal>
   </div>
 </template>
 
 <script>
-import itemInfoModal from "@/components/home/ItemInfoModal.vue";
+import serviceModal from "@/components/pickup/ServiceModal.vue";
 import paggingBar from "@/components/PagingBar.vue";
 import imageBox from "@/components/ImageBox.vue";
 
 export default {
   components: {
-    itemInfoModal,
+    serviceModal,
     paggingBar,
     imageBox,
   },
@@ -70,27 +67,24 @@ export default {
       items: null,
       selectedRow: null,
       showModal: false,
+      refresh: 0,
     };
   },
   methods: {
     updateTable(data) {
       this.items = data;
     },
-    camelCaseToNormal(text) {
-      const normalText = text
-        .replace(/([a-z])([A-Z])/g, "$1 $2")
-        .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2")
-        .toLowerCase();
-
-      return normalText.charAt(0).toUpperCase() + normalText.slice(1);
+    closeModal() {
+      this.showModal = false;
+      this.refresh++;
     },
   },
   computed: {
     searchExtras() {
       return [
         {
-          name: "availableInDepartments",
-          value: this.searchData.selectedDepartments,
+          name: "searchItems",
+          value: this.searchData.searchItem,
         },
       ];
     },
