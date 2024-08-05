@@ -91,7 +91,15 @@
                 v-model="modelResevation.from"
                 :max="modelResevation.to"
                 :min="minDate"
+                @blur="v$.modelResevation.from.$touch()"
               />
+              <span
+                class="invalid_info"
+                v-for="error of v$.modelResevation.from.$errors"
+                :key="error.$uid"
+              >
+                {{ error.$message }}
+              </span>
             </div>
             <div class="row mt-2">
               <span class="col-4">To</span>
@@ -100,7 +108,15 @@
                 type="date"
                 v-model="modelResevation.to"
                 :min="modelResevation.from"
+                @blur="v$.modelResevation.to.$touch()"
               />
+              <span
+                class="invalid_info"
+                v-for="error of v$.modelResevation.to.$errors"
+                :key="error.$uid"
+              >
+                {{ error.$message }}
+              </span>
             </div>
           </div>
         </div>
@@ -120,10 +136,17 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 import ImageBox from "@/components/ImageBox.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
     ImageBox,
@@ -143,6 +166,14 @@ export default {
       modelResevation: null,
       isReserveReady: false,
       minDate: null,
+    };
+  },
+  validations() {
+    return {
+      modelResevation: {
+        from: { required },
+        to: { required },
+      },
     };
   },
   computed: {
@@ -223,6 +254,9 @@ export default {
       }
     },
     async reserveExecution() {
+      this.v$.$touch();
+      if (this.v$.modelResevation.$invalid) return;
+
       try {
         const respons = await this.axios.post(
           "Reservation/CreateReservation",

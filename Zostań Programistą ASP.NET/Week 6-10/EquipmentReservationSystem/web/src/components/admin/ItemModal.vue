@@ -64,7 +64,15 @@
                       type="text"
                       v-model="model.name"
                       :disabled="globalDisable"
+                      @blur="v$.model.name.$touch()"
                     />
+                    <span
+                      class="invalid_info"
+                      v-for="error of v$.model.name.$errors"
+                      :key="error.$uid"
+                    >
+                      {{ error.$message }}
+                    </span>
                   </div>
                 </div>
 
@@ -121,6 +129,14 @@
                         v-model="selectedSerialItem.serialNumber"
                         :disabled="globalDisable"
                       />
+                      <span
+                        class="invalid_info"
+                        v-for="error of v$.model.instances.$each.$response
+                          .$errors[indexOfSelectedSerialItem].serialNumber"
+                        :key="error.$uid"
+                      >
+                        {{ error.$message }}
+                      </span>
                     </div>
                   </div>
 
@@ -150,6 +166,14 @@
                         <option value="Withdrawn" selected>Withdrawn</option>
                         <option value="Lost" selected>Lost</option>
                       </select>
+                      <span
+                        class="invalid_info"
+                        v-for="error of v$.model.instances.$each.$response
+                          .$errors[indexOfSelectedSerialItem].status"
+                        :key="error.$uid"
+                      >
+                        {{ error.$message }}
+                      </span>
                     </div>
                   </div>
 
@@ -162,6 +186,14 @@
                         v-model="selectedSerialItem.addedDate"
                         :disabled="globalDisable"
                       />
+                      <span
+                        class="invalid_info"
+                        v-for="error of v$.model.instances.$each.$response
+                          .$errors[indexOfSelectedSerialItem].addedDate"
+                        :key="error.$uid"
+                      >
+                        {{ error.$message }}
+                      </span>
                     </div>
                   </div>
 
@@ -202,13 +234,22 @@
                   :class="[
                     index % 2 === 0 ? 'row_color_1' : 'row_color_2',
                     { active: selectedSerialItem === item },
+                    {
+                      invalid_tab_info:
+                        v$.model.instances.$each.$message[index].length > 0,
+                    },
                   ]"
                   v-for="(item, index) in model.instances"
                   :key="index"
-                  @click="selectedSerialItem = item"
+                  @click="selectedSerialItemWithValidation(item)"
                 >
                   <div class="p-0 col-2">
+                    <span
+                      v-if="v$.model.instances.$each.$message[index].length > 0"
+                      >!</span
+                    >
                     <input
+                      v-else
                       type="checkbox"
                       v-model="item.active"
                       :disabled="true"
@@ -222,6 +263,14 @@
                   </div>
                 </div>
               </div>
+              <span
+                class="invalid_info"
+                v-if="
+                  v$.model.instances.$dirty &&
+                  v$.model.instances.required.$invalid
+                "
+                >At least 1 equipment is required</span
+              >
             </div>
           </div>
 
@@ -257,6 +306,11 @@
               ></fileUpload>
             </div>
           </div>
+          <span
+            class="invalid_info"
+            v-if="selectedPage == 'images' && v$.model.imagesId.$error"
+            >At least 1 file is required</span
+          >
 
           <!-----------------------------------------------------------------------------------------------------Files-------------------->
           <div v-if="selectedPage == 'files'" class="files_info">
@@ -419,12 +473,19 @@
 
 <script>
 import { format } from "date-fns";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, maxLength, helpers } from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 import imageBox from "@/components/ImageBox.vue";
 import fileUpload from "@/components/FileUpload.vue";
 import fileDownload from "@/components/FileDownload.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
     imageBox,
@@ -455,7 +516,35 @@ export default {
       model: null,
       departmentsList: null,
       selectedSerialItem: null,
+      indexOfSelectedSerialItem: null,
     };
+  },
+  validations: {
+    model: {
+      name: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(300),
+      },
+      imagesId: {
+        required,
+      },
+      instances: {
+        required,
+        $each: helpers.forEach({
+          serialNumber: {
+            required,
+            maxLength: maxLength(200),
+          },
+          status: {
+            required,
+          },
+          addedDate: {
+            required,
+          },
+        }),
+      },
+    },
   },
   methods: {
     camelCaseToNormal(text) {
@@ -465,6 +554,10 @@ export default {
         .toLowerCase();
 
       return normalText.charAt(0).toUpperCase() + normalText.slice(1);
+    },
+    selectedSerialItemWithValidation(item) {
+      this.selectedSerialItem = item;
+      this.indexOfSelectedSerialItem = this.model.instances.indexOf(item);
     },
     async setPage(name) {
       this.selectedPage = name;
@@ -504,9 +597,11 @@ export default {
     },
     async addImage(idList) {
       this.model.imagesId.push(...idList);
+      this.v$.model.imagesId.$touch();
     },
     async removeImage(id) {
       this.model.imagesId = this.model.imagesId.filter((x) => x !== id);
+      this.v$.model.imagesId.$touch();
     },
     async addFile(idList) {
       [...idList].forEach(async (id) => {
@@ -534,6 +629,9 @@ export default {
       return format(new Date(date), "dd-MM-yyyy HH:mm");
     },
     async save() {
+      this.v$.model.$touch();
+      if (this.v$.$invalid) return;
+
       try {
         const respons =
           this.model.id == null
@@ -556,7 +654,7 @@ export default {
         const respons = await this.axios.get(`Admin/Item/Get?id=${this.id}`);
         if (respons.status !== 200) return;
         this.model = respons.data;
-        this.selectedSerialItem = this.model.instances[0] ?? null;
+        this.selectedSerialItemWithValidation(this.model.instances[0] ?? null);
         this.isReady = true;
       } catch (error) {
         console.log(error);
@@ -583,9 +681,7 @@ export default {
         withdrawalDate: null,
       };
       this.model.instances.push(this.selectedSerialItem);
-    },
-    async selectSerialItem(item) {
-      this.selectedSerialItem = item;
+      this.selectedSerialItemWithValidation(this.selectedSerialItem);
     },
     async removeSerialItem() {
       const response = confirm("Are you sure you want do that?");
@@ -595,6 +691,7 @@ export default {
         (i) => i !== this.selectedSerialItem
       );
       this.selectedSerialItem = null;
+      this.indexOfSelectedSerialItem = null;
     },
     getEmptyModel() {
       return {

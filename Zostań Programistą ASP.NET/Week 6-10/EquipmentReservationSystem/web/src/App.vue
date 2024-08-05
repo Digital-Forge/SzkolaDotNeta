@@ -271,4 +271,16 @@
     }
   }
 }
+
+//------------------------------------------------------------- validation
+.invalid_info {
+  color: red;
+  font-size: small;
+  font-weight: bold;
+}
+
+.invalid_tab_info {
+  color: red;
+  font-weight: bold;
+}
 </style>

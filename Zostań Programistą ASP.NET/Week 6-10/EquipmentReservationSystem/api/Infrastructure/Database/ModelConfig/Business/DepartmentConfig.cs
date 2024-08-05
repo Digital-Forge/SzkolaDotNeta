@@ -13,7 +13,8 @@ namespace Infrastructure.Database.ModelConfig.Business
                 .HasMaxLength(200);
 
             builder.Property(e => e.Description)
-                .HasColumnName("description");
+                .HasColumnName("description")
+                .HasMaxLength(3000);
         }
     }
 }

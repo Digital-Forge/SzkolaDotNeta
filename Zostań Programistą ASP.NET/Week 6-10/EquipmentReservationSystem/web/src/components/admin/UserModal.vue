@@ -44,9 +44,17 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="model.username"
+                  v-model="v$.model.username.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.username.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.username.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -55,9 +63,17 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="model.email"
+                  v-model="v$.model.email.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.email.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.email.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -66,9 +82,17 @@
               <div class="col-9 box_value">
                 <input
                   type="password"
-                  v-model="model.password"
+                  v-model="v$.model.password.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.password.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.password.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -221,9 +245,22 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import {
+  required,
+  requiredIf,
+  minLength,
+  email,
+  maxLength,
+} from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
   },
@@ -252,7 +289,30 @@ export default {
       selectDepartment: null,
     };
   },
+  validations() {
+    return {
+      model: {
+        email: {
+          required,
+          email,
+          maxLength: maxLength(255),
+        },
+        password: {
+          required: requiredIf(this.isCreate),
+          minLength: minLength(5),
+        },
+        username: {
+          required,
+          minLength: minLength(5),
+          maxLength: maxLength(255),
+        },
+      },
+    };
+  },
   methods: {
+    isCreate() {
+      return !this.model.id;
+    },
     async setPage(name) {
       this.selectedPage = name;
     },
@@ -290,6 +350,9 @@ export default {
       );
     },
     async save() {
+      this.v$.$touch();
+      if (this.v$.model.$invalid) return;
+
       try {
         const respons =
           this.model.id == null

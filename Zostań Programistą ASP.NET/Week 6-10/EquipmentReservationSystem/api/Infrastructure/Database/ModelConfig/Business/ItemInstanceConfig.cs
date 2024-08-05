@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces.Models;
-using Domain.Models.Business;
+﻿using Domain.Models.Business;
 using Domain.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

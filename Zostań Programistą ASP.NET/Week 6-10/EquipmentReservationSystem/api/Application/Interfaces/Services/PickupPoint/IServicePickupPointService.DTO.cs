@@ -39,7 +39,7 @@
         {
             public Guid Id { get; set; }
             public ServiceStatus Status { get; set; }
-            public string ServiceNote { get; set; }
+            public string? ServiceNote { get; set; }
 
 
             public enum ServiceStatus

@@ -182,7 +182,15 @@
                     v-model="changeModel.from"
                     :max="changeModel.to"
                     :disabled="!changeDate"
+                    @blur="v$.changeModel.from.$touch()"
                   />
+                  <span
+                    class="invalid_info"
+                    v-for="error of v$.changeModel.from.$errors"
+                    :key="error.$uid"
+                  >
+                    {{ error.$message }}
+                  </span>
                 </div>
                 <div class="prop_box row">
                   <span class="header_prop col-6">New to : </span>
@@ -253,11 +261,18 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { requiredIf } from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 import ImageBox from "@/components/ImageBox.vue";
 import FileDownload from "@/components/FileDownload.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
     ImageBox,
@@ -285,6 +300,15 @@ export default {
       selectImage: null,
       availableAdminMode: false,
       changeDate: false,
+    };
+  },
+  validations() {
+    return {
+      changeModel: {
+        from: {
+          required: requiredIf(this.changeDate),
+        },
+      },
     };
   },
   watch: {
@@ -323,7 +347,6 @@ export default {
       }
     },
   },
-  computed: {},
   methods: {
     async setPage(name) {
       this.selectedPage = name;
@@ -340,6 +363,9 @@ export default {
       this.$emit("close");
     },
     async sendChanges() {
+      this.v$.$touch();
+      if (this.v$.$invalid) return;
+
       this.isReady = false;
 
       try {

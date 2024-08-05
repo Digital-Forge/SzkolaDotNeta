@@ -37,9 +37,17 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="model.name"
+                  v-model="v$.model.name.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.name.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.name.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -48,9 +56,17 @@
               <div class="col-9 box_value">
                 <textarea
                   type="text"
-                  v-model="model.description"
+                  v-model="v$.model.description.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.description.$touch()"
                 ></textarea>
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.description.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -192,10 +208,17 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, maxLength } from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 import userModal from "@/components/admin/UserModal.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
     userModal,
@@ -229,6 +252,18 @@ export default {
       selectUserInfo: null,
     };
   },
+  validations: {
+    model: {
+      name: {
+        required,
+        minLength: minLength(5),
+        maxLength: maxLength(200),
+      },
+      description: {
+        maxLength: maxLength(3000),
+      },
+    },
+  },
   methods: {
     async openUserInfo(id) {
       this.selectUserInfo = id;
@@ -245,6 +280,9 @@ export default {
       this.$emit("close");
     },
     async save() {
+      this.v$.$touch();
+      if (this.v$.$invalid) return;
+
       try {
         const respons =
           this.model.id == null
