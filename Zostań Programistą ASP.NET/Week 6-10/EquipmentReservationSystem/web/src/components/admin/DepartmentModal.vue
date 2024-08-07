@@ -280,8 +280,12 @@ export default {
       this.$emit("close");
     },
     async save() {
+      this.isReady = false;
       this.v$.$touch();
-      if (this.v$.$invalid) return;
+      if (this.v$.$invalid) {
+        this.isReady = true;
+        return;
+      }
 
       try {
         const respons =
@@ -293,6 +297,7 @@ export default {
       } catch (error) {
         console.log(error);
         alert("Error occured");
+        this.isReady = true;
       }
     },
     async closeUserAddModal() {
@@ -354,7 +359,6 @@ export default {
         );
         if (respons.status !== 200) return;
         this.model = respons.data;
-        this.isReady = true;
       } catch (error) {
         alert("Error occured");
         this.$emit("close");
@@ -406,7 +410,6 @@ export default {
     switch (this.mode) {
       case "add":
         this.model = this.getEmptyModel();
-        this.isReady = true;
         break;
       case "edit":
         await this.loadData();
@@ -419,6 +422,7 @@ export default {
         this.$emit("close");
         break;
     }
+    this.isReady = true;
   },
 };
 </script>

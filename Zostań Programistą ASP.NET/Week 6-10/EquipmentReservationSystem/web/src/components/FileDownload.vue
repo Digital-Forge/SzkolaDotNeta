@@ -39,12 +39,10 @@ export default {
     async download() {
       if (!this.load) await this.downloadFile();
 
-      const blob = new Blob([this.fileBase64], {
-        type: this.getMimeType(this.fileFormat),
-      });
-
       const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
+      link.href = `data:${this.getMimeType(this.fileFormat)};base64,${
+        this.fileBase64
+      }`;
       link.download = `${this.fileName}.${this.fileFormat}`;
       link.format = this.fileFormat;
 

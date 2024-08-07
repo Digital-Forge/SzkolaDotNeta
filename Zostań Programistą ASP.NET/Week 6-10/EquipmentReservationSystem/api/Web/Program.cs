@@ -15,7 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Context>(options => options.UseSqlServer(connectionString));
-builder.Services.AddIdentityCore<UserData>()
+builder.Services.AddIdentityCore<UserData>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<Context>()
                 .AddApiEndpoints();

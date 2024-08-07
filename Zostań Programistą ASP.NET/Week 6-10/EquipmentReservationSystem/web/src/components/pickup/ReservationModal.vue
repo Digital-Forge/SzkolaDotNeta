@@ -236,12 +236,8 @@
       </template>
       <template v-slot:footer>
         <div v-if="isReady" class="footer_style">
-          <div class="admin_mode_btn">
-            <input
-              v-if="availableAdminMode"
-              type="checkbox"
-              v-model="changeModel.adminMode"
-            />
+          <div v-if="availableAdminMode" class="admin_mode_btn">
+            <input type="checkbox" v-model="changeModel.adminMode" />
             <span class="admin_mode_btn_text"> Admin mode</span>
           </div>
           <div class="change_btn save_box">
@@ -363,10 +359,12 @@ export default {
       this.$emit("close");
     },
     async sendChanges() {
-      this.v$.$touch();
-      if (this.v$.$invalid) return;
-
       this.isReady = false;
+      this.v$.$touch();
+      if (this.v$.$invalid) {
+        this.isReady = true;
+        return;
+      }
 
       try {
         const respons = await this.axios.post(
@@ -377,9 +375,8 @@ export default {
         this.close();
       } catch (error) {
         alert("Error occured");
+        this.isReady = true;
       }
-
-      this.isReady = true;
     },
     async loadData() {
       if (!this.id) {

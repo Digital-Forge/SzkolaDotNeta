@@ -254,8 +254,12 @@ export default {
       }
     },
     async reserveExecution() {
+      this.isReserveReady = false;
       this.v$.$touch();
-      if (this.v$.modelResevation.$invalid) return;
+      if (this.v$.modelResevation.$invalid) {
+        this.isReserveReady = true;
+        return;
+      }
 
       try {
         const respons = await this.axios.post(

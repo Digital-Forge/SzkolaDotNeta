@@ -9,7 +9,7 @@
       :value="uploadValue"
     />
     <span v-show="uploadProcess" class="loader mt-2"></span>
-    <span v-show="!uploadProcess">UPLAOD</span>
+    <span v-show="!uploadProcess">Upload</span>
   </div>
 </template>
 

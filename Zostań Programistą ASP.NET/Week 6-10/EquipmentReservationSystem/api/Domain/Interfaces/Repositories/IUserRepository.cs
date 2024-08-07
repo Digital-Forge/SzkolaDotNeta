@@ -1,12 +1,13 @@
 ﻿using Domain.Interfaces.Repositories.Abstract;
 using Domain.Models;
 using Domain.Models.Business;
+using Infrastructure.Repositories.Abstract;
 using Microsoft.AspNetCore.Identity;
 using static Domain.Interfaces.Repositories.IUserRepository;
 
 namespace Domain.Interfaces.Repositories
 {
-    public interface IUserRepository : IRepository<IUserQuery, UserData>
+    public interface IUserRepository : IRepository<IUserQuery, UserData>, IRepositoryTransaction
     {
         UserData GetContextUser();
         UserData GetUser(string email);

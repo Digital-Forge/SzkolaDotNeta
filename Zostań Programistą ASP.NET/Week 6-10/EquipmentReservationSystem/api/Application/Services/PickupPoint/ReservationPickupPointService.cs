@@ -51,6 +51,7 @@ namespace Application.Services.PickupPoint
                         throw new ReservationChangeStatusException(model.Status, entity.Status);
 
                     entity.Status = ReservationStatus.Issued;
+                    entity.From = DateOnly.FromDateTime(DateTime.Now);
                     entity.ItemInstance.Status = ItemInstanceStatus.Reservations;
                     break;
                 case ReservationStatus.Returned:
@@ -58,6 +59,7 @@ namespace Application.Services.PickupPoint
                         throw new ReservationChangeStatusException(model.Status, entity.Status);
 
                     entity.Status = ReservationStatus.Returned;
+                    entity.To = DateOnly.FromDateTime(DateTime.Now);
                     entity.ItemInstance.Status = ItemInstanceStatus.Available;
                     break;
                 case ReservationStatus.Lost:
@@ -65,7 +67,9 @@ namespace Application.Services.PickupPoint
                         throw new ReservationChangeStatusException(model.Status, entity.Status);
 
                     entity.Status = ReservationStatus.Lost;
-                    entity.ItemInstance.Status = ItemInstanceStatus.Unavailable;
+                    entity.To = DateOnly.FromDateTime(DateTime.Now);
+                    entity.ItemInstance.Status = ItemInstanceStatus.Lost;
+                    entity.ItemInstance.WithdrawalDate = DateOnly.FromDateTime(DateTime.Now);
                     entity.ItemInstance.Active = false;
                     break;
                 case ReservationStatus.Destroyed:
@@ -73,6 +77,7 @@ namespace Application.Services.PickupPoint
                         throw new ReservationChangeStatusException(model.Status, entity.Status);
 
                     entity.Status = ReservationStatus.Destroyed;
+                    entity.To = DateOnly.FromDateTime(DateTime.Now);
                     entity.ItemInstance.Status = ItemInstanceStatus.Service;
 
                     if (!string.IsNullOrWhiteSpace(entity.InnerNote))

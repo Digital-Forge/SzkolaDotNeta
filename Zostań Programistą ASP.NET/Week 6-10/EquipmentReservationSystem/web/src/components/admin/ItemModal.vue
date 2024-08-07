@@ -28,6 +28,9 @@
               :class="[{ page_select_active: selectedPage == 'images' }]"
               @click="setPage('images')"
             >
+              <span style="color: red" v-if="v$.model.imagesId.$error">
+                !
+              </span>
               Images
             </div>
             <div
@@ -112,7 +115,7 @@
               <div class="serial_data">
                 <span><b>Serial object</b></span>
                 <div
-                  v-if="selectedSerialItem"
+                  v-if="selectedSerialItem && !globalDisable"
                   class="remove_serial_item"
                   @click="removeSerialItem()"
                 >
@@ -297,6 +300,7 @@
               </div>
             </div>
             <div
+              v-if="!globalDisable"
               class="image_content image_content_box image_content_box_upload"
             >
               <fileUpload
@@ -397,6 +401,9 @@
                   </span>
                 </div>
               </div>
+            </div>
+            <div class="pt-2">
+              If the list is empty, the resource is available to everyone
             </div>
           </div>
 
@@ -629,8 +636,12 @@ export default {
       return format(new Date(date), "dd-MM-yyyy HH:mm");
     },
     async save() {
+      this.isReady = false;
       this.v$.model.$touch();
-      if (this.v$.$invalid) return;
+      if (this.v$.$invalid) {
+        this.isReady = true;
+        return;
+      }
 
       try {
         const respons =
@@ -642,6 +653,7 @@ export default {
       } catch (error) {
         console.log(error);
         alert("Error occured");
+        this.isReady = true;
       }
     },
     async loadData() {
@@ -655,7 +667,6 @@ export default {
         if (respons.status !== 200) return;
         this.model = respons.data;
         this.selectedSerialItemWithValidation(this.model.instances[0] ?? null);
-        this.isReady = true;
       } catch (error) {
         console.log(error);
         alert("Error occured - load data");
@@ -676,7 +687,7 @@ export default {
         id: null,
         active: false,
         serialNumber: null,
-        status: null,
+        status: "Available",
         addedDate: null,
         withdrawalDate: null,
       };
@@ -735,7 +746,6 @@ export default {
       case "add":
         this.model = this.getEmptyModel();
         await this.loadDepartments();
-        this.isReady = true;
         break;
       case "edit":
         await this.loadData();
@@ -750,6 +760,7 @@ export default {
         this.$emit("close");
         break;
     }
+    this.isReady = true;
   },
 };
 </script>

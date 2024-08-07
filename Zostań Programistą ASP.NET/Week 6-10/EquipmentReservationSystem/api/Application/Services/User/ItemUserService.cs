@@ -67,7 +67,7 @@ namespace Application.Services.User
 
             var itemsQuery = _itemRepository.QueryBuilder(true, true)
                 .IncludeInstances()
-                .Where(x => x.Departments.Any(y => departmentsAccess.Contains(y.DepartmentId)))
+                .Where(x => x.Departments.Count == 0 || x.Departments.Any(y => departmentsAccess.Contains(y.DepartmentId)))
                 .Where(x => x.Instances.Any(y => y.Status == Domain.Utils.ItemInstanceStatus.Available && y.AddedDate <= nowData && (y.WithdrawalDate == null || y.WithdrawalDate > nowData)))
                 .Query
                 .OrderBy(o => o.Name)

@@ -134,31 +134,43 @@ namespace Application.Services
 
         public async Task<Guid> Create(UserModel model)
         {
-            var newUser = new UserData()
+            try
             {
-                Email = model.Email,
-                UserName = model.Username,
-                NormalizedUserName = model.Username.ToUpper(),
-                Active = model.Active,
-                EntityStatus = Domain.Utils.EntityStatus.Buffer,
-                EmailConfirmed = true
-            };
+                await _userRepository.Transactions.BeginTransactionAsync();
 
-            var result = await _userManager.CreateAsync(newUser, model.Password);
-            if (!result.Succeeded) throw new UserCreateException();
+                var newUser = new UserData()
+                {
+                    Email = model.Email,
+                    UserName = model.Username,
+                    NormalizedUserName = model.Username.ToUpper(),
+                    Active = model.Active,
+                    EntityStatus = Domain.Utils.EntityStatus.Buffer,
+                    EmailConfirmed = true
+                };
 
-            if (model.isAdmin) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.Administration, newUser.Id);
-            if (model.isPickupPoint) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.PickupPoint, newUser.Id);
+                var result = await _userManager.CreateAsync(newUser, model.Password);
+                if (!result.Succeeded) throw new UserCreateException();
 
-            newUser.Departments = model.Departments.Select(s => new Domain.Models.Business.MiddleTabs.UserToDepartment
+                if (model.isAdmin) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.Administration, newUser.Id);
+                if (model.isPickupPoint) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.PickupPoint, newUser.Id);
+
+                newUser.Departments = model.Departments.Select(s => new Domain.Models.Business.MiddleTabs.UserToDepartment
+                {
+                    DepartmentId = s.Id,
+                    UserId = newUser.Id,
+                }).ToList();
+
+                newUser.EntityStatus = Domain.Utils.EntityStatus.Use;
+                await _userRepository.SaveAsync(newUser);
+
+                await _userRepository.Transactions.CommitTransactionAsync();
+                return newUser.Id;
+            }
+            catch (Exception)
             {
-                DepartmentId = s.Id,
-                UserId = newUser.Id,
-            }).ToList();
-
-            newUser.EntityStatus = Domain.Utils.EntityStatus.Use;
-            await _userRepository.SaveAsync(newUser);
-            return newUser.Id;
+                await _userRepository.Transactions.RollbackTransactionAsync();
+                throw;
+            }
         }
 
         public async Task Update(UserModel model)
@@ -269,6 +281,22 @@ namespace Application.Services
             }
 
             return data;
+        }
+
+        public async Task<bool> CheckUserEmailUnique(CheckUniqueModel data)
+        {
+            return !await _userRepository.QueryBuilder(asNoTracking: true, allowBuffor: true)
+                .Where(x => x.Id != data.Id && x.NormalizedEmail == data.Value.ToUpper())
+                .Query
+                .AnyAsync();
+        }
+
+        public async Task<bool> CheckUsernameUnique(CheckUniqueModel data)
+        {
+            return !await _userRepository.QueryBuilder(asNoTracking: true, allowBuffor: true)
+                .Where(x => x.Id != data.Id && x.NormalizedUserName == data.Value.ToUpper())
+                .Query
+                .AnyAsync();
         }
     }
 }

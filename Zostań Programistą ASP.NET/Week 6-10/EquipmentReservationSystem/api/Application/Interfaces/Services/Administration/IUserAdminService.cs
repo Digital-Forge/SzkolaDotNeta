@@ -12,5 +12,7 @@ namespace Application.Interfaces
         Task<UserModel> GetFullAsync(Guid id);
         Task<Guid> Create(UserModel model);
         Task Update(UserModel model);
+        Task<bool> CheckUserEmailUnique(CheckUniqueModel data);
+        Task<bool> CheckUsernameUnique(CheckUniqueModel data);
     }
 }

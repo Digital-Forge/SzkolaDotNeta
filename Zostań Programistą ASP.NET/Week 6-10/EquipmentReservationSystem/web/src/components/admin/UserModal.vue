@@ -44,7 +44,7 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="v$.model.username.$model"
+                  v-model.trim="v$.model.username.$model"
                   :disabled="globalDisable"
                   @blur="v$.model.username.$touch()"
                 />
@@ -63,7 +63,7 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="v$.model.email.$model"
+                  v-model.trim="v$.model.email.$model"
                   :disabled="globalDisable"
                   @blur="v$.model.email.$touch()"
                 />
@@ -252,6 +252,7 @@ import {
   minLength,
   email,
   maxLength,
+  helpers,
 } from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 
@@ -296,6 +297,10 @@ export default {
           required,
           email,
           maxLength: maxLength(255),
+          uniquex: helpers.withMessage(
+            "The provided email address has already been used",
+            helpers.withAsync(this.checkUniqueEmail)
+          ),
         },
         password: {
           required: requiredIf(this.isCreate),
@@ -305,6 +310,10 @@ export default {
           required,
           minLength: minLength(5),
           maxLength: maxLength(255),
+          uniquex: helpers.withMessage(
+            "The username is already taken",
+            helpers.withAsync(this.checkUniqueUsername)
+          ),
         },
       },
     };
@@ -312,6 +321,38 @@ export default {
   methods: {
     isCreate() {
       return !this.model.id;
+    },
+    async checkUniqueEmail() {
+      if (!this.model.email) return !helpers.req(this.model.email);
+      try {
+        const respons = await this.axios.post(
+          "Admin/User/CheckUserEmailUnique",
+          {
+            id: this.model.id,
+            value: this.model.email,
+          }
+        );
+        if (respons.status !== 200) return false;
+        return respons.data;
+      } catch (error) {
+        return false;
+      }
+    },
+    async checkUniqueUsername() {
+      if (!this.model.username) return !helpers.req(this.model.username);
+      try {
+        const respons = await this.axios.post(
+          "Admin/User/CheckUsernameUnique",
+          {
+            id: this.model.id,
+            value: this.model.username,
+          }
+        );
+        if (respons.status !== 200) return false;
+        return respons.data;
+      } catch (error) {
+        return false;
+      }
     },
     async setPage(name) {
       this.selectedPage = name;
@@ -350,8 +391,12 @@ export default {
       );
     },
     async save() {
+      this.isReady = false;
       this.v$.$touch();
-      if (this.v$.model.$invalid) return;
+      if (this.v$.model.$invalid) {
+        this.isReady = true;
+        return;
+      }
 
       try {
         const respons =
@@ -363,6 +408,7 @@ export default {
       } catch (error) {
         console.log(error);
         alert("Error occured");
+        this.isReady = true;
       }
     },
     async loadData() {
@@ -377,7 +423,6 @@ export default {
         );
         if (respons.status !== 200) return;
         this.model = respons.data;
-        this.isReady = true;
       } catch (error) {
         console.log(error);
         alert("Error occured - load data");
@@ -451,6 +496,7 @@ export default {
         this.$emit("close");
         break;
     }
+    this.isReady = true;
   },
 };
 </script>
