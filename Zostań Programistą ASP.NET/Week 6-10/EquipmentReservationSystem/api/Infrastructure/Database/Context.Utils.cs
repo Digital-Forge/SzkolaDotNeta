@@ -54,6 +54,7 @@ namespace Infrastructure.Database
             (new RefreshTokenConfig()).Config(builder);
             (new DataFileConfig()).Config(builder);
         }
+
         public override int SaveChanges()
         {
             EntityAudit();

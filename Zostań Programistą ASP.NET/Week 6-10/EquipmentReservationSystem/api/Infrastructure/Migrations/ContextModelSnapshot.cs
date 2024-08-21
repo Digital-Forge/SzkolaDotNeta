@@ -381,6 +381,51 @@ namespace Infrastructure.Migrations
                     b.ToTable("Files");
                 });
 
+            modelBuilder.Entity("Domain.Models.System.Log", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("message");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("ParentLogId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("parent_log_id");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("source");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("type");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("user_Id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("Domain.Models.System.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -435,7 +480,9 @@ namespace Infrastructure.Migrations
                         .HasColumnName("create_time");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")

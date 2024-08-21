@@ -27,5 +27,6 @@ namespace Infrastructure.Database
         //System
         public DbSet<RefreshToken> RefreshTokens { get; set; } 
         public DbSet<DataFile> Files { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 }
