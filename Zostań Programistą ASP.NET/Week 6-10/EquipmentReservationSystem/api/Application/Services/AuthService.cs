@@ -1,5 +1,6 @@
 ﻿using Application.Attributes;
 using Application.Interfaces;
+using Application.Interfaces.Services;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.System;
@@ -17,20 +18,20 @@ namespace Application.Services
     public partial class AuthService : IAuthService
     {
         private readonly SignInManager<UserData> _signInManager;
-        private readonly UserManager<UserData> _userManager;
         private readonly ITokenRepository _tokenRepository;
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IConfiguration _config;
+        private readonly ILogService _logger;
 
-        public AuthService(SignInManager<UserData> signInManager, IConfiguration configuration, IUserRepository userRepository, ITokenRepository tokenRepository, IRoleRepository roleRepository)
+        public AuthService(SignInManager<UserData> signInManager, IConfiguration configuration, IUserRepository userRepository, ITokenRepository tokenRepository, IRoleRepository roleRepository, ILogService logService)
         {
             _tokenRepository = tokenRepository;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _signInManager = signInManager;
-            _userManager = signInManager.UserManager;
             _config = configuration;
+            _logger = logService;
         }
 
         public async Task<IAuthService.TokenModel> LoginAsync(IAuthService.LoginModel model)
@@ -43,6 +44,7 @@ namespace Application.Services
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (!result.Succeeded) return null;
+            await _logger.InfoLogAsync($"Login user ({user.UserName})", source: typeof(AuthService).Name);
             return await GenerateTokenAsync(user);
         }
 
@@ -123,8 +125,9 @@ namespace Application.Services
         public async Task LogoutAsync()
         {
             var user = _userRepository.GetContextUser();
+            await _logger.InfoLogAsync($"Logout user ({user.UserName})", source: typeof(AuthService).Name);
             await _tokenRepository.RemoveTokenAsync(user.Id);
-            await _signInManager.SignOutAsync();
+            //await _signInManager.SignOutAsync();
         }
 
         public async Task<bool> IsUserAdminAsync(Guid? userId = null)

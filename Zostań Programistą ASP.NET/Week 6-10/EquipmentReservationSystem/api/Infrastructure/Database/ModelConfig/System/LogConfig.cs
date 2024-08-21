@@ -25,6 +25,9 @@ namespace Infrastructure.Database.ModelConfig.System
             builder.Property(x => x.Source)
                 .HasColumnName("source");
 
+            builder.Property(x => x.StackTrace)
+                .HasColumnName("stack_trace");
+
             builder.Property(x => x.Type)
                 .HasColumnName("type")
                 .HasConversion(new EnumToStringConverter<LogType>())

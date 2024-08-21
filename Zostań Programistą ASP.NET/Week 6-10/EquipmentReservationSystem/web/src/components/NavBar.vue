@@ -50,6 +50,11 @@ export default {
       if (this.pickupAccess) this.$router.push({ name: "pickuppoint" });
     },
     async logout() {
+      try {
+        await this.axios.get("Auth/Logout");
+        // eslint-disable-next-line
+      } catch (error) {}
+
       this.$store.commit("removeAccerssToken");
       this.$router.push({ name: "login" });
     },

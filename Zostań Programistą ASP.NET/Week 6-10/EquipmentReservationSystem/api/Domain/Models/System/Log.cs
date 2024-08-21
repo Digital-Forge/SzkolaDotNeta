@@ -8,6 +8,7 @@ namespace Domain.Models.System
         public string Name { get; set; }
         public string? Message { get; set; }
         public string? Source { get; set; }
+        public string? StackTrace { get; set; }
         public LogType Type { get; set; }
         public DateTime Date { get; set; }
         public Guid? UserId { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Application.Attributes;
 using Application.Interfaces;
+using Application.Interfaces.Services;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +15,14 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly UserManager<UserData> _userManager;
+        private readonly ILogService _logger;
 
-        public UserAdminService(IUserRepository userRepository, UserManager<UserData> userManager, IRoleRepository roleRepository)
+        public UserAdminService(IUserRepository userRepository, UserManager<UserData> userManager, IRoleRepository roleRepository, ILogService logService)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
+            _logger = logService;
         }
 
         public UserPanelAccessModel GetPanelAccess()
@@ -164,6 +167,7 @@ namespace Application.Services
                 await _userRepository.SaveAsync(newUser);
 
                 await _userRepository.Transactions.CommitTransactionAsync();
+                await _logger.InfoLogAsync($"Successfully create user ({newUser.UserName}, {newUser.Id})", source: typeof(UserAdminService).Name);
                 return newUser.Id;
             }
             catch (Exception)
@@ -208,6 +212,8 @@ namespace Application.Services
 
         public async Task DeleteAsync(Guid id)
         {
+            var user = _userRepository.GetUser(id);
+            await _logger.InfoLogAsync($"Delete user ({user.UserName}, {user.Id})", source: typeof(UserAdminService).Name);
             await _userRepository.DeleteAsync(id);
         }
 

@@ -42,9 +42,10 @@ namespace Application.Services
 
             var log = new Log()
             {
-                Name = exception.GetType().Name,
+                Name = exception.GetType().FullName,
                 Message = exception.Message,
                 Source = exception.Source,
+                StackTrace = exception.StackTrace,
                 Type = LogType.Exception,
                 ParentLogId = parentLogId
             };
@@ -67,9 +68,10 @@ namespace Application.Services
 
             var log = new Log()
             {
-                Name = exception.GetType().Name,
+                Name = exception.GetType().FullName,
                 Message = exception.Message,
                 Source = exception.Source,
+                StackTrace = exception.StackTrace,
                 Type = LogType.Exception,
                 ParentLogId = parentLogId
             };
@@ -95,6 +97,7 @@ namespace Application.Services
                 Name = exception.GetType().Name,
                 Message = $"Description: \"{exception.Description}\"; Message: \"{exception.Message}\"",
                 Source = $"System: \"{exception.Occurred}\", Action: \"{exception.TypeAction}\"; Source: \"{exception.Source}\"",
+                StackTrace = exception.StackTrace,
                 Type = LogType.SystemException,
             };
 
@@ -112,6 +115,7 @@ namespace Application.Services
                 Name = exception.GetType().Name,
                 Message = $"Description: \"{exception.Description}\"; Message: \"{exception.Message}\"",
                 Source = $"System: \"{exception.Occurred}\", Action: \"{exception.TypeAction}\"; Source: \"{exception.Source}\"",
+                StackTrace = exception.StackTrace,
                 Type = LogType.SystemException,
             };
 

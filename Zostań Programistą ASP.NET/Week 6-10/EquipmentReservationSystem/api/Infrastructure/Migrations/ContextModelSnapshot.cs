@@ -411,6 +411,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("source");
 
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("stack_trace");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasMaxLength(30)
