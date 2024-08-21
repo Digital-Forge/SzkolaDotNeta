@@ -7,6 +7,7 @@ namespace Domain.Models.Business
         public DateOnly From { get; set; }
         public DateOnly? To { get; set; }
         public ReservationStatus Status { get; set; }
+        public string? InnerNote { get; set; }
 
         //Relations
         public Guid ItemInstanceId { get; set; }

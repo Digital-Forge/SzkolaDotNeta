@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.DTO;
 
 namespace Web.Controllers.Administration
 {
@@ -46,6 +47,18 @@ namespace Web.Controllers.Administration
         {
             await _userService.Update(model);
             return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckUserEmailUnique(IUserAdminService.CheckUniqueModel data)
+        {
+            return Ok(await _userService.CheckUserEmailUnique(data));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckUsernameUnique(IUserAdminService.CheckUniqueModel data)
+        {
+            return Ok(await _userService.CheckUsernameUnique(data));
         }
     }
 }

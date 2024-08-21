@@ -14,7 +14,7 @@
           :class="[
             index % 2 === 0 ? 'row_color_1' : 'row_color_2',
             { active: selectedRow === item.id },
-            { item_expired: item.to && Date(item.to) <= Date.now() },
+            { item_expired: checkItemExpired(item.to) },
           ]"
           v-for="(item, index) in items"
           :key="item.id"
@@ -84,6 +84,13 @@ export default {
         .toLowerCase();
 
       return normalText.charAt(0).toUpperCase() + normalText.slice(1);
+    },
+    checkItemExpired(to) {
+      if (!to) return false;
+      return (
+        new Date(to).setHours(0, 0, 0, 0) <=
+        new Date(Date.now()).setHours(0, 0, 0, 0)
+      );
     },
   },
   computed: {

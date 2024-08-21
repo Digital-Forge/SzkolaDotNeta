@@ -218,6 +218,7 @@
     .page_select:hover {
       background-color: magenta;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .page_select_active {
@@ -269,5 +270,17 @@
       }
     }
   }
+}
+
+//------------------------------------------------------------- validation
+.invalid_info {
+  color: red;
+  font-size: small;
+  font-weight: bold;
+}
+
+.invalid_tab_info {
+  color: red;
+  font-weight: bold;
 }
 </style>

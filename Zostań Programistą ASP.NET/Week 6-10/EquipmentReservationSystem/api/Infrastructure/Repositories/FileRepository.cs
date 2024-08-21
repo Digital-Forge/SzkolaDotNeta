@@ -12,6 +12,11 @@ namespace Infrastructure.Repositories
         private readonly Context _context;
         private readonly SemaphoreSlim _semaphore;
 
+        public bool SystemHostedServiceMode { 
+            get => _context.SystemHostedServiceMode;
+            set => _context.SystemHostedServiceMode = value; 
+        }
+
         public FileRepository(Context context)
         {
             _context = context;
@@ -33,6 +38,13 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public DataFile? Get(Guid id)
+        {
+            return _context.Files
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id && x.EntityStatus != Domain.Utils.EntityStatus.Delete);
+        }
+
         public async Task<Guid> SaveAsync(DataFile file)
         {
             var isExist = (await _context.Files.AsNoTracking().FirstOrDefaultAsync(x => x.Id == file.Id)) != null;
@@ -52,6 +64,20 @@ namespace Infrastructure.Repositories
 
             _context.Files.Remove(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public void Remove(Guid id)
+        {
+            var entity = _context.Files.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (entity == null) return;
+
+            _context.Files.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        public IQueryable<DataFile> GetTemporaryFiles()
+        {
+            return _context.Files.Where(x => x.EntityStatus == Domain.Utils.EntityStatus.Buffer);
         }
     }
 }

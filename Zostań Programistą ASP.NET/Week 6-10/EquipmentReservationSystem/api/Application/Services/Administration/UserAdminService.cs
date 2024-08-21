@@ -1,5 +1,6 @@
 ﻿using Application.Attributes;
 using Application.Interfaces;
+using Application.Interfaces.Services;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +15,14 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly UserManager<UserData> _userManager;
+        private readonly ILogService _logger;
 
-        public UserAdminService(IUserRepository userRepository, UserManager<UserData> userManager, IRoleRepository roleRepository)
+        public UserAdminService(IUserRepository userRepository, UserManager<UserData> userManager, IRoleRepository roleRepository, ILogService logService)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
+            _logger = logService;
         }
 
         public UserPanelAccessModel GetPanelAccess()
@@ -92,8 +95,8 @@ namespace Application.Services
         public async Task<UserModel> GetFullAsync(Guid id)
         {
             var entity = await _userRepository.QueryBuilder(asNoTracking: true)
-                .IncludeReservation()
                 .IncludeDepartments()
+                .IncludeReservationItem()
                 .GetUserByIdAsync(id) ?? throw new UserNotFoundException();
 
             var model = new UserModel()
@@ -134,31 +137,44 @@ namespace Application.Services
 
         public async Task<Guid> Create(UserModel model)
         {
-            var newUser = new UserData()
+            try
             {
-                Email = model.Email,
-                UserName = model.Username,
-                NormalizedUserName = model.Username.ToUpper(),
-                Active = model.Active,
-                EntityStatus = Domain.Utils.EntityStatus.Buffer,
-                EmailConfirmed = true
-            };
+                await _userRepository.Transactions.BeginTransactionAsync();
 
-            var result = await _userManager.CreateAsync(newUser, model.Password);
-            if (!result.Succeeded) throw new UserCreateException();
+                var newUser = new UserData()
+                {
+                    Email = model.Email,
+                    UserName = model.Username,
+                    NormalizedUserName = model.Username.ToUpper(),
+                    Active = model.Active,
+                    EntityStatus = Domain.Utils.EntityStatus.Buffer,
+                    EmailConfirmed = true
+                };
 
-            if (model.isAdmin) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.Administration, newUser.Id);
-            if (model.isPickupPoint) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.PickupPoint, newUser.Id);
+                var result = await _userManager.CreateAsync(newUser, model.Password);
+                if (!result.Succeeded) throw new UserCreateException();
 
-            newUser.Departments = model.Departments.Select(s => new Domain.Models.Business.MiddleTabs.UserToDepartment
+                if (model.isAdmin) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.Administration, newUser.Id);
+                if (model.isPickupPoint) await _roleRepository.AddRoleToUserAsync(Constans.Constans.Role.Id.PickupPoint, newUser.Id);
+
+                newUser.Departments = model.Departments.Select(s => new Domain.Models.Business.MiddleTabs.UserToDepartment
+                {
+                    DepartmentId = s.Id,
+                    UserId = newUser.Id,
+                }).ToList();
+
+                newUser.EntityStatus = Domain.Utils.EntityStatus.Use;
+                await _userRepository.SaveAsync(newUser);
+
+                await _userRepository.Transactions.CommitTransactionAsync();
+                await _logger.InfoLogAsync($"Successfully create user ({newUser.UserName}, {newUser.Id})", source: typeof(UserAdminService).Name);
+                return newUser.Id;
+            }
+            catch (Exception)
             {
-                DepartmentId = s.Id,
-                UserId = newUser.Id,
-            }).ToList();
-
-            newUser.EntityStatus = Domain.Utils.EntityStatus.Use;
-            await _userRepository.SaveAsync(newUser);
-            return newUser.Id;
+                await _userRepository.Transactions.RollbackTransactionAsync();
+                throw;
+            }
         }
 
         public async Task Update(UserModel model)
@@ -196,6 +212,8 @@ namespace Application.Services
 
         public async Task DeleteAsync(Guid id)
         {
+            var user = _userRepository.GetUser(id);
+            await _logger.InfoLogAsync($"Delete user ({user.UserName}, {user.Id})", source: typeof(UserAdminService).Name);
             await _userRepository.DeleteAsync(id);
         }
 
@@ -269,6 +287,22 @@ namespace Application.Services
             }
 
             return data;
+        }
+
+        public async Task<bool> CheckUserEmailUnique(CheckUniqueModel data)
+        {
+            return !await _userRepository.QueryBuilder(asNoTracking: true, allowBuffor: true)
+                .Where(x => x.Id != data.Id && x.NormalizedEmail == data.Value.ToUpper())
+                .Query
+                .AnyAsync();
+        }
+
+        public async Task<bool> CheckUsernameUnique(CheckUniqueModel data)
+        {
+            return !await _userRepository.QueryBuilder(asNoTracking: true, allowBuffor: true)
+                .Where(x => x.Id != data.Id && x.NormalizedUserName == data.Value.ToUpper())
+                .Query
+                .AnyAsync();
         }
     }
 }

@@ -97,5 +97,35 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return entity.Id;
         }
+
+        public List<string> GetAllServiceNoteForItem(Guid ItemInstanceId)
+        {
+            return _context.ServiceNotes
+                .Where(x => x.ItemInstanceId == ItemInstanceId)
+                .OrderByDescending(o => o.CreateTime)
+                .Select(s => s.Note)
+                .ToList();
+        }
+
+        public async Task<List<string>> GetAllServiceNoteForItemAsync(Guid ItemInstanceId)
+        {
+            return await _context.ServiceNotes
+                .Where(x => x.ItemInstanceId == ItemInstanceId)
+                .OrderByDescending(o => o.CreateTime)
+                .Select(s => s.Note)
+                .ToListAsync();
+        }
+
+        public void AddServiceNoteToItem(Guid ItemInstanceId, string note)
+        {
+            _context.ServiceNotes.Add(new ServiceNote { ItemInstanceId = ItemInstanceId, Note = note });
+            _context.SaveChanges();
+        }
+
+        public async Task AddServiceNoteToItemAsync(Guid ItemInstanceId, string note)
+        {
+            await _context.ServiceNotes.AddAsync(new ServiceNote { ItemInstanceId = ItemInstanceId, Note = note });
+            await _context.SaveChangesAsync();
+        }
     }
 }

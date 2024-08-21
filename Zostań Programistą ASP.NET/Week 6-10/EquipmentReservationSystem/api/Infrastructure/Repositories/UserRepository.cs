@@ -3,14 +3,25 @@ using Domain.Models;
 using Domain.Models.Business;
 using Infrastructure.Attributes;
 using Infrastructure.Database;
+using Infrastructure.Repositories.Abstract;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
     [AutoRegisterTransientRepository(typeof(IUserRepository))]
-    public partial class UserRepository(Context _context) : IUserRepository
+    public partial class UserRepository : IUserRepository
     {
+        private readonly Context _context;
+        public IRepositoryTransaction.ITransactionCommander Transactions { get; set; }
+
+        public UserRepository(Context context)
+        {
+            _context = context;
+            Transactions = new TransactionCommander(context);
+        }
+
+
         public UserData GetContextUser()
         {
             return _context.GetContextUser();

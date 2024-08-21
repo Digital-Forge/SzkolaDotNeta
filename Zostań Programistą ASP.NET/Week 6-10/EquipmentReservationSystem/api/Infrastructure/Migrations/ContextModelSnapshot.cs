@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -42,7 +42,8 @@ namespace Infrastructure.Migrations
                         .HasColumnName("create_time");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
                         .HasColumnName("description");
 
                     b.Property<string>("EntityStatus")
@@ -163,7 +164,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("serial_number");
 
-                    b.Property<string>("Starus")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
@@ -246,6 +247,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("date")
                         .HasColumnName("from");
 
+                    b.Property<string>("InnerNote")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
+                        .HasColumnName("inner_note");
+
                     b.Property<Guid>("ItemInstanceId")
                         .HasColumnType("uniqueidentifier");
 
@@ -277,6 +283,53 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("Domain.Models.Business.ServiceNote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasColumnName("active");
+
+                    b.Property<Guid>("CreateBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("create_by");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("create_time");
+
+                    b.Property<string>("EntityStatus")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("entity_status");
+
+                    b.Property<Guid>("ItemInstanceId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("item_instance_id");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
+                        .HasColumnName("note");
+
+                    b.Property<Guid>("UpdateBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("update_by");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("update_time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceNotes");
                 });
 
             modelBuilder.Entity("Domain.Models.System.DataFile", b =>
@@ -326,6 +379,55 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("Domain.Models.System.Log", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("message");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("ParentLogId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("parent_log_id");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("source");
+
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("stack_trace");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("type");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("user_Id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Domain.Models.System.RefreshToken", b =>
@@ -382,7 +484,9 @@ namespace Infrastructure.Migrations
                         .HasColumnName("create_time");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")

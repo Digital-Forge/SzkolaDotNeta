@@ -7,6 +7,9 @@ namespace Infrastructure.Database.ModelConfig.Business
     {
         public override void ModelConfig(EntityTypeBuilder<UserData> builder)
         {
+            builder.Property(p => p.Email)
+                .IsRequired()
+                .IsUnicode();
         }
     }
 }

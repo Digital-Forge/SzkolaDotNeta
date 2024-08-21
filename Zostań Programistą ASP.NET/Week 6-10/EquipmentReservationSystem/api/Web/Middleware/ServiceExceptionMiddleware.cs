@@ -1,9 +1,10 @@
 ﻿using Application.Abstract;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace Web.Middleware
 {
-    public class ServiceExceptionMiddleware : IExceptionHandler
+    public class ServiceExceptionMiddleware(IServiceProvider _serviceProvider) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
@@ -29,10 +30,13 @@ namespace Web.Middleware
                     httpContext.Response.StatusCode = 403; // Forbidden
                     break;
                 default:
-                    throw new NotImplementedException();
-            }
-
-            await httpContext.Response.WriteAsync(serviceException.Message);
+                    httpContext.Response.StatusCode = 501;
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        await scope.ServiceProvider.GetService<ILogService>().ExceptionLogAsync(new NotImplementedException());
+                    }
+                    break;
+            };
             return true;
         }
     }

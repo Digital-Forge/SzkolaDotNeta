@@ -36,7 +36,7 @@ namespace Application.Interfaces
             public Guid? Id { get; set; }
             public bool Active { get; set; }
             public string Name { get; set; }
-            public string Description { get; set; }
+            public string? Description { get; set; }
             public DateOnly? Create { get; set; }
             public List<DepartmentModel> Departments { get; set; } = new List<DepartmentModel>();
             public List<Instance> Instances { get; set; } = new List<Instance>();

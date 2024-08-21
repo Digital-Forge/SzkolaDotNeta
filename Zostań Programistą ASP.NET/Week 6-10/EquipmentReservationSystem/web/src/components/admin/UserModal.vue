@@ -44,9 +44,17 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="model.username"
+                  v-model.trim="v$.model.username.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.username.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.username.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -55,9 +63,17 @@
               <div class="col-9 box_value">
                 <input
                   type="text"
-                  v-model="model.email"
+                  v-model.trim="v$.model.email.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.email.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.email.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -66,9 +82,17 @@
               <div class="col-9 box_value">
                 <input
                   type="password"
-                  v-model="model.password"
+                  v-model="v$.model.password.$model"
                   :disabled="globalDisable"
+                  @blur="v$.model.password.$touch()"
                 />
+                <span
+                  class="invalid_info"
+                  v-for="error of v$.model.password.$errors"
+                  :key="error.$uid"
+                >
+                  {{ error.$message }}
+                </span>
               </div>
             </div>
 
@@ -221,9 +245,23 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import {
+  required,
+  requiredIf,
+  minLength,
+  email,
+  maxLength,
+  helpers,
+} from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
   },
@@ -252,7 +290,70 @@ export default {
       selectDepartment: null,
     };
   },
+  validations() {
+    return {
+      model: {
+        email: {
+          required,
+          email,
+          maxLength: maxLength(255),
+          uniquex: helpers.withMessage(
+            "The provided email address has already been used",
+            helpers.withAsync(this.checkUniqueEmail)
+          ),
+        },
+        password: {
+          required: requiredIf(this.isCreate),
+          minLength: minLength(5),
+        },
+        username: {
+          required,
+          minLength: minLength(5),
+          maxLength: maxLength(255),
+          uniquex: helpers.withMessage(
+            "The username is already taken",
+            helpers.withAsync(this.checkUniqueUsername)
+          ),
+        },
+      },
+    };
+  },
   methods: {
+    isCreate() {
+      return !this.model.id;
+    },
+    async checkUniqueEmail() {
+      if (!this.model.email) return !helpers.req(this.model.email);
+      try {
+        const respons = await this.axios.post(
+          "Admin/User/CheckUserEmailUnique",
+          {
+            id: this.model.id,
+            value: this.model.email,
+          }
+        );
+        if (respons.status !== 200) return false;
+        return respons.data;
+      } catch (error) {
+        return false;
+      }
+    },
+    async checkUniqueUsername() {
+      if (!this.model.username) return !helpers.req(this.model.username);
+      try {
+        const respons = await this.axios.post(
+          "Admin/User/CheckUsernameUnique",
+          {
+            id: this.model.id,
+            value: this.model.username,
+          }
+        );
+        if (respons.status !== 200) return false;
+        return respons.data;
+      } catch (error) {
+        return false;
+      }
+    },
     async setPage(name) {
       this.selectedPage = name;
     },
@@ -290,6 +391,13 @@ export default {
       );
     },
     async save() {
+      this.isReady = false;
+      this.v$.$touch();
+      if (this.v$.model.$invalid) {
+        this.isReady = true;
+        return;
+      }
+
       try {
         const respons =
           this.model.id == null
@@ -300,6 +408,7 @@ export default {
       } catch (error) {
         console.log(error);
         alert("Error occured");
+        this.isReady = true;
       }
     },
     async loadData() {
@@ -314,7 +423,6 @@ export default {
         );
         if (respons.status !== 200) return;
         this.model = respons.data;
-        this.isReady = true;
       } catch (error) {
         console.log(error);
         alert("Error occured - load data");
@@ -388,6 +496,7 @@ export default {
         this.$emit("close");
         break;
     }
+    this.isReady = true;
   },
 };
 </script>

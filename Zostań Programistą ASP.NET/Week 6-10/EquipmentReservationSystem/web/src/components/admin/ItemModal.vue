@@ -28,6 +28,9 @@
               :class="[{ page_select_active: selectedPage == 'images' }]"
               @click="setPage('images')"
             >
+              <span style="color: red" v-if="v$.model.imagesId.$error">
+                !
+              </span>
               Images
             </div>
             <div
@@ -64,7 +67,15 @@
                       type="text"
                       v-model="model.name"
                       :disabled="globalDisable"
+                      @blur="v$.model.name.$touch()"
                     />
+                    <span
+                      class="invalid_info"
+                      v-for="error of v$.model.name.$errors"
+                      :key="error.$uid"
+                    >
+                      {{ error.$message }}
+                    </span>
                   </div>
                 </div>
 
@@ -104,7 +115,7 @@
               <div class="serial_data">
                 <span><b>Serial object</b></span>
                 <div
-                  v-if="selectedSerialItem"
+                  v-if="selectedSerialItem && !globalDisable"
                   class="remove_serial_item"
                   @click="removeSerialItem()"
                 >
@@ -121,6 +132,14 @@
                         v-model="selectedSerialItem.serialNumber"
                         :disabled="globalDisable"
                       />
+                      <span
+                        class="invalid_info"
+                        v-for="error of v$.model.instances.$each.$response
+                          .$errors[indexOfSelectedSerialItem].serialNumber"
+                        :key="error.$uid"
+                      >
+                        {{ error.$message }}
+                      </span>
                     </div>
                   </div>
 
@@ -150,6 +169,14 @@
                         <option value="Withdrawn" selected>Withdrawn</option>
                         <option value="Lost" selected>Lost</option>
                       </select>
+                      <span
+                        class="invalid_info"
+                        v-for="error of v$.model.instances.$each.$response
+                          .$errors[indexOfSelectedSerialItem].status"
+                        :key="error.$uid"
+                      >
+                        {{ error.$message }}
+                      </span>
                     </div>
                   </div>
 
@@ -162,6 +189,14 @@
                         v-model="selectedSerialItem.addedDate"
                         :disabled="globalDisable"
                       />
+                      <span
+                        class="invalid_info"
+                        v-for="error of v$.model.instances.$each.$response
+                          .$errors[indexOfSelectedSerialItem].addedDate"
+                        :key="error.$uid"
+                      >
+                        {{ error.$message }}
+                      </span>
                     </div>
                   </div>
 
@@ -202,13 +237,22 @@
                   :class="[
                     index % 2 === 0 ? 'row_color_1' : 'row_color_2',
                     { active: selectedSerialItem === item },
+                    {
+                      invalid_tab_info:
+                        v$.model.instances.$each.$message[index].length > 0,
+                    },
                   ]"
                   v-for="(item, index) in model.instances"
                   :key="index"
-                  @click="selectedSerialItem = item"
+                  @click="selectedSerialItemWithValidation(item)"
                 >
                   <div class="p-0 col-2">
+                    <span
+                      v-if="v$.model.instances.$each.$message[index].length > 0"
+                      >!</span
+                    >
                     <input
+                      v-else
                       type="checkbox"
                       v-model="item.active"
                       :disabled="true"
@@ -222,6 +266,14 @@
                   </div>
                 </div>
               </div>
+              <span
+                class="invalid_info"
+                v-if="
+                  v$.model.instances.$dirty &&
+                  v$.model.instances.required.$invalid
+                "
+                >At least 1 equipment is required</span
+              >
             </div>
           </div>
 
@@ -248,6 +300,7 @@
               </div>
             </div>
             <div
+              v-if="!globalDisable"
               class="image_content image_content_box image_content_box_upload"
             >
               <fileUpload
@@ -257,6 +310,11 @@
               ></fileUpload>
             </div>
           </div>
+          <span
+            class="invalid_info"
+            v-if="selectedPage == 'images' && v$.model.imagesId.$error"
+            >At least 1 file is required</span
+          >
 
           <!-----------------------------------------------------------------------------------------------------Files-------------------->
           <div v-if="selectedPage == 'files'" class="files_info">
@@ -344,6 +402,9 @@
                 </div>
               </div>
             </div>
+            <div class="pt-2">
+              If the list is empty, the resource is available to everyone
+            </div>
           </div>
 
           <!-----------------------------------------------------------------------------------------------------History------------------>
@@ -362,9 +423,11 @@
                 :key="item.id"
               >
                 <div class="col-5">{{ item.serialNumber }}</div>
-                <div class="col-2">{{ item.From }}</div>
-                <div class="col-2">{{ item.To }}</div>
-                <div class="col-3">{{ item.Status }}</div>
+                <div class="col-2">{{ item.from }}</div>
+                <div class="col-2">{{ item.to }}</div>
+                <div class="col-3">
+                  {{ camelCaseToNormal(item.status) }}
+                </div>
               </div>
             </div>
           </div>
@@ -417,12 +480,19 @@
 
 <script>
 import { format } from "date-fns";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, maxLength, helpers } from "@vuelidate/validators";
 import modal from "@/components/ModalWindow.vue";
 import imageBox from "@/components/ImageBox.vue";
 import fileUpload from "@/components/FileUpload.vue";
 import fileDownload from "@/components/FileDownload.vue";
 
 export default {
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   components: {
     modal,
     imageBox,
@@ -453,9 +523,49 @@ export default {
       model: null,
       departmentsList: null,
       selectedSerialItem: null,
+      indexOfSelectedSerialItem: null,
     };
   },
+  validations: {
+    model: {
+      name: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(300),
+      },
+      imagesId: {
+        required,
+      },
+      instances: {
+        required,
+        $each: helpers.forEach({
+          serialNumber: {
+            required,
+            maxLength: maxLength(200),
+          },
+          status: {
+            required,
+          },
+          addedDate: {
+            required,
+          },
+        }),
+      },
+    },
+  },
   methods: {
+    camelCaseToNormal(text) {
+      const normalText = text
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .replace(/([A-Z])([A-Z][a-z])/g, "$1 $2")
+        .toLowerCase();
+
+      return normalText.charAt(0).toUpperCase() + normalText.slice(1);
+    },
+    selectedSerialItemWithValidation(item) {
+      this.selectedSerialItem = item;
+      this.indexOfSelectedSerialItem = this.model.instances.indexOf(item);
+    },
     async setPage(name) {
       this.selectedPage = name;
     },
@@ -494,9 +604,11 @@ export default {
     },
     async addImage(idList) {
       this.model.imagesId.push(...idList);
+      this.v$.model.imagesId.$touch();
     },
     async removeImage(id) {
       this.model.imagesId = this.model.imagesId.filter((x) => x !== id);
+      this.v$.model.imagesId.$touch();
     },
     async addFile(idList) {
       [...idList].forEach(async (id) => {
@@ -524,6 +636,13 @@ export default {
       return format(new Date(date), "dd-MM-yyyy HH:mm");
     },
     async save() {
+      this.isReady = false;
+      this.v$.model.$touch();
+      if (this.v$.$invalid) {
+        this.isReady = true;
+        return;
+      }
+
       try {
         const respons =
           this.model.id == null
@@ -534,6 +653,7 @@ export default {
       } catch (error) {
         console.log(error);
         alert("Error occured");
+        this.isReady = true;
       }
     },
     async loadData() {
@@ -546,8 +666,7 @@ export default {
         const respons = await this.axios.get(`Admin/Item/Get?id=${this.id}`);
         if (respons.status !== 200) return;
         this.model = respons.data;
-        this.selectedSerialItem = this.model.instances[0] ?? null;
-        this.isReady = true;
+        this.selectedSerialItemWithValidation(this.model.instances[0] ?? null);
       } catch (error) {
         console.log(error);
         alert("Error occured - load data");
@@ -568,14 +687,12 @@ export default {
         id: null,
         active: false,
         serialNumber: null,
-        status: null,
+        status: "Available",
         addedDate: null,
         withdrawalDate: null,
       };
       this.model.instances.push(this.selectedSerialItem);
-    },
-    async selectSerialItem(item) {
-      this.selectedSerialItem = item;
+      this.selectedSerialItemWithValidation(this.selectedSerialItem);
     },
     async removeSerialItem() {
       const response = confirm("Are you sure you want do that?");
@@ -585,6 +702,7 @@ export default {
         (i) => i !== this.selectedSerialItem
       );
       this.selectedSerialItem = null;
+      this.indexOfSelectedSerialItem = null;
     },
     getEmptyModel() {
       return {
@@ -628,7 +746,6 @@ export default {
       case "add":
         this.model = this.getEmptyModel();
         await this.loadDepartments();
-        this.isReady = true;
         break;
       case "edit":
         await this.loadData();
@@ -643,6 +760,7 @@ export default {
         this.$emit("close");
         break;
     }
+    this.isReady = true;
   },
 };
 </script>
