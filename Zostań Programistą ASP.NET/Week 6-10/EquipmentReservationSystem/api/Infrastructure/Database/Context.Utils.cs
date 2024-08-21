@@ -13,6 +13,7 @@ namespace Infrastructure.Database
     public partial class Context
     {
         public IHttpContextAccessor _httpContextAccessor { get; set; }
+        public bool SystemHostedServiceMode { get; set; } = false;
 
         public Context(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
@@ -70,11 +71,11 @@ namespace Infrastructure.Database
             var user = GetContextUser();
             var changeTrackerList = ChangeTracker.Entries<IAuditableEntity>();
 
-            if (user == null && changeTrackerList.Any()) throw new UserUnrecognizedException();
+            if (user == null && changeTrackerList.Any() && !SystemHostedServiceMode) throw new UserUnrecognizedException();
 
             foreach (var entity in changeTrackerList)
             {
-                entity.Entity.UpdateBy = user.Id;
+                entity.Entity.UpdateBy = user?.Id ?? Guid.Empty;
                 entity.Entity.UpdateTime = DateTime.Now;
 
                 switch (entity.State)

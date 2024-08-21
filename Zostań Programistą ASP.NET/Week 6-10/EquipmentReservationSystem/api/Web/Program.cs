@@ -18,6 +18,7 @@ builder.Services.AddDbContext<Context>(options => options.UseSqlServer(connectio
 builder.Services.AddIdentityCore<UserData>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
+                    
                 })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<Context>()

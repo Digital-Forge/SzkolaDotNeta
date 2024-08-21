@@ -1,6 +1,7 @@
 ﻿using Application.Attributes;
 using Application.Interfaces;
 using Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Application.Services
@@ -9,14 +10,21 @@ namespace Application.Services
     public partial class FileService : IFileService
     {
         private readonly string _path;
+        private readonly double? _dateCleaningSpan;
         private readonly IFileRepository _fileRepository;
         private readonly IAuthService _authService;
+
+        public bool SystemHostedServiceMode { 
+            get => _fileRepository.SystemHostedServiceMode; 
+            set => _fileRepository.SystemHostedServiceMode = value;
+        }
 
         public FileService(IFileRepository fileRepository, IAuthService authService, IConfiguration config)
         {
             _authService = authService;
             _fileRepository = fileRepository;
-            _path = config["FilesPath"] ?? "";
+            _path = config["File:FilesPath"] ?? "";
+            _dateCleaningSpan = double.TryParse(config["File:CleaningSpan"], out double timeValue) ? timeValue : null;
         }
 
         public async Task<IFileService.DataFileInfoModel> GetFileInfoAsync(Guid Id)
@@ -65,7 +73,7 @@ namespace Application.Services
 
             var file = Convert.FromBase64String(data.DataBase64);
 
-            if(!Directory.Exists(_path)) Directory.CreateDirectory(_path);
+            if (!Directory.Exists(_path)) Directory.CreateDirectory(_path);
 
             await File.WriteAllBytesAsync(Path.Combine(_path, entity.Id.ToString()), file);
 
@@ -83,8 +91,8 @@ namespace Application.Services
             var entity = await _fileRepository.GetAsync(model.Id.Value);
             DataFileInfoModel.Map(model, entity);
 
-            entity.EntityStatus = isTemporary 
-                ? Domain.Utils.EntityStatus.Buffer 
+            entity.EntityStatus = isTemporary
+                ? Domain.Utils.EntityStatus.Buffer
                 : Domain.Utils.EntityStatus.Use;
 
             await _fileRepository.SaveAsync(entity);
@@ -102,6 +110,17 @@ namespace Application.Services
             await _fileRepository.RemoveAsync(Id);
         }
 
+        public void DeleteFile(Guid Id)
+        {
+            var entity = _fileRepository.Get(Id);
+            var path = Path.Combine(_path, entity?.Id.ToString() ?? throw new FilePathException()) ?? string.Empty;
+
+            if (File.Exists(path))
+                File.Delete(path);
+
+            _fileRepository.Remove(Id);
+        }
+
         public async Task UpdateTemporary(Guid id, bool isTemporary)
         {
             var entity = await _fileRepository.GetAsync(id);
@@ -111,6 +130,23 @@ namespace Application.Services
                 : Domain.Utils.EntityStatus.Use;
 
             await _fileRepository.SaveAsync(entity);
+        }
+
+        public void ClearTemporaryFiles()
+        {
+            if (_dateCleaningSpan == null) return;
+
+            var dateMarginFileter = DateTime.Now.AddDays(-_dateCleaningSpan.Value);
+
+            var files = _fileRepository.GetTemporaryFiles()
+                .Where(x => x.UpdateTime < dateMarginFileter)
+                .Select(s => s.Id)
+                .ToList();
+
+            foreach (var file in files)
+            {
+                DeleteFile(file);
+            }
         }
     }
 }
