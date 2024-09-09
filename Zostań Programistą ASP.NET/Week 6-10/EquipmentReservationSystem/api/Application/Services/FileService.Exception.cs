@@ -4,7 +4,7 @@ namespace Application.Services
 {
     public partial class FileService
     {
-        public abstract class FileServiceException : ServiceException
+        public abstract class FileServiceException : AppSystemException
         {
             public FileServiceException(string message, Exception innerException = null) : base(message, innerException)
             {

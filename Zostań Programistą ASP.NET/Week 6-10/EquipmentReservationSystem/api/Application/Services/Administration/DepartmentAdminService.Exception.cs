@@ -4,7 +4,7 @@ namespace Application.Services
 {
     public partial class DepartmentAdminService
     {
-        public class DepartmentServiceException : ServiceException
+        public class DepartmentServiceException : AppSystemException
         {
             public DepartmentServiceException(string message, Exception innerException = null) : base(message, innerException)
             {

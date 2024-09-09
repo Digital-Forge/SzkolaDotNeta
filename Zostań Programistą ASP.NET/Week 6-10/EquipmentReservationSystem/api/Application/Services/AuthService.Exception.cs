@@ -1,12 +1,12 @@
 ﻿
 using Application.Abstract;
-using static Application.Abstract.ServiceException;
+using static Application.Abstract.AppSystemException;
 
 namespace Application.Services
 {
     public partial class AuthService
     {
-        public abstract class AuthServiceException : ServiceException
+        public abstract class AuthServiceException : AppSystemException
         {
             public AuthServiceException(string message, Exception innerException = null) : base(message, innerException)
             {

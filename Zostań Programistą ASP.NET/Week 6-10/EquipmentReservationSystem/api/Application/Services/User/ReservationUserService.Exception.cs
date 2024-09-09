@@ -4,7 +4,7 @@ namespace Application.Services.User
 {
     public partial class ReservationUserService
     {
-        public class ReservationUserServiceException : ServiceException
+        public class ReservationUserServiceException : AppSystemException
         {
             public ReservationUserServiceException(string message, Exception innerException = null) : base(message, innerException)
             {

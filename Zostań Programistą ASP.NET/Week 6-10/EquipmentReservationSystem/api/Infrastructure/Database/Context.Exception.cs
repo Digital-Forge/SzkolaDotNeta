@@ -4,7 +4,7 @@ namespace Infrastructure.Database
 {
     public partial class Context
     {
-        public abstract class ContextException : ServiceException
+        public abstract class ContextException : AppSystemException
         {
             public ContextException(string message, Exception innerException = null) : base(message, innerException)
             {

@@ -1,11 +1,11 @@
 ﻿using Application.Abstract;
-using static Application.Abstract.ServiceException;
+using static Application.Abstract.AppSystemException;
 
 namespace Application.Services
 {
     public partial class UserAdminService
     {
-        public abstract class UserServiceException : ServiceException
+        public abstract class UserServiceException : AppSystemException
         {
             public UserServiceException(string message, Exception innerException = null) : base(message, innerException)
             {

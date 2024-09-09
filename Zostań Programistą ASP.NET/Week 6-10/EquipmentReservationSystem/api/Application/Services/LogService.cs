@@ -88,7 +88,7 @@ namespace Application.Services
             else if (exception.InnerException != null) await ExceptionLogAsync(exception.InnerException, logId);
         }
 
-        public void SystemExceptionLog(ServiceException exception)
+        public void SystemExceptionLog(AppSystemException exception)
         {
             if (exception == null) return;
 
@@ -106,7 +106,7 @@ namespace Application.Services
             if (exception.InnerException != null) ExceptionLog(exception.InnerException, logId);
         }
 
-        public async Task SystemExceptionLogAsync(ServiceException exception)
+        public async Task SystemExceptionLogAsync(AppSystemException exception)
         {
             if (exception == null) return;
 

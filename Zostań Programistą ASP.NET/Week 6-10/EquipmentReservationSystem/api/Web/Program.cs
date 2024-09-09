@@ -25,7 +25,7 @@ builder.Services.AddIdentityCore<UserData>(options =>
                 .AddApiEndpoints();
 
 // Add middleware
-builder.Services.AddExceptionHandler<ServiceExceptionMiddleware>();
+builder.Services.AddExceptionHandler<AppSystemExceptionMiddleware>();
 builder.Services.AddExceptionHandler<GeneralExceptionMiddleware>();
 
 // Add services to the container.

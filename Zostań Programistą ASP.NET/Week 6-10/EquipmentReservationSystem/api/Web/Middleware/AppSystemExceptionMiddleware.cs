@@ -4,29 +4,29 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace Web.Middleware
 {
-    public class ServiceExceptionMiddleware(IServiceProvider _serviceProvider) : IExceptionHandler
+    public class AppSystemExceptionMiddleware(IServiceProvider _serviceProvider) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            if (exception is not ServiceException) return false;
+            if (exception is not AppSystemException) return false;
 
-            var serviceException = exception as ServiceException;
+            var serviceException = exception as AppSystemException;
 
             switch (serviceException.TypeAction)
             {
-                case ServiceException.ExceptionTypeAction.Error:
+                case AppSystemException.ExceptionTypeAction.Error:
                     httpContext.Response.StatusCode = 500; // INTERNAL SERVER ERROR
                     break;
-                case ServiceException.ExceptionTypeAction.Argument:
+                case AppSystemException.ExceptionTypeAction.Argument:
                     httpContext.Response.StatusCode = 400; // Bad Request
                     break;
-                case ServiceException.ExceptionTypeAction.Unauthoryze:
+                case AppSystemException.ExceptionTypeAction.Unauthoryze:
                     httpContext.Response.StatusCode = 401; // Unauthorized
                     break;
-                case ServiceException.ExceptionTypeAction.NotFound:
+                case AppSystemException.ExceptionTypeAction.NotFound:
                     httpContext.Response.StatusCode = 404; // Not Found
                     break;
-                case ServiceException.ExceptionTypeAction.NotAccess:
+                case AppSystemException.ExceptionTypeAction.NotAccess:
                     httpContext.Response.StatusCode = 403; // Forbidden
                     break;
                 default:

@@ -4,7 +4,7 @@ namespace Application.Services.User
 {
     public partial class ItemUserService
     {
-        public class ItemUserServiceException : ServiceException
+        public class ItemUserServiceException : AppSystemException
         {
             public ItemUserServiceException(string message, Exception innerException = null) : base(message, innerException)
             {

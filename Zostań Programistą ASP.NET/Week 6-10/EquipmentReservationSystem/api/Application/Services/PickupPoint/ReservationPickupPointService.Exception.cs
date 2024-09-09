@@ -5,7 +5,7 @@ namespace Application.Services.PickupPoint
 {
     public partial class ReservationPickupPointService
     {
-        public class ReservationPickupPointServiceException : ServiceException
+        public class ReservationPickupPointServiceException : AppSystemException
         {
             public ReservationPickupPointServiceException(string message, Exception innerException = null) : base(message, innerException)
             {
