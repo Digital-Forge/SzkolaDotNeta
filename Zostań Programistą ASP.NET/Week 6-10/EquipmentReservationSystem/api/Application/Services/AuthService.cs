@@ -1,12 +1,12 @@
 ﻿using Application.Attributes;
 using Application.Interfaces;
-using Application.Interfaces.Services;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -22,16 +22,14 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IConfiguration _config;
-        private readonly ILogService _logger;
 
-        public AuthService(SignInManager<UserData> signInManager, IConfiguration configuration, IUserRepository userRepository, ITokenRepository tokenRepository, IRoleRepository roleRepository, ILogService logService)
+        public AuthService(SignInManager<UserData> signInManager, IConfiguration configuration, IUserRepository userRepository, ITokenRepository tokenRepository, IRoleRepository roleRepository)
         {
             _tokenRepository = tokenRepository;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _signInManager = signInManager;
             _config = configuration;
-            _logger = logService;
         }
 
         public async Task<IAuthService.TokenModel> LoginAsync(IAuthService.LoginModel model)
@@ -44,7 +42,7 @@ namespace Application.Services
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (!result.Succeeded) return null;
-            await _logger.InfoLogAsync($"Login user ({user.UserName})", source: typeof(AuthService).Name);
+            Log.Information($"Login user ({user.UserName})");
             return await GenerateTokenAsync(user);
         }
 
@@ -74,7 +72,7 @@ namespace Application.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var roles = _userRepository.GetUserRoles(user.Id);
 
-            var claims = new List<Claim>() 
+            var claims = new List<Claim>()
             {
                 new Claim("Id", Guid.NewGuid().ToString()),
                 new Claim("XID", user.Id.ToString()),
@@ -94,7 +92,7 @@ namespace Application.Services
                                              null,
                                              timeSource.AddMinutes(double.Parse(_config["Token:LifeTimeToken"])),
                                              credentials);
-            
+
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
@@ -125,9 +123,9 @@ namespace Application.Services
         public async Task LogoutAsync()
         {
             var user = _userRepository.GetContextUser();
-            await _logger.InfoLogAsync($"Logout user ({user.UserName})", source: typeof(AuthService).Name);
             await _tokenRepository.RemoveTokenAsync(user.Id);
             //await _signInManager.SignOutAsync();
+            Log.Information($"Logout user ({user.UserName})");
         }
 
         public async Task<bool> IsUserAdminAsync(Guid? userId = null)

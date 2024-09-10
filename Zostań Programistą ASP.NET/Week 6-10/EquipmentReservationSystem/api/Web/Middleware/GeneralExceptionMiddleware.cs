@@ -1,5 +1,5 @@
-﻿using Application.Interfaces.Services;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Serilog;
 
 namespace Web.Middleware
 {
@@ -8,12 +8,7 @@ namespace Web.Middleware
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             httpContext.Response.StatusCode = 500; // Bad Request
-
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                await scope.ServiceProvider.GetService<ILogService>().ExceptionLogAsync(exception);
-            }
-
+            Log.Error(exception, "Exception");
             return true;
         }
     }

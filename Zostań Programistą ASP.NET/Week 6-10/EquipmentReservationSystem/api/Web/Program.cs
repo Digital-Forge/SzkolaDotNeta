@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using System.Text;
 using System.Text.Json.Serialization;
 using Web.Middleware;
@@ -18,11 +20,31 @@ builder.Services.AddDbContext<Context>(options => options.UseSqlServer(connectio
 builder.Services.AddIdentityCore<UserData>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
-                    
+
                 })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<Context>()
                 .AddApiEndpoints();
+
+// Add logger
+#pragma warning disable CS0618 // The component is outdated
+Log.Logger = new LoggerConfiguration()
+    //.ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MSSqlServerSinkOptions()
+        {
+            AutoCreateSqlDatabase = false,
+            AutoCreateSqlTable = false,
+            TableName = "Logs",
+            SchemaName = "oss"
+        })
+    .CreateLogger();
+#pragma warning restore CS0618 // The component is outdated
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(Log.Logger);
+//builder.Host.UseSerilog();
 
 // Add middleware
 builder.Services.AddExceptionHandler<AppSystemExceptionMiddleware>();
@@ -87,26 +109,41 @@ builder.Services.AddCors(options =>
                           .SetIsOriginAllowedToAllowWildcardSubdomains());
 });
 
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Information("Starting web application");
+
+    var app = builder.Build();
+
+    // request logging
+    //app.UseSerilogRequestLogging();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseCors(options =>
+    {
+        options.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+
+    app.UseExceptionHandler(_ => { });
+    app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.MapControllers();
+    app.Run();
 }
-
-app.UseCors(options =>
+catch (Exception ex)
 {
-    options.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
-
-app.UseExceptionHandler(_ => { });
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

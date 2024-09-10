@@ -5,6 +5,7 @@ using Domain.Models.System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Serilog.Events;
 
 namespace Infrastructure.Database
 {
@@ -27,6 +28,6 @@ namespace Infrastructure.Database
         //System
         public DbSet<RefreshToken> RefreshTokens { get; set; } 
         public DbSet<DataFile> Files { get; set; }
-        public DbSet<Log> Logs { get; set; }
+        public DbSet<SerilogEntry> Logs { get; set; }
     }
 }
